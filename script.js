@@ -35,6 +35,49 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('rmaType').value = savedRmaType;
             handleRmaTypeChange(savedRmaType); // Call the function to show/hide fields
         }
+
+        // Load saved parts data
+        const savedPartsData = JSON.parse(localStorage.getItem('partsData')) || [];
+        savedPartsData.forEach(part => {
+            const formRow = document.createElement('div');
+            formRow.classList.add('form-row');
+
+            const partNumberInput = document.createElement('input');
+            partNumberInput.type = 'text';
+            partNumberInput.name = 'partNumber[]';
+            partNumberInput.placeholder = 'Part Number';
+            partNumberInput.value = part.partNumber;
+            partNumberInput.required = true;
+            partNumberInput.addEventListener('input', savePartsToLocalStorage);
+
+            const quantityInput = document.createElement('input');
+            quantityInput.type = 'number';
+            quantityInput.name = 'quantity[]';
+            quantityInput.placeholder = 'Quantity';
+            quantityInput.value = part.quantity;
+            quantityInput.required = true;
+            quantityInput.addEventListener('input', savePartsToLocalStorage);
+
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.classList.add('remove-button');
+            removeButton.innerText = 'Remove';
+            removeButton.addEventListener('click', function () {
+                formRow.remove();
+                savePartsToLocalStorage();
+            });
+
+            if (isDarkModeActive()) {
+                partNumberInput.classList.add('dark-mode');
+                quantityInput.classList.add('dark-mode');
+                removeButton.classList.add('dark-mode');
+            }
+
+            formRow.appendChild(partNumberInput);
+            formRow.appendChild(quantityInput);
+            formRow.appendChild(removeButton);
+            document.getElementById('dynamicForm').appendChild(formRow);
+        });
     };
 
     // Function to show or hide fields based on RMA Type
@@ -203,6 +246,10 @@ document.addEventListener('DOMContentLoaded', function () {
             quantityInput.placeholder = 'Quantity';
             quantityInput.required = true;
 
+            // Add event listeners to save part data to local storage on change
+            partNumberInput.addEventListener('input', savePartsToLocalStorage);
+            quantityInput.addEventListener('input', savePartsToLocalStorage);
+
             // Create the remove button
             const removeButton = document.createElement('button');
             removeButton.type = 'button';
@@ -210,6 +257,7 @@ document.addEventListener('DOMContentLoaded', function () {
             removeButton.innerText = 'Remove';
             removeButton.addEventListener('click', function () {
                 formRow.remove(); // Remove the row on click
+                savePartsToLocalStorage(); // Save updated data after removal
             });
 
             // Check if dark mode is active and apply the dark-mode class to newly created elements
@@ -227,6 +275,16 @@ document.addEventListener('DOMContentLoaded', function () {
             // Append the new row to the dynamic form section
             document.getElementById('dynamicForm').appendChild(formRow);
         });
+    }
+
+    function savePartsToLocalStorage() {
+        const partsData = [];
+        document.querySelectorAll('.form-row').forEach(row => {
+            const partNumber = row.querySelector('input[name="partNumber[]"]').value;
+            const quantity = row.querySelector('input[name="quantity[]"]').value;
+            partsData.push({ partNumber, quantity });
+        });
+        localStorage.setItem('partsData', JSON.stringify(partsData));
     }
 
     // Clear buttons for forms

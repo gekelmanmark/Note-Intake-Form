@@ -39,44 +39,46 @@ document.addEventListener('DOMContentLoaded', function () {
         // Load saved parts data
         const savedPartsData = JSON.parse(localStorage.getItem('partsData')) || [];
         savedPartsData.forEach(part => {
-            const formRow = document.createElement('div');
-            formRow.classList.add('form-row');
-
-            const partNumberInput = document.createElement('input');
-            partNumberInput.type = 'text';
-            partNumberInput.name = 'partNumber[]';
-            partNumberInput.placeholder = 'Part Number';
-            partNumberInput.value = part.partNumber;
-            partNumberInput.required = true;
-            partNumberInput.addEventListener('input', savePartsToLocalStorage);
-
-            const quantityInput = document.createElement('input');
-            quantityInput.type = 'number';
-            quantityInput.name = 'quantity[]';
-            quantityInput.placeholder = 'Quantity';
-            quantityInput.value = part.quantity;
-            quantityInput.required = true;
-            quantityInput.addEventListener('input', savePartsToLocalStorage);
-
-            const removeButton = document.createElement('button');
-            removeButton.type = 'button';
-            removeButton.classList.add('remove-button');
-            removeButton.innerText = 'Remove';
-            removeButton.addEventListener('click', function () {
-                formRow.remove();
-                savePartsToLocalStorage();
-            });
-
-            if (isDarkModeActive()) {
-                partNumberInput.classList.add('dark-mode');
-                quantityInput.classList.add('dark-mode');
-                removeButton.classList.add('dark-mode');
+            if (part.partNumber || part.quantity){
+                const formRow = document.createElement('div');
+                formRow.classList.add('form-row');
+    
+                const partNumberInput = document.createElement('input');
+                partNumberInput.type = 'text';
+                partNumberInput.name = 'partNumber[]';
+                partNumberInput.placeholder = 'Part Number';
+                partNumberInput.value = part.partNumber;
+                partNumberInput.required = true;
+                partNumberInput.addEventListener('input', savePartsToLocalStorage);
+    
+                const quantityInput = document.createElement('input');
+                quantityInput.type = 'number';
+                quantityInput.name = 'quantity[]';
+                quantityInput.placeholder = 'Quantity';
+                quantityInput.value = part.quantity;
+                quantityInput.required = true;
+                quantityInput.addEventListener('input', savePartsToLocalStorage);
+    
+                const removeButton = document.createElement('button');
+                removeButton.type = 'button';
+                removeButton.classList.add('remove-button');
+                removeButton.innerText = 'Remove';
+                removeButton.addEventListener('click', function () {
+                    formRow.remove();
+                    savePartsToLocalStorage();
+                });
+    
+                if (isDarkModeActive()) {
+                    partNumberInput.classList.add('dark-mode');
+                    quantityInput.classList.add('dark-mode');
+                    removeButton.classList.add('dark-mode');
+                }
+    
+                formRow.appendChild(partNumberInput);
+                formRow.appendChild(quantityInput);
+                formRow.appendChild(removeButton);
+                document.getElementById('dynamicForm').appendChild(formRow);
             }
-
-            formRow.appendChild(partNumberInput);
-            formRow.appendChild(quantityInput);
-            formRow.appendChild(removeButton);
-            document.getElementById('dynamicForm').appendChild(formRow);
         });
     };
 
@@ -299,6 +301,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         handleRmaTypeChange('Not Selected'); // Call the function to show/hide fields
                     }
                     form.reset();
+                    savePartsToLocalStorage();
                 }
             });
         });

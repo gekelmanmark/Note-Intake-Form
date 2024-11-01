@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Support Form</title>
+
+    <!-- Inline script to check for dark mode immediately -->
+    <script>
+        // Apply dark mode instantly if it's the saved preference
+        if (localStorage.getItem('mode') === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Product 99 Form</h1>
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.html" class="nav-link">Notes</a></li>
+                <li><a href="RMA.html" class="nav-link">RMA</a></li>
+                <li><a href="Dial-in.html" class="nav-link">Dial-In</a></li>
+                <li><a href="Product99.html" class="nav-link">Product 99</a></li>
+                <li><button id="toggle-mode">Toggle Dark Mode</button></li>
+            </ul>
+        </nav>
+
+        <form id="product99" class="form-99">
+            <div class="form-item">
+                <label for="reportDate">Report Date</label>
+                <input type="date" id="reportDate" name="reportDate" required>
+            </div>
+            <div class="form-item">
+                <label for="incidentDate">Incident Date</label>
+                <input type="date" id="incidentDate" name="incidentDate" required>
+            </div>
+            <div class="form-item">
+                <label for="contactName">Contact Name</label>
+                <input type="text" id="contactName" name="contactName" required>
+            </div>
+            <div class="form-item">
+                <label for="contactNumber">Contact Number</label>
+                <input type="number" id="contactNumber" name="contactNumber" required>
+            </div>
+            <div class="form-item">
+                <label for="email">Contact Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-item">
+                <label for="productType">Product Type</label>
+                <input type="text" id="productType" name="productType" required>
+            </div>
+            <div class="form-item">
+                <label for="lockCaseType">Lock Case Type</label>
+                <input type="text" id="lockCaseType" name="lockCaseType" required>
+            </div>
+            <div class="form-item">
+                <label for="numberOfRoomsInHotel">Number of Rooms in Hotel</label>
+                <input type="number" id="numberOfRoomsInHotel" name="numberOfRoomsInHotel" required>
+            </div>
+            <div class="form-item">
+                <label for="warrantyStartDate">Warranty Start Date</label>
+                <input type="date" id="warrantyStartDate" name="warrantyStartDate" required>
+            </div>
+            <div class="form-item">
+                <label for="accountNumber">Account Number</label>
+                <input type="number" id="accountNumber" name="accountNumber" required>
+            </div>
+            <div class="form-item">
+                <label for="caseNumber">Case Number</label>
+                <input type="number" id="caseNumber" name="caseNumber" required>
+            </div>
+            <div class="form-item">
+                <label for="propertyName">Property Name</label>
+                <input type="text" id="propertyName" name="propertyName" required>
+            </div>
+            <div class="form-item">
+                <label for="propertyAddress">Property Address</label>
+                <input type="text" id="propertyAddress" name="propertyAddress" required>
+            </div>
+            <div class="form-item">
+                <label for="summary">Summary:</label>
+                <textarea id="summary" rows="2" placeholder="Summarize what happened" required></textarea>
+            </div>
+            <div class="form-buttons">
+                <button type="button" id="copyButton99">Copy</button>
+                <button type="button" id="clearButton">Clear</button>
+            </div>
+        </form>
+        <div id="copyNotification" class="notification hidden">Copied to clipboard!</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

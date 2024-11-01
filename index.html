@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Support Form</title>
+
+    <!-- Inline script to check for dark mode immediately -->
+    <script>
+        // Apply dark mode instantly if it's the saved preference
+        if (localStorage.getItem('mode') === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Customer Support Form</h1>
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.html" class="nav-link">Notes</a></li>
+                <li><a href="RMA.html" class="nav-link">RMA</a></li>
+                <li><a href="Dial-in.html" class="nav-link">Dial-In</a></li>
+                <li><a href="Product99.html" class="nav-link">Product 99</a></li>
+                <li><button id="toggle-mode">Toggle Dark Mode</button></li>
+            </ul>
+        </nav>
+
+        <form id="contactForm">
+            <label for="customerName">S/W:</label>
+            <textarea id="customerName" rows="2" placeholder="Enter the customer's name" required></textarea>
+        
+            <label for="reasonForCall">Reason for Call:</label>
+            <textarea id="reasonForCall" rows="2" placeholder="Briefly describe the reason for the call" required></textarea>
+        
+            <label for="troubleshooting">Troubleshooting Performed:</label>
+            <textarea id="troubleshooting" rows="8" placeholder="Detail the troubleshooting steps performed" required></textarea>
+        
+            <label for="resolution">Resolution or Next Steps:</label>
+            <textarea id="resolution" rows="2" placeholder="Enter the resolution or next steps" required></textarea>
+        
+            <div class="form-buttons">
+                <button type="button" id="copyButton">Copy</button>
+                <button type="button" id="clearButton">Clear</button>
+            </div>
+        </form>
+        <div id="copyNotification" class="notification hidden">Copied to clipboard!</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

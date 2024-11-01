@@ -7,7 +7,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const formElements = document.querySelectorAll('input, textarea, select');
         formElements.forEach((element) => {
             element.addEventListener('input', () => {
-                localStorage.setItem(element.id, element.value);
+                if (element.type === 'checkbox') {
+                    localStorage.setItem(element.id, element.checked);
+                } else {
+                    localStorage.setItem(element.id, element.value);
+                }
             });
         });
     };
@@ -24,10 +28,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const populateFormData = () => {
         const formElements = document.querySelectorAll('input, textarea, select');
         formElements.forEach((element) => {
-            const savedData = localStorage.getItem(element.id);
-            if (savedData) {
-                element.value = savedData;
+            const savedValue = localStorage.getItem(element.id);
+            if (savedValue !== null) {
+                if (element.type === 'checkbox') {
+                    element.checked = (savedValue === 'true'); // Convert string back to boolean
+                } else {
+                    element.value = savedValue;
+                }
             }
+            // const savedData = localStorage.getItem(element.id);
+            // if (savedData) {
+            //     element.value = savedData;
+            // }
         });
         // Retrieve the saved RMA type and trigger the display logic
         const savedRmaType = localStorage.getItem('rmaType');

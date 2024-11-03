@@ -42,11 +42,14 @@ document.addEventListener('DOMContentLoaded', function () {
             // }
         });
 
-        // Retrieve the saved RMA type and trigger the display logic
+        // Retrieve the saved System type and trigger the display logic
         const savedSystemType = localStorage.getItem('systemType');
         if (savedSystemType) {
-            document.getElementById('systemType').value = savedSystemType;
-            handleSystemTypeChange(savedSystemType); // Call the function to show/hide fields
+            currentSystemType = document.getElementById('systemType');
+            if (currentSystemType) {
+                document.getElementById('systemType').value = savedSystemType;
+                handleSystemTypeChange(savedSystemType); // Call the function to show/hide fields
+            }
         }
 
         // Retrieve the saved RMA type and trigger the display logic
@@ -338,6 +341,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (form) {
                     if (form.id === 'rmaForm') {
                         handleRmaTypeChange('Not Selected'); // Call the function to show/hide fields
+                    }
+                    if (form.id === 'dialInForm') {
+                        handleSystemTypeChange('Not Selected'); // Call the function to show/hide fields
                     }
                     form.reset();
                     savePartsToLocalStorage();

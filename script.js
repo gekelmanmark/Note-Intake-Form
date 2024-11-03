@@ -29,6 +29,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 element.value = savedData;
             }
         });
+
+        // Retrieve the saved RMA type and trigger the display logic
+        const savedSystemType = localStorage.getItem('systemType');
+        if (savedSystemType) {
+            document.getElementById('systemType').value = savedSystemType;
+            handleSystemTypeChange(savedSystemType); // Call the function to show/hide fields
+        }
+
         // Retrieve the saved RMA type and trigger the display logic
         const savedRmaType = localStorage.getItem('rmaType');
         if (savedRmaType) {
@@ -140,6 +148,25 @@ document.addEventListener('DOMContentLoaded', function () {
             link.classList.add('active'); // Add 'active' class to the current page's link
         }
     });
+
+    // Function to show or hide fields based on System Type Type
+    const handleSystemTypeChange = (systemType) => {
+        const batteryCheckDiv = document.getElementById('batteryCheckDiv');
+        const lithiumBatteryDiv = document.getElementById('lithiumBatteryDiv');
+        const modemTypeDiv = document.getElementById('modemTypeDiv');
+
+        // Display fields based on selected RMA type
+        if (systemType === 'OnPortal') {
+            batteryCheckDiv.classList.add('hidden');
+            lithiumBatteryDiv.classList.add('hidden');
+            modemTypeDiv.classList.add('hidden');
+        } else {
+            // Show all conditional fields for other system types
+            batteryCheckDiv.classList.remove('hidden');
+            lithiumBatteryDiv.classList.remove('hidden');
+            modemTypeDiv.classList.remove('hidden');
+        }
+    };
 
     // Function to show the notification after copying
     function showNotification() {
@@ -380,7 +407,7 @@ Summary:\n${summary.trim()}`;
 
             // Loop through all the select elements and check if "None" is selected
             selectElements.forEach(select => {
-                if (select.value === 'Not Selected') {
+                if (select.value === 'Not Selected' && !isElementOrParentHidden(select)) {
                     select.classList.add('invalid-field'); // Highlight the field with red
                     formIsValid = false;
                 } else {
@@ -388,7 +415,6 @@ Summary:\n${summary.trim()}`;
                 }
             });
             if (dialInForm.checkValidity() && formIsValid) {
-
                 const contactName = document.getElementById('contactName')?.value || '';
                 const contactNumber = document.getElementById('contactNumber')?.value || '';
                 const systemType = document.getElementById('systemType')?.value || '';
@@ -402,18 +428,20 @@ Summary:\n${summary.trim()}`;
                 const modemType = document.getElementById('modemType')?.value || '';
                 const billing = document.getElementById('billing')?.value || '';
 
-                const fullText = `Contact Name: ${contactName}
-Contact Number: ${contactNumber}
-System Type: ${systemType}
-Under Warranty?: ${underWarranty}
-Dial-In Type: ${dialInType}
-Oracle ID: ${oracleID}
-Dial-In Fee: ${dialInFee}
-Credit Hold: ${creditHold}
-Battery Check: ${batteryCheck}
-Lithium Battery: ${lithiumBattery}
-Modem Type: ${modemType}
-Billing: ${billing}`;
+                let fullText = `Contact Name: ${contactName}\n`;
+                fullText += `Contact Number: ${contactNumber}\n`;
+                fullText += `System Type: ${systemType}\n`;
+                fullText += `Under Warranty?: ${underWarranty}\n`;
+                fullText += `Dial-In Type: ${dialInType}\n`;
+                fullText += `Oracle ID: ${oracleID}\n`;
+                fullText += `Dial-In Fee: ${dialInFee}\n`;
+                fullText += `Credit Hold: ${creditHold}\n`;
+                if (systemType != 'OnPortal') {
+                    fullText += `Battery Check: ${batteryCheck}\n`;
+                    fullText += `Lithium Battery: ${lithiumBattery}\n`;
+                    fullText += `Modem Type: ${modemType}\n`;
+                }
+                fullText += `Billing: ${billing}`;
 
                 navigator.clipboard.writeText(fullText).then(() => {
                     showNotification();
@@ -464,6 +492,14 @@ Resolution or Next Steps:\n${resolution.trim()}`;
             } else {
                 applyValidationStyles(customerSupportForm); // Apply validation styles
             }
+        });
+    }
+
+    const systemTypeField = document.getElementById('systemType');
+    if (systemTypeField) {
+        systemTypeField.addEventListener('change', function () {
+            const selectedSystemType = systemTypeField.value || '';
+            handleSystemTypeChange(selectedSystemType)
         });
     }
 

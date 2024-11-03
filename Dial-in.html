@@ -38,7 +38,7 @@
 
             <div class="form-item">
                 <label for="contactNumber">Contact Number</label>
-                <input type="text" id="contactNumber" name="contactNumber" required>
+                <input type="number" id="contactNumber" name="contactNumber" required>
             </div>
 
             <div class="form-item">
@@ -79,7 +79,7 @@
 
             <div class="form-item">
                 <label for="oracleID">Oracle ID</label>
-                <input type="text" id="oracleID" name="oracleID" required>
+                <input type="number" id="oracleID" name="oracleID" required>
             </div>
 
             <div class="form-item">
@@ -101,31 +101,37 @@
             </div>
 
             <div class="form-item">
-                <label for="batteryCheck">Battery Check</label>
-                <select id="batteryCheck" name="batteryCheck" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="OK">OK</option>
-                    <option value="Low">Low</option>
-                </select>
+                <div id="batteryCheckDiv">
+                    <label for="batteryCheck">Battery Check</label>
+                    <select id="batteryCheck" name="batteryCheck" required>
+                        <option value="Not Selected">Not Selected</option>
+                        <option value="OK">OK</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
             </div>
 
             <div class="form-item">
-                <label for="lithiumBattery">Lithium Battery</label>
-                <select id="lithiumBattery" name="lithiumBattery" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="OK">OK</option>
-                    <option value="Low">Low</option>
-                </select>
+                <div id="lithiumBatteryDiv">
+                    <label for="lithiumBattery">Lithium Battery</label>
+                    <select id="lithiumBattery" name="lithiumBattery" required>
+                        <option value="Not Selected">Not Selected</option>
+                        <option value="OK">OK</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
             </div>
 
             <div class="form-item">
-                <label for="modemType">Modem Type</label>
-                <select id="modemType" name="modemType" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="Internal">Internal</option>
-                    <option value="External">External</option>
-                    <option value="Needs to Order/Find">Needs to Order/Find</option>
-                </select>
+                <div id="modemTypeDiv">
+                    <label for="modemType">Modem Type</label>
+                    <select id="modemType" name="modemType" required>
+                        <option value="Not Selected">Not Selected</option>
+                        <option value="Internal">Internal</option>
+                        <option value="External">External</option>
+                        <option value="Needs to Order/Find">Needs to Order/Find</option>
+                    </select>
+                </div>
             </div>
 
             <div class="form-item">

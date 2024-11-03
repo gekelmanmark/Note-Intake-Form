@@ -29,4 +29,4 @@ To set up this project locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/customer-support-form.git
+   git clone https://github.com/gekelmanmark/Note-Intake-Form.git

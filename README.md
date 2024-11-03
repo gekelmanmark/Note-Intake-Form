@@ -7,12 +7,6 @@ A responsive and user-friendly customer support form designed to streamline data
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [Screenshots](#screenshots)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
 
 ## Overview
 The Customer Support Form Webpage is designed to help customer service teams gather, manage, and process customer information efficiently. This dynamic form includes multiple fields and customizable options, ensuring a smooth data entry experience. It's built with responsiveness in mind to provide optimal usability on both desktop and mobile devices.

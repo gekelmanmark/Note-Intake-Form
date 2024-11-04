@@ -77,7 +77,16 @@
                 
                 <label for="failureReason">Failure Reason:</label>
                 <textarea name="FAILUREREASON" id="failureReason" rows="2" required></textarea>
-            
+                
+                <label for="shippingType">Shipping Type:</label>
+                <select name="SHIPPINGTYPE" id="shippingType" required>
+                    <option value="Not Selected">Not Selected</option>
+                    <option value="Ground">Ground</option>
+                    <option value="Overnight">Overnight</option>
+                    <option value="Overnight Saturday">Overnight Saturday</option>
+                    <option value="Overnight AM">Overnight AM</option>
+                </select>
+                
                 <label for="redDot">Red Dot:</label>
                 <div class="user-note">
                     <strong>Note:</strong> Emergency Shipment - Only works if submitted before 11am
@@ -87,16 +96,7 @@
                     <option value="Yes Chatter Tracy Gassaway & Anne Kelly on the case">Yes Chatter Tracy Gassaway & Anne Kelly on the case</option>
                     <option value="No">No</option>
                 </select>
-            
-                <label for="shippingType">Shipping Type:</label>
-                <select name="SHIPPINGTYPE" id="shippingType" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="Ground">Ground</option>
-                    <option value="Overnight">Overnight</option>
-                    <option value="Overnight Saturday">Overnight Saturday</option>
-                    <option value="Overnight AM">Overnight AM</option>
-                </select>
-            
+                
                 <label for="callTag">Call Tag:</label>
                 <div class="user-note">
                     <strong>Definition:</strong> Pre-paid return shipping label

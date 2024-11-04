@@ -599,19 +599,19 @@ Resolution or Next Steps:\n${resolution.trim()}`;
                 const bsoNumber = document.getElementById('bso')?.value || '';
                 const warrantyLevel = document.getElementById('warrantyLevel')?.value || '';
 
-                let fullText = `RMA Type: ${rmaType}\n`;
+                let fullText = `RMA Type: ${rmaType}`;
                 if (inspectionChecked === "Yes") {
-                    fullText += ` **08 Inspection Requested**\n`;
+                    fullText += ` **08 Inspection Requested**`;
                 }
-                fullText += `Warranty: ${warrantyField}`
+                fullText += `\nWarranty: ${warrantyField}`
                 if (warrantyField === 'Limited') {
                     fullText += `\nWarranty Limited BSO: ${bsoNumber}`;
                 } else if (warrantyField === 'Extended') {
                     fullText += `\nWarranty Extended Level: ${warrantyLevel}`;
                 }
                 fullText += `\nFailure Reason: ${failureReason.trim()}
-Red Dot: ${redDot}
 Shipping Type: ${shippingType}
+Red Dot: ${redDot}
 Call Tag: ${callTag}`;
 
                 const partNumbers = document.querySelectorAll('input[name="partNumber[]"]');

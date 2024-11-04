@@ -217,6 +217,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 ...document.querySelectorAll('select'),
                 ...document.querySelectorAll('input'),
                 ...document.querySelectorAll('option'),
+                ...document.querySelectorAll('nav'),
                 ...document.querySelectorAll('button')
             ];
 

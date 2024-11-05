@@ -89,19 +89,26 @@
                     <option value="Waived">Waived</option>
                     <option value="Charged">Charged</option>
                 </select>
+                <div id="reasonWaivedDiv" class="hidden">
+                    <label for="reasonWaived">Waived Fee Reason</label>
+                    <textarea id="reasonWaived" rows="2" placeholder="Why is the fee waived?" required></textarea>
+                </div>
+            </div>
+
+
+            <div class="form-item">
+                <div id="creditHoldDiv">
+                    <label for="creditHold">Credit Hold</label>
+                    <select id="creditHold" name="creditHold" required>
+                        <option value="Not Selected">Not Selected</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
             </div>
 
             <div class="form-item">
-                <label for="creditHold">Credit Hold</label>
-                <select id="creditHold" name="creditHold" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                </select>
-            </div>
-
-            <div class="form-item">
-                <div id="batteryCheckDiv">
+                <div id="batteryCheckDiv" class="hidden">
                     <label for="batteryCheck">Battery Check</label>
                     <select id="batteryCheck" name="batteryCheck" required>
                         <option value="Not Selected">Not Selected</option>
@@ -112,7 +119,7 @@
             </div>
 
             <div class="form-item">
-                <div id="lithiumBatteryDiv">
+                <div id="lithiumBatteryDiv" class="hidden">
                     <label for="lithiumBattery">Lithium Battery</label>
                     <select id="lithiumBattery" name="lithiumBattery" required>
                         <option value="Not Selected">Not Selected</option>
@@ -123,7 +130,7 @@
             </div>
 
             <div class="form-item">
-                <div id="modemTypeDiv">
+                <div id="modemTypeDiv" class="hidden">
                     <label for="modemType">Modem Type</label>
                     <select id="modemType" name="modemType" required>
                         <option value="Not Selected">Not Selected</option>
@@ -135,12 +142,14 @@
             </div>
 
             <div class="form-item">
-                <label for="billing">Billing?</label>
-                <select id="billing" name="billing" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="Net">Net</option>
-                    <option value="Prepay">Prepay</option>
-                </select>
+                <div id="billingDiv">
+                    <label for="billing">Billing?</label>
+                    <select id="billing" name="billing" required>
+                        <option value="Not Selected">Not Selected</option>
+                        <option value="Net">Net</option>
+                        <option value="Prepay">Prepay</option>
+                    </select>
+                </div>
             </div>
             <div class="form-buttons">
                 <button type="button" id="copyButtonDialIn">Copy</button>

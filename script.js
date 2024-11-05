@@ -36,10 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     element.value = savedValue;
                 }
             }
-            // const savedData = localStorage.getItem(element.id);
-            // if (savedData) {
-            //     element.value = savedData;
-            // }
         });
 
         // Retrieve the saved System type and trigger the display logic
@@ -49,6 +45,16 @@ document.addEventListener('DOMContentLoaded', function () {
             if (currentSystemType) {
                 document.getElementById('systemType').value = savedSystemType;
                 handleSystemTypeChange(savedSystemType); // Call the function to show/hide fields
+            }
+        }
+
+        // Retrieve the saved System type and trigger the display logic
+        const savedDialInFeeType = localStorage.getItem('dialInFee');
+        if (savedDialInFeeType) {
+            currentDialInFeeType = document.getElementById('dialInFee');
+            if (currentDialInFeeType) {
+                document.getElementById('dialInFee').value = savedDialInFeeType;
+                handleDialInFeeChange(savedDialInFeeType); // Call the function to show/hide fields
             }
         }
 
@@ -170,16 +176,34 @@ document.addEventListener('DOMContentLoaded', function () {
         const lithiumBatteryDiv = document.getElementById('lithiumBatteryDiv');
         const modemTypeDiv = document.getElementById('modemTypeDiv');
 
-        // Display fields based on selected RMA type
-        if (systemType === 'OnPortal') {
-            batteryCheckDiv.classList.add('hidden');
-            lithiumBatteryDiv.classList.add('hidden');
-            modemTypeDiv.classList.add('hidden');
-        } else {
-            // Show all conditional fields for other system types
+        // Display fields based on selected system type
+        if (systemType === 'HT22X') {
             batteryCheckDiv.classList.remove('hidden');
             lithiumBatteryDiv.classList.remove('hidden');
             modemTypeDiv.classList.remove('hidden');
+        } else {
+            // Show all conditional fields for other system types
+            batteryCheckDiv.classList.add('hidden');
+            lithiumBatteryDiv.classList.add('hidden');
+            modemTypeDiv.classList.add('hidden');
+        }
+    };
+
+    const handleDialInFeeChange = (status) => {
+        const billingDiv = document.getElementById('billingDiv');
+        const creditHoldDiv = document.getElementById('creditHoldDiv');
+        const reasonWaivedDiv = document.getElementById('reasonWaivedDiv');
+
+        // Display fields based on selected system type
+        if (status === 'Waived') {
+            billingDiv.classList.add('hidden');
+            creditHoldDiv.classList.add('hidden');
+            reasonWaivedDiv.classList.remove('hidden');
+        } else {
+            // Show all conditional fields for other system types
+            billingDiv.classList.remove('hidden');
+            creditHoldDiv.classList.remove('hidden');
+            reasonWaivedDiv.classList.add('hidden');
         }
     };
 
@@ -345,6 +369,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                     if (form.id === 'dialInForm') {
                         handleSystemTypeChange('Not Selected'); // Call the function to show/hide fields
+                        handleDialInFeeChange('Not Selected'); // Call the function to show/hide fields
                     }
                     form.reset();
                     savePartsToLocalStorage();
@@ -446,6 +471,7 @@ Summary:\n${summary.trim()}`;
                 const lithiumBattery = document.getElementById('lithiumBattery')?.value || '';
                 const modemType = document.getElementById('modemType')?.value || '';
                 const billing = document.getElementById('billing')?.value || '';
+                const reasonWaived = document.getElementById('reasonWaived')?.value || '';
 
                 let fullText = `Contact Name: ${contactName}\n`;
                 fullText += `Contact Number: ${contactNumber}\n`;
@@ -454,13 +480,18 @@ Summary:\n${summary.trim()}`;
                 fullText += `Dial-In Type: ${dialInType}\n`;
                 fullText += `Oracle ID: ${oracleID}\n`;
                 fullText += `Dial-In Fee: ${dialInFee}\n`;
-                fullText += `Credit Hold: ${creditHold}\n`;
-                if (systemType != 'OnPortal') {
+                if (dialInFee != "Waived") {
+                    fullText += `Credit Hold: ${creditHold}\n`;
+                }
+                if (dialInFee === "Waived") {
+                    fullText += `Waived Fee Reason:\n ${reasonWaived}\n`;
+                }
+                if (systemType === 'HT22X') {
                     fullText += `Battery Check: ${batteryCheck}\n`;
                     fullText += `Lithium Battery: ${lithiumBattery}\n`;
                     fullText += `Modem Type: ${modemType}\n`;
                 }
-                fullText += `Billing: ${billing}`;
+                if (dialInFee != "Waived") {fullText += `Billing: ${billing}`;}
 
                 navigator.clipboard.writeText(fullText).then(() => {
                     showNotification();
@@ -519,6 +550,14 @@ Resolution or Next Steps:\n${resolution.trim()}`;
         systemTypeField.addEventListener('change', function () {
             const selectedSystemType = systemTypeField.value || '';
             handleSystemTypeChange(selectedSystemType)
+        });
+    }
+
+    const dialInFeeField = document.getElementById('dialInFee');
+    if (dialInFeeField) {
+        dialInFeeField.addEventListener('change', function () {
+            const selectedDialInFeeType = dialInFeeField.value || '';
+            handleDialInFeeChange(selectedDialInFeeType)
         });
     }
 

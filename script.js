@@ -686,6 +686,60 @@ Resolution or Next Steps:\n${resolution.trim()}`;
         });
     }
 
+    // Apply the auto-resize behavior on input event
+    document.querySelectorAll('textarea').forEach(textarea => {
+        // Automatically resize on input
+        textarea.addEventListener('input', function () {
+            autoResizeTextarea(this); // Auto-adjust height as the user types
+        });
+    
+        // Detect user resize
+        textarea.addEventListener('mousedown', function (e) {
+            // Detect if the user is resizing the textarea manually (bottom-right corner click)
+            const initialHeight = textarea.offsetHeight;
+            const initialY = e.clientY;
+    
+            const onMouseMove = (moveEvent) => {
+                const newHeight = initialHeight + (moveEvent.clientY - initialY);
+                if (newHeight !== textarea.scrollHeight) {
+                    textarea.dataset.userResized = 'true'; // Mark as user-resized
+                    autoResizeTextarea(textarea);
+                }
+            };
+    
+            const onMouseUp = () => {
+                window.removeEventListener('mousemove', onMouseMove);
+                window.removeEventListener('mouseup', onMouseUp);
+            };
+    
+            window.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('mouseup', onMouseUp);
+        });
+    
+        let clickCount = 0;
+        let clickTimer;
+    
+        textarea.addEventListener('click', function (event) {
+            clickCount++;
+    
+            if (clickCount === 1) {
+                // Start a timer to reset click count after a short period
+                clickTimer = setTimeout(() => {
+                    clickCount = 0;
+                }, 600); // Adjust the timeout duration as needed (500ms is typical for triple-click detection)
+            }
+    
+            if (clickCount === 4) {
+    
+                textarea.dataset.userResized = ''; // Reset the user-resized state
+                autoResizeTextarea(textarea); // Reapply automatic resizing
+                // Reset click count and clear the timer
+                clearTimeout(clickTimer);
+                clickCount = 0;
+            }
+        });
+    });
+
     // Call both functions on page load
     populateFormData();
     saveFormData();
@@ -698,59 +752,21 @@ function autoResizeTextarea(textarea) {
         textarea.style.height = 'auto'; // Reset the height
         textarea.style.height = textarea.scrollHeight + 'px'; // Set new height based on content
     }
+    localStorage.setItem(`textareaHeight-${textarea.id}`, textarea.style.height); // Save the height
 }
 
-// Apply the auto-resize behavior on input event
-document.querySelectorAll('textarea').forEach(textarea => {
-    // Automatically resize on input
-    textarea.addEventListener('input', function () {
-        autoResizeTextarea(this); // Auto-adjust height as the user types
+// Function to initialize textarea height from storage
+function initializeTextareaHeight(textarea) {
+    const savedHeight = localStorage.getItem(`textareaHeight-${textarea.id}`);
+    if (savedHeight) {
+        textarea.style.height = savedHeight; // Restore the height from localStorage
+    }
+}
+
+// Initialize the textarea height on page load
+window.onload = function() {
+    const textareaElements = document.querySelectorAll('textarea');
+    textareaElements.forEach((element) => {
+        initializeTextareaHeight(element);
     });
-
-    // Detect user resize
-    textarea.addEventListener('mousedown', function (e) {
-        // Detect if the user is resizing the textarea manually (bottom-right corner click)
-        const initialHeight = textarea.offsetHeight;
-        const initialY = e.clientY;
-
-        const onMouseMove = (moveEvent) => {
-            const newHeight = initialHeight + (moveEvent.clientY - initialY);
-            if (newHeight !== textarea.scrollHeight) {
-                textarea.dataset.userResized = 'true'; // Mark as user-resized
-            }
-        };
-
-        const onMouseUp = () => {
-            window.removeEventListener('mousemove', onMouseMove);
-            window.removeEventListener('mouseup', onMouseUp);
-        };
-
-        window.addEventListener('mousemove', onMouseMove);
-        window.addEventListener('mouseup', onMouseUp);
-    });
-
-    let clickCount = 0;
-    let clickTimer;
-
-    textarea.addEventListener('click', function (event) {
-        clickCount++;
-
-        if (clickCount === 1) {
-            // Start a timer to reset click count after a short period
-            clickTimer = setTimeout(() => {
-                clickCount = 0;
-            }, 600); // Adjust the timeout duration as needed (500ms is typical for triple-click detection)
-        }
-
-        if (clickCount === 4) {
-
-            textarea.dataset.userResized = ''; // Reset the user-resized state
-            autoResizeTextarea(textarea); // Reapply automatic resizing
-            // Reset click count and clear the timer
-            clearTimeout(clickTimer);
-            clickCount = 0;
-        }
-    });
-});
-
-
+};

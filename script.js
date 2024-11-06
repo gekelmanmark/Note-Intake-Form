@@ -374,6 +374,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (form) {
                     if (form.id === 'rmaForm') {
                         handleRmaTypeChange('Not Selected'); // Call the function to show/hide fields
+                        const container = document.getElementById('dynamicForm');
+                        if (container) {
+                            container.innerHTML = ''; // Clears all child elements
+                        }
                     }
                     if (form.id === 'dialInForm') {
                         handleSystemTypeChange('Not Selected'); // Call the function to show/hide fields

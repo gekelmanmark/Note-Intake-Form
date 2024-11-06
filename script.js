@@ -37,32 +37,37 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         });
-
-        // Retrieve the saved System type and trigger the display logic
-        const savedSystemType = localStorage.getItem('systemType');
-        if (savedSystemType) {
-            currentSystemType = document.getElementById('systemType');
-            if (currentSystemType) {
-                document.getElementById('systemType').value = savedSystemType;
-                handleSystemTypeChange(savedSystemType); // Call the function to show/hide fields
+        
+        const dialInForm = document.getElementById('dialInForm')?.value || '';
+        if (dialInForm) {
+            // Retrieve the saved System type and trigger the display logic
+            const savedSystemType = localStorage.getItem('systemType');
+            if (savedSystemType) {
+                currentSystemType = document.getElementById('systemType');
+                if (currentSystemType) {
+                    document.getElementById('systemType').value = savedSystemType;
+                    handleSystemTypeChange(savedSystemType); // Call the function to show/hide fields
+                }
+            }
+            // Retrieve the saved System type and trigger the display logic
+            const savedDialInFeeType = localStorage.getItem('dialInFee');
+            if (savedDialInFeeType) {
+                currentDialInFeeType = document.getElementById('dialInFee');
+                if (currentDialInFeeType) {
+                    document.getElementById('dialInFee').value = savedDialInFeeType;
+                    handleDialInFeeChange(savedDialInFeeType); // Call the function to show/hide fields
+                }
             }
         }
 
-        // Retrieve the saved System type and trigger the display logic
-        const savedDialInFeeType = localStorage.getItem('dialInFee');
-        if (savedDialInFeeType) {
-            currentDialInFeeType = document.getElementById('dialInFee');
-            if (currentDialInFeeType) {
-                document.getElementById('dialInFee').value = savedDialInFeeType;
-                handleDialInFeeChange(savedDialInFeeType); // Call the function to show/hide fields
+        const rmaForm = document.getElementById('rmaForm')?.value || '';
+        if (rmaForm) {
+            // Retrieve the saved RMA type and trigger the display logic
+            const savedRmaType = localStorage.getItem('rmaType');
+            if (savedRmaType) {
+                document.getElementById('rmaType').value = savedRmaType;
+                handleRmaTypeChange(savedRmaType); // Call the function to show/hide fields
             }
-        }
-
-        // Retrieve the saved RMA type and trigger the display logic
-        const savedRmaType = localStorage.getItem('rmaType');
-        if (savedRmaType) {
-            document.getElementById('rmaType').value = savedRmaType;
-            handleRmaTypeChange(savedRmaType); // Call the function to show/hide fields
         }
 
         // Load saved parts data

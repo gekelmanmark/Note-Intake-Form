@@ -59,12 +59,13 @@
                 </div>
                 <div id="bsoField" class="hidden">
                     <label for="bso">BSO Number:</label>
-                    <input name="BSOFIELD" type="number" id="bso" name="bso"></input>
+                    <input name="BSOFIELD" type="number" id="bso" name="bso" required></input>
                 </div>
 
                 <div id="warrantyLevelField" class="hidden">
                     <label for="warrantyLevel">Warranty Level:</label>
-                    <select name="WARRANTYLEVEL" id="warrantyLevel">
+                    <select name="WARRANTYLEVEL" id="warrantyLevel" required>
+                        <option value="Not Selected">Not Selected</option>
                         <option value="Bronze">Bronze</option>
                         <option value="Gold">Gold</option>
                         <option value="Platinum">Platinum</option>

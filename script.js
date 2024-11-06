@@ -37,75 +37,54 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         });
+
+        const rmaFormLoaded = document.getElementById('rmaType');
+        if (rmaFormLoaded) {
+            // Load saved parts data
+            const savedPartsData = JSON.parse(localStorage.getItem('partsData')) || [];
+            savedPartsData.forEach(part => {
+                if (part.partNumber || part.quantity){
+                    const formRow = document.createElement('div');
+                    formRow.classList.add('form-row');
         
-        const dialInForm = document.getElementById('dialInForm')?.value || '';
-        if (dialInForm) {
-            // Retrieve the saved System type and trigger the display logic
-            const savedSystemType = localStorage.getItem('systemType');
-            if (savedSystemType) {
-                currentSystemType = document.getElementById('systemType');
-                if (currentSystemType) {
-                    document.getElementById('systemType').value = savedSystemType;
-                    handleSystemTypeChange(savedSystemType); // Call the function to show/hide fields
+                    const partNumberInput = document.createElement('input');
+                    partNumberInput.type = 'text';
+                    partNumberInput.name = 'partNumber[]';
+                    partNumberInput.placeholder = 'Part Number';
+                    partNumberInput.value = part.partNumber;
+                    partNumberInput.required = true;
+                    partNumberInput.addEventListener('input', savePartsToLocalStorage);
+        
+                    const quantityInput = document.createElement('input');
+                    quantityInput.type = 'number';
+                    quantityInput.name = 'quantity[]';
+                    quantityInput.placeholder = 'Quantity';
+                    quantityInput.value = part.quantity;
+                    quantityInput.required = true;
+                    quantityInput.addEventListener('input', savePartsToLocalStorage);
+        
+                    const removeButton = document.createElement('button');
+                    removeButton.type = 'button';
+                    removeButton.classList.add('remove-button');
+                    removeButton.innerText = 'Remove';
+                    removeButton.addEventListener('click', function () {
+                        formRow.remove();
+                        savePartsToLocalStorage();
+                    });
+        
+                    if (isDarkModeActive()) {
+                        partNumberInput.classList.add('dark-mode');
+                        quantityInput.classList.add('dark-mode');
+                        removeButton.classList.add('dark-mode');
+                    }
+        
+                    formRow.appendChild(partNumberInput);
+                    formRow.appendChild(quantityInput);
+                    formRow.appendChild(removeButton);
+                    document.getElementById('dynamicForm').appendChild(formRow);
                 }
-            }
-            // Retrieve the saved System type and trigger the display logic
-            const savedDialInFeeType = localStorage.getItem('dialInFee');
-            if (savedDialInFeeType) {
-                currentDialInFeeType = document.getElementById('dialInFee');
-                if (currentDialInFeeType) {
-                    document.getElementById('dialInFee').value = savedDialInFeeType;
-                    handleDialInFeeChange(savedDialInFeeType); // Call the function to show/hide fields
-                }
-            }
+            });
         }
-
-
-
-        // Load saved parts data
-        const savedPartsData = JSON.parse(localStorage.getItem('partsData')) || [];
-        savedPartsData.forEach(part => {
-            if (part.partNumber || part.quantity){
-                const formRow = document.createElement('div');
-                formRow.classList.add('form-row');
-    
-                const partNumberInput = document.createElement('input');
-                partNumberInput.type = 'text';
-                partNumberInput.name = 'partNumber[]';
-                partNumberInput.placeholder = 'Part Number';
-                partNumberInput.value = part.partNumber;
-                partNumberInput.required = true;
-                partNumberInput.addEventListener('input', savePartsToLocalStorage);
-    
-                const quantityInput = document.createElement('input');
-                quantityInput.type = 'number';
-                quantityInput.name = 'quantity[]';
-                quantityInput.placeholder = 'Quantity';
-                quantityInput.value = part.quantity;
-                quantityInput.required = true;
-                quantityInput.addEventListener('input', savePartsToLocalStorage);
-    
-                const removeButton = document.createElement('button');
-                removeButton.type = 'button';
-                removeButton.classList.add('remove-button');
-                removeButton.innerText = 'Remove';
-                removeButton.addEventListener('click', function () {
-                    formRow.remove();
-                    savePartsToLocalStorage();
-                });
-    
-                if (isDarkModeActive()) {
-                    partNumberInput.classList.add('dark-mode');
-                    quantityInput.classList.add('dark-mode');
-                    removeButton.classList.add('dark-mode');
-                }
-    
-                formRow.appendChild(partNumberInput);
-                formRow.appendChild(quantityInput);
-                formRow.appendChild(removeButton);
-                document.getElementById('dynamicForm').appendChild(formRow);
-            }
-        });
     };
 
     // Function to show or hide fields based on RMA Type
@@ -199,17 +178,40 @@ document.addEventListener('DOMContentLoaded', function () {
         const billingDiv = document.getElementById('billingDiv');
         const creditHoldDiv = document.getElementById('creditHoldDiv');
         const reasonWaivedDiv = document.getElementById('reasonWaivedDiv');
+        const reasonWaivedField = document.getElementById('reasonWaived');
 
         // Display fields based on selected system type
         if (status === 'Waived') {
             billingDiv.classList.add('hidden');
             creditHoldDiv.classList.add('hidden');
             reasonWaivedDiv.classList.remove('hidden');
+            reasonWaivedField.required = true;
         } else {
             // Show all conditional fields for other system types
             billingDiv.classList.remove('hidden');
             creditHoldDiv.classList.remove('hidden');
             reasonWaivedDiv.classList.add('hidden');
+            reasonWaivedField.required = false;
+        }
+    };
+
+    const handleWarrantyTypeChange = (warrantyType) => {
+        const rmaType = document.getElementById('rmaType')?.value || '';
+        if (rmaType === 'Warranty ADV Replace') {
+            if (warrantyType === 'Limited') {
+                bsoField?.classList.remove('hidden');
+                bso.required = true;
+                warrantyLevelField?.classList.add('hidden');
+            } else if (warrantyType === 'Extended') {
+                bsoField?.classList.add('hidden');
+                bso.required = false;
+                warrantyLevelField?.classList.remove('hidden');
+            }
+            else {
+                bsoField?.classList.add('hidden');
+                bso.required = false;
+                warrantyLevelField?.classList.add('hidden');
+            }
         }
     };
 
@@ -490,7 +492,7 @@ Summary:\n${summary.trim()}`;
                     fullText += `Credit Hold: ${creditHold}\n`;
                 }
                 if (dialInFee === "Waived") {
-                    fullText += `Waived Fee Reason:\n ${reasonWaived}\n`;
+                    fullText += `Waived Fee Reason:\n${reasonWaived}\n`;
                 }
                 if (systemType === 'HT22X') {
                     fullText += `Battery Check: ${batteryCheck}\n`;
@@ -556,7 +558,6 @@ Resolution or Next Steps:\n${resolution.trim()}`;
     const copyButtonRMA = document.getElementById('copyButtonRMA');
     const rmaForm = document.getElementById('rmaForm');
     if (copyButtonRMA && rmaForm) {
-        console.log("RMA form and copy button loaded")
         copyButtonRMA.addEventListener('click', function () {
             clearValidationStyles(rmaForm); // Clear previous validation styles
             const selectElements = rmaForm.querySelectorAll('select');
@@ -568,7 +569,6 @@ Resolution or Next Steps:\n${resolution.trim()}`;
                     if (select.value === 'Not Selected') {
                         select.classList.add('invalid-field');
                         formIsValid = false;
-                        console.log("RMA form invalid")
                     } else {
                         select.classList.remove('invalid-field');
                     }
@@ -591,16 +591,21 @@ Resolution or Next Steps:\n${resolution.trim()}`;
                 if (inspectionChecked === "Yes") {
                     fullText += ` **08 Inspection Requested**`;
                 }
-                fullText += `\nWarranty: ${warrantyField}`
-                if (warrantyField === 'Limited') {
-                    fullText += `\nWarranty Limited BSO: ${bsoNumber}`;
-                } else if (warrantyField === 'Extended') {
-                    fullText += `\nWarranty Extended Level: ${warrantyLevel}`;
+                if (rmaType === 'Warranty ADV Replace') {
+                    if (warrantyField === 'Limited' || warrantyField === 'Extended') {
+                        fullText += `\nWarranty: ${warrantyField}`;
+                        if (warrantyField === 'Limited') {
+                            fullText += `\nWarranty Limited BSO: ${bsoNumber}`;
+                        }
+                        if (warrantyField === 'Extended') {
+                            fullText += `\nWarranty Extended Level: ${warrantyLevel}`;
+                        }
+                    }
                 }
-                fullText += `\nFailure Reason: ${failureReason.trim()}
-Shipping Type: ${shippingType}
-Red Dot: ${redDot}
-Call Tag: ${callTag}`;
+                fullText += `\nFailure Reason: ${failureReason.trim()}`;
+                fullText += `\nShipping Type: ${shippingType}`;
+                fullText += `\nRed Dot: ${redDot}`;
+                fullText += `\nCall Tag: ${callTag}`;
 
                 const partNumbers = document.querySelectorAll('input[name="partNumber[]"]');
                 const quantities = document.querySelectorAll('input[name="quantity[]"]');
@@ -623,26 +628,29 @@ Call Tag: ${callTag}`;
                 applyValidationStyles(rmaForm); // Apply validation styles
             }
         });
-    } else {
-        console.log("RMA form not found")
     }
-
     
     const rmaFormLoaded = document.getElementById('rmaType');
     if (rmaFormLoaded) {
-        // console.log(`RMA form laoded`);
         const savedRmaType = localStorage.getItem('rmaType');
         const savedWarrantyType = localStorage.getItem('warranty');
         const RmaTypeField = document.getElementById('rmaType');
+        const warrantyTypeField = document.getElementById('warranty');
         if (savedRmaType) {
             document.getElementById('rmaType').value = savedRmaType;
-            document.getElementById('warranty').value = savedWarrantyType;
-            // console.log(`RMA type: ${savedRmaType}`);
             handleRmaTypeChange(savedRmaType); // Call the function to show/hide fields
         }
+        if (savedWarrantyType) {
+            document.getElementById('warranty').value = savedWarrantyType;
+            handleWarrantyTypeChange(savedWarrantyType)
+        }
         RmaTypeField.addEventListener('change', function () {
-            const selectedRmaType = RmaTypeField.value || '';
+            const selectedRmaType = RmaTypeField.value;
             handleRmaTypeChange(selectedRmaType)
+        });
+        warrantyTypeField.addEventListener('change', function () {
+            const selectedWarrantyType = warrantyTypeField.value;
+            handleWarrantyTypeChange(selectedWarrantyType)
         });
     }
     

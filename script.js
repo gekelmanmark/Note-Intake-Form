@@ -60,15 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        const rmaForm = document.getElementById('rmaForm')?.value || '';
-        if (rmaForm) {
-            // Retrieve the saved RMA type and trigger the display logic
-            const savedRmaType = localStorage.getItem('rmaType');
-            if (savedRmaType) {
-                document.getElementById('rmaType').value = savedRmaType;
-                handleRmaTypeChange(savedRmaType); // Call the function to show/hide fields
-            }
-        }
+
 
         // Load saved parts data
         const savedPartsData = JSON.parse(localStorage.getItem('partsData')) || [];
@@ -122,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const warrantyField = document.getElementById('warrantyField');
         const warranty = document.getElementById('warranty');
         const bsoField = document.getElementById('bsoField');
+        const bso = document.getElementById('bso');
         const warrantyLevelField = document.getElementById('warrantyLevelField');
 
         // Display fields based on selected RMA type
@@ -129,34 +122,41 @@ document.addEventListener('DOMContentLoaded', function () {
             inspectionField.classList.remove('hidden');
             warrantyField.classList.add('hidden');
             bsoField.classList.add('hidden');
+            bso.required = false;
             warrantyLevelField.classList.add('hidden');
         } else if (rmaType === 'Warranty ADV Replace') {
             if (warranty.value === 'Limited') {
                 inspectionField.classList.remove('hidden');
                 warrantyField.classList.remove('hidden');
                 bsoField.classList.remove('hidden');
+                bso.required = true;
                 warrantyLevelField.classList.add('hidden');
             } else if (warranty.value === 'Extended') {
                 inspectionField.classList.remove('hidden');
                 warrantyField.classList.remove('hidden');
                 bsoField.classList.add('hidden');
+                bso.required = false;
                 warrantyLevelField.classList.remove('hidden');
             } else {
                 inspectionField.classList.remove('hidden');
                 warrantyField.classList.remove('hidden');
                 bsoField.classList.add('hidden');
+                bso.required = false;
                 warrantyLevelField.classList.add('hidden');
             }
             warranty.addEventListener('change', function () {
                 if (warranty.value === 'Limited') {
                     bsoField?.classList.remove('hidden');
+                    bso.required = true;
                     warrantyLevelField?.classList.add('hidden');
                 } else if (warranty.value === 'Extended') {
                     bsoField?.classList.add('hidden');
+                    bso.required = false;
                     warrantyLevelField?.classList.remove('hidden');
                 }
                 else {
                     bsoField?.classList.add('hidden');
+                    bso.required = false;
                     warrantyLevelField?.classList.add('hidden');
                 }
             });
@@ -165,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
             inspectionField.classList.add('hidden');
             warrantyField.classList.add('hidden');
             bsoField.classList.add('hidden');
+            bsoField.required = false;
             warrantyLevelField.classList.add('hidden');
         }
     };
@@ -550,70 +551,12 @@ Resolution or Next Steps:\n${resolution.trim()}`;
         });
     }
 
-    const systemTypeField = document.getElementById('systemType');
-    if (systemTypeField) {
-        systemTypeField.addEventListener('change', function () {
-            const selectedSystemType = systemTypeField.value || '';
-            handleSystemTypeChange(selectedSystemType)
-        });
-    }
 
-    const dialInFeeField = document.getElementById('dialInFee');
-    if (dialInFeeField) {
-        dialInFeeField.addEventListener('change', function () {
-            const selectedDialInFeeType = dialInFeeField.value || '';
-            handleDialInFeeChange(selectedDialInFeeType)
-        });
-    }
-
-    // RMA Type: Show or hide fields based on the selected RMA type
-    const rmaTypeField = document.getElementById('rmaType');
-    const warrantyField = document.getElementById('warrantyField');
-    const warranty = document.getElementById('warranty');
-    const inspectionField = document.getElementById('inspectionField');
-    const bsoField = document.getElementById('bsoField');
-    const warrantyLevelField = document.getElementById('warrantyLevelField');
-    if (rmaTypeField) {
-        rmaTypeField.addEventListener('change', function () {
-            const selectedRMAType = rmaTypeField.value || '';
-            if (selectedRMAType === 'Paid Repair - HT22X / Safe-XPP Only') {
-                inspectionField?.classList.remove('hidden');
-                warrantyField?.classList.add('hidden');
-                bsoField?.classList.add('hidden');
-                warrantyLevelField?.classList.add('hidden');
-            } else if (selectedRMAType === 'Warranty ADV Replace') {
-                inspectionField?.classList.remove('hidden');
-                warrantyField?.classList.remove('hidden');
-                warranty.addEventListener('change', function () {
-                    if (warranty.value === 'Limited') {
-                        bsoField?.classList.remove('hidden');
-                        warrantyLevelField?.classList.add('hidden');
-                    } else if (warranty.value === 'Extended') {
-                        bsoField?.classList.add('hidden');
-                        warrantyLevelField?.classList.remove('hidden');
-                    }
-                    else {
-                        bsoField?.classList.add('hidden');
-                        warrantyLevelField?.classList.add('hidden');
-                    }
-                });
-            } else if (selectedRMAType === 'Concession ADV Replace') {
-                inspectionField?.classList.remove('hidden');
-                warrantyField?.classList.add('hidden');
-                bsoField?.classList.add('hidden');
-                warrantyLevelField?.classList.add('hidden');
-            } else {
-                inspectionField?.classList.add('hidden');
-                warrantyField?.classList.add('hidden');
-                bsoField?.classList.add('hidden');
-                warrantyLevelField?.classList.add('hidden');
-            }
-        });
-    }
 
     const copyButtonRMA = document.getElementById('copyButtonRMA');
     const rmaForm = document.getElementById('rmaForm');
     if (copyButtonRMA && rmaForm) {
+        console.log("RMA form and copy button loaded")
         copyButtonRMA.addEventListener('click', function () {
             clearValidationStyles(rmaForm); // Clear previous validation styles
             const selectElements = rmaForm.querySelectorAll('select');
@@ -625,6 +568,7 @@ Resolution or Next Steps:\n${resolution.trim()}`;
                     if (select.value === 'Not Selected') {
                         select.classList.add('invalid-field');
                         formIsValid = false;
+                        console.log("RMA form invalid")
                     } else {
                         select.classList.remove('invalid-field');
                     }
@@ -678,6 +622,55 @@ Call Tag: ${callTag}`;
             } else {
                 applyValidationStyles(rmaForm); // Apply validation styles
             }
+        });
+    } else {
+        console.log("RMA form not found")
+    }
+
+    
+    const rmaFormLoaded = document.getElementById('rmaType');
+    if (rmaFormLoaded) {
+        // console.log(`RMA form laoded`);
+        const savedRmaType = localStorage.getItem('rmaType');
+        const savedWarrantyType = localStorage.getItem('warranty');
+        const RmaTypeField = document.getElementById('rmaType');
+        if (savedRmaType) {
+            document.getElementById('rmaType').value = savedRmaType;
+            document.getElementById('warranty').value = savedWarrantyType;
+            // console.log(`RMA type: ${savedRmaType}`);
+            handleRmaTypeChange(savedRmaType); // Call the function to show/hide fields
+        }
+        RmaTypeField.addEventListener('change', function () {
+            const selectedRmaType = RmaTypeField.value || '';
+            handleRmaTypeChange(selectedRmaType)
+        });
+    }
+    
+    const dialInFormLoaded = document.getElementById('dialInForm');
+    if (dialInFormLoaded) {
+        const savedSystemType = localStorage.getItem('systemType');
+        const savedDialInFeeType = localStorage.getItem('dialInFee');
+        const systemTypeField = document.getElementById('systemType');
+        const dialInFeeField = document.getElementById('dialInFee');
+        if (systemTypeField) {
+            if (savedSystemType) {
+                document.getElementById('systemType').value = savedSystemType;
+                handleSystemTypeChange(savedSystemType)
+            }
+        }
+        if (dialInFeeField) {
+            if (savedDialInFeeType) {
+                document.getElementById('dialInFee').value = savedDialInFeeType;
+                handleDialInFeeChange(savedDialInFeeType)
+            }
+        }
+        systemTypeField.addEventListener('change', function () {
+            const selectedSystemType = systemTypeField.value;
+            handleSystemTypeChange(selectedSystemType)
+        });
+        dialInFeeField.addEventListener('change', function () {
+            const selectedDialInFeeType = dialInFeeField.value;
+            handleDialInFeeChange(selectedDialInFeeType)
         });
     }
 

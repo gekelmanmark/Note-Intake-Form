@@ -1,9 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&family=Merriweather:wght@700&display=swap');
 
+:root{
+    /* Primary Colors */
+    --color-primary-pink: #da5fff;      /* Used for borders, focus, and link color */
+    --color-primary-green: #28a745;     /* Notification background */
+    --color-primary-red: #dc3545;       /* Light mode remove button */
+
+    /* Dark Mode Colors */
+    --color-dark-bg: #444444;           /* Dark mode background */
+    --color-dark-container-bg: #333333; /* Dark mode container background */
+    --color-dark-border: #777777;       /* Dark mode borders */
+    --color-dark-scrollbar: #666;       /* Dark mode scrollbar */
+    --color-dark-text: #e0e0e0;         /* Dark mode text color */
+
+    
+    /* Light Mode Backgrounds */
+    --color-bg-light: #f9f9f9;          /* Light background for inputs, selects */
+    --color-bg-container: #c9c8c7;      /* Container background */
+    --color-bg-body: #949392;           /* Body background */
+    --color-bg-note: #f7f7f7;           /* User note background */
+    
+    /* Text Colors */
+    --color-text-dark: #333;            /* Default dark text */
+    --color-text-placeholder: #999;     /* Placeholder text */
+    --color-text-link: #79aaff;         /* Dark mode link color */
+    
+    /* Shadows */
+    --color-shadow-light: rgba(0, 0, 0, 0.1);  /* Light shadow */
+    --color-shadow-deep: rgba(0, 0, 0, 0.2);   /* Deeper shadow */
+
+    /* Hover and Focus Effects */
+    --color-hover-border: #888;         /* Hover border for various elements */
+    --color-focus-outline: rgba(0, 123, 255, 0.3);  /* Focus glow for text areas */
+    --color-hover-remove-btn: #c82333;  /* Hover color for remove button in light mode */
+    --color-hover-dark-remove: #a0222f; /* Darker red for remove button in dark mode */
+}
+
+
 body {
     font-family: 'Roboto', sans-serif;
     margin: 40px;
-    background-color: #949392;
+    background-color: var(--color-bg-body);
     transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out; /* Smooth transition for dark mode */
 }
 
@@ -11,10 +48,10 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #c9c8c7;
+    background: var(--color-bg-container);
     padding: 40px;
     border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px var(--color-shadow-light);
     max-width: 700px;
     margin: auto;
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */ 
@@ -26,8 +63,8 @@ select {
     margin-bottom: 15px; /* Space below each select element */
     border-radius: 5px; /* Rounded corners */
     border: 1px solid #ccc; /* Subtle border */
-    background-color: #f9f9f9; /* Light background color */
-    color: #333; /* Text color */
+    background-color: var( --color-bg-light); /* Light background color */
+    color: var(--color-text-dark); /* Text color */
     appearance: none; /* Remove default arrow */
     background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="%23333" viewBox="0 0 24 24"%3E%3Cpath d="M7 10l5 5 5-5z"/%3E%3C/svg%3E'); /* Custom arrow icon */
     background-repeat: no-repeat;
@@ -39,25 +76,28 @@ select {
 }
 
 select:hover {
-    border-color: #888; /* Slightly darker border on hover */
+    border-color: var(--color-primary-pink); /* Slightly darker border on hover */
 }
 
 select:focus {
-    border-color: #007bff; /* Blue border on focus */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25); /* Subtle blue glow */
+    border-color: var(--color-primary-pink); /* Blue border on focus */
     outline: none; /* Remove default outline */
 }
 
 option {
-    color: #333; /* Color for the option text */
+    color: var(--color-text-dark); /* Color for the option text */
+    accent-color: var(--color-primary-pink);
 }
 
+option:hover {
+    background-color: var(--color-primary-pink);
+}
 
 h1 {
     font-family: 'Merriweather', serif;
     text-align: center;
     font-size: 1.5em;
-    color: #333;
+    color: var(--color-text-dark);
     transition: color 0.3s ease; /* Smooth heading transition */
 }
 
@@ -82,9 +122,9 @@ textarea {
     margin-right: 60px;
     border-radius: 8px; /* Softer border */
     border: 1px solid #ccc;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 1px 3px var(--color-shadow-light);
     transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Smooth transition */
-    background-color: #f9f9f9;
+    background-color: var( --color-bg-light);
     font-size: 0.9rem; /* Slightly larger font */
     resize: both; /* Enable both horizontal and vertical resizing */
     min-width: 300px; /* Set a minimum width to keep usability */
@@ -97,7 +137,7 @@ textarea {
 /* Custom Scroll Bar Styling */
 textarea, .container {
     scrollbar-width: thin; /* For Firefox */
-    scrollbar-color: #888 #f9f9f9; /* Scrollbar color and background for Firefox */
+    scrollbar-color: var(--color-hover-border) var( --color-bg-light); /* Scrollbar color and background for Firefox */
 }
 
 /* WebKit browsers (Chrome, Safari, etc.) */
@@ -107,15 +147,15 @@ textarea::-webkit-scrollbar, .container::-webkit-scrollbar {
 
 /* Track of the scroll bar */
 textarea::-webkit-scrollbar-track, .container::-webkit-scrollbar-track {
-    background: #f9f9f9; /* Track background */
+    background: var( --color-bg-light); /* Track background */
     border-radius: 10px; /* Rounded corners for track */
 }
 
 /* Handle of the scroll bar */
 textarea::-webkit-scrollbar-thumb, .container::-webkit-scrollbar-thumb {
-    background-color: #888; /* Handle color */
+    background-color: var(--color-hover-border); /* Handle color */
     border-radius: 10px; /* Rounded corners for handle */
-    border: 2px solid #f9f9f9; /* Add some padding around the handle */
+    border: 2px solid var( --color-bg-light); /* Add some padding around the handle */
 }
 
 /* Handle on hover */
@@ -125,7 +165,7 @@ textarea::-webkit-scrollbar-thumb:hover, .container::-webkit-scrollbar-thumb:hov
 
 /* Dark Mode Scroll Bar */
 body.dark-mode textarea, body.dark-mode .container {
-    scrollbar-color: #666 #333; /* Scrollbar color for dark mode (Firefox) */
+    scrollbar-color: var(--color-dark-scrollbar) var(--color-text-dark); /* Scrollbar color for dark mode (Firefox) */
 }
 
 body.dark-mode textarea::-webkit-scrollbar, body.dark-mode .container::-webkit-scrollbar {
@@ -133,41 +173,52 @@ body.dark-mode textarea::-webkit-scrollbar, body.dark-mode .container::-webkit-s
 }
 
 body.dark-mode textarea::-webkit-scrollbar-track, body.dark-mode .container::-webkit-scrollbar-track {
-    background: #333; /* Dark background */
+    background: var(--color-text-dark); /* Dark background */
 }
 
 body.dark-mode textarea::-webkit-scrollbar-thumb, body.dark-mode .container::-webkit-scrollbar-thumb {
-    background-color: #666; /* Lighter color for dark mode */
-    border: 2px solid #333; /* Dark padding */
+    background-color: var(--color-dark-scrollbar); /* Lighter color for dark mode */
+    border: 2px solid var(--color-text-dark); /* Dark padding */
 }
 
 body.dark-mode textarea::-webkit-scrollbar-thumb:hover, body.dark-mode .container::-webkit-scrollbar-thumb:hover {
-    background-color: #888; /* Lighter color on hover in dark mode */
+    background-color: var(--color-hover-border); /* Lighter color on hover in dark mode */
 }
 
 
 textarea:focus {
-    background-color: #fff; /* Lighter background on focus */
-    border-color: #007bff; /* Change border color on focus */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3); /* Add subtle outer glow */
+    border-color: var(--color-primary-pink); /* Change border color on focus */
     outline: none; /* Remove the default outline */
 }
 
+textarea:hover {
+    border-color: var(--color-primary-pink); /* Change border color on focus */
+}
+
 textarea::placeholder {
-    color: #999; /* Softer placeholder color */
+    color: var(--color-text-placeholder); /* Softer placeholder color */
     font-style: italic; /* Italic placeholder text */
 }
 
 textarea.dark-mode, select.dark-mode {
     background-color: #2c2c2c;
-    color: #e0e0e0;
+    color: var( --color-dark-text);
     border: 1px solid #444;
+}
+
+textarea.dark-mode:hover {
+    border-color: var(--color-primary-pink);
+}
+
+textarea.dark-mode:focus {
+    border-color: var(--color-primary-pink);
+    outline: none; /* Remove the default outline */
 }
 
 
 .user-note {
-    background-color: #f7f7f7; /* Light, neutral background */
-    color: #666; /* Muted text color */
+    background-color: var(--color-bg-note); /* Light, neutral background */
+    color: var(--color-dark-scrollbar); /* Muted text color */
     border: 1px solid #ccc; /* Subtle border */
     padding: 5px 10px; /* Less padding for a smaller appearance */
     border-radius: 3px; /* Slightly rounded corners */
@@ -179,7 +230,7 @@ textarea.dark-mode, select.dark-mode {
 
 /* Dark mode styles for the user note */
 body.dark-mode .user-note {
-    background-color: #444444; /* Darker background for dark mode */
+    background-color: var(--color-dark-bg); /* Darker background for dark mode */
     color: #bbb; /* Lighter muted text */
     border: 1px solid #777; /* Subtle border in dark mode */
 }
@@ -193,24 +244,23 @@ button {
     background-color: #6c757d;
     color: rgb(218, 218, 218);
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px var(--color-shadow-light);
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Smoother transitions */
 }
 
 button:hover {
     background-color: #5a6268;
     transform: translateY(-3px) rotate(-1deg); /* Slight lift and rotate on hover */
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Add more depth */
+    box-shadow: 0 6px 8px var(--color-shadow-deep); /* Add more depth */
 }
 
 button:focus {
-    outline: 2px solid #007bff;
+    outline: 2px solid var(--color-primary-pink);
     transform: scale(1.05); /* Slightly bigger on focus */
 }
 
 /* Light Mode Links */
 a {
-    color: #007bff; /* Default blue for links */
     text-decoration: none;
     position: relative;
     display: inline-block;
@@ -220,38 +270,36 @@ a {
 a::after {
     content: '';
     display: block;
-    width: 0;
+    width: 100%;             /* Set full width initially */
     height: 2px;
-    background: #007bff; /* Underline matches link color */
-    transition: width 0.3s ease;
+    background-color: currentColor; /* Use the current text color */
+    border-radius: 2px;      /* Rounded corners */
+    transform: scaleX(0);    /* Start with scale 0 on X-axis */
+    transform-origin: left;  /* Animate from left to right */
+    transition: transform 0.3s ease;
     position: absolute;
-    left: 0;
+    left: 5%;
     bottom: -2px;
+    background: var(--color-primary-pink);
 }
 
 /* Hover state - animate underline */
 a:hover::after {
-    width: 100%;
+    transform: scaleX(0.9); /* Expand on hover with rounded corners */
 }
 
 /* Focus state - outline for accessibility */
 a:focus {
-    outline: 2px solid #007bff;
-    outline-offset: 2px;
-}
-
-/* Visited link color for light mode */
-a:visited {
-    color: #000000;
+    outline: 2px solid var(--color-primary-pink);
 }
 
 /* Dark Mode Links */
 body.dark-mode a {
-    color: #79aaff; /* Lighter blue for dark mode links */
+    color: var(--color-text-link); /* Lighter blue for dark mode links */
 }
 
 body.dark-mode a::after {
-    background: #79aaff; /* Lighter underline in dark mode */
+    background: var(--color-primary-pink);
 }
 
 /* Dark Mode Visited Links */
@@ -264,11 +312,11 @@ body.dark-mode a:visited {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #28a745;
+    background-color: var(--color-primary-green);
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px var(--color-shadow-light);
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.3s ease, transform 0.3s ease;
@@ -287,24 +335,24 @@ body.dark-mode a:visited {
 
 /* Dark Mode Styles */
 body.dark-mode {
-    background-color: #444444;
-    color: #e0e0e0;
+    background-color: var(--color-dark-bg);
+    color: var( --color-dark-text);
 }
 
 .container.dark-mode {
-    background-color: #333333;
+    background-color: var(--color-dark-container-bg);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 h1.dark-mode {
-    color: #e0e0e0;
+    color: var( --color-dark-text);
 }
 
 
 
 button.dark-mode {
     background-color: #555;
-    color: #e0e0e0;
+    color: var( --color-dark-text);
 }
 
 button.dark-mode:hover {
@@ -321,40 +369,40 @@ button.dark-mode:hover {
 
 /* Light Mode Remove Button */
 .remove-button {
-    background-color: #dc3545; /* Light mode background */
+    background-color: var(--color-primary-red); /* Light mode background */
     color: white;
     border: none;
     cursor: pointer;
     margin-left: 10px;
     border-radius: 4px; /* Rounded corners for consistency */
     transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
+    box-shadow: 0 4px 6px var(--color-shadow-light); /* Light shadow */
 }
 
 /* Hover effect for remove buttons in Light Mode */
 .remove-button:hover {
-    background-color: #c82333; /* Darker red on hover */
+    background-color: var(--color-hover-remove-btn); /* Darker red on hover */
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
 }
 
 /* Dark Mode Remove Button */
 .remove-button.dark-mode {
     background-color: #b32d3e; /* Slightly darker red for dark mode */
-    color: #f9f9f9; /* Light text for contrast */
+    color: var( --color-bg-light); /* Light text for contrast */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Stronger shadow in dark mode */
 }
 
 /* Hover effect for remove buttons in Dark Mode */
 .remove-button.dark-mode:hover {
-    background-color: #a0222f; /* Darker red on hover in dark mode */
+    background-color: var(--color-hover-dark-remove); /* Darker red on hover in dark mode */
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.7); /* Deeper shadow on hover */
 }
 
 
 select.dark-mode {
     background-color: #2c2c2c; /* Darker background */
-    color: #e0e0e0; /* Light text */
-    border: 1px solid #777777; /* Softer border in dark mode */
+    color: var( --color-dark-text); /* Light text */
+    border: 1px solid var(--color-dark-border); /* Softer border in dark mode */
     background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="%23e0e0e0" viewBox="0 0 24 24"%3E%3Cpath d="M7 10l5 5 5-5z"/%3E%3C/svg%3E'); /* Light arrow for dark background */
     background-repeat: no-repeat;
     background-position: right 10px center;
@@ -363,19 +411,18 @@ select.dark-mode {
 }
 
 select.dark-mode:hover {
-    border-color: #888888; /* Slightly lighter border on hover */
+    border-color: var(--color-primary-pink); /* Slightly lighter border on hover */
 }
 
 select.dark-mode:focus {
-    border-color: #007bff; /* Blue border on focus */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25); /* Subtle blue glow */
+    border-color: var(--color-primary-pink); /* Blue border on focus */
     outline: none; /* Remove default outline */
 }
 
 /* Dark mode for the options in the select dropdown */
 option.dark-mode {
     background-color: #2c2c2c; /* Dark background for options */
-    color: #e0e0e0; /* Light text */
+    color: var(--color-dark-text); /* Light text */
 }
 
 input {
@@ -384,40 +431,38 @@ input {
     margin-bottom: 15px 15px; /* Space between elements */
     border-radius: 5px; /* Rounded corners */
     border: 1px solid #ccc; /* Subtle border */
-    background-color: #f9f9f9; /* Light background */
-    color: #333; /* Dark text */
+    background-color: var( --color-bg-light); /* Light background */
+    color: var(--color-text-dark); /* Dark text */
     font-size: 1rem; /* Font size */
     transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
     appearance: none; /* Remove default styling */
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Slight inset shadow */
+    box-shadow: inset 0 1px 3px var(--color-shadow-light); /* Slight inset shadow */
 }
 
 input:hover {
-    border-color: #888; /* Slightly darker border on hover */
+    border-color: var(--color-primary-pink); /* Slightly darker border on hover */
 }
 
 input:focus {
-    border-color: #007bff; /* Blue border on focus */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25); /* Subtle blue glow */
+    border-color: var(--color-primary-pink); /* Blue border on focus */
     outline: none; /* Remove default outline */
 }
 
 /* Dark Mode Input Styles */
 input.dark-mode {
     background-color: #2c2c2c; /* Dark background */
-    color: #e0e0e0; /* Light text */
-    border: 1px solid #777777; /* Softer border in dark mode */
+    color: var( --color-dark-text); /* Light text */
+    border: 1px solid var(--color-dark-border); /* Softer border in dark mode */
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4); /* Deeper inset shadow */
     transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
 }
 
 input.dark-mode:hover {
-    border-color: #888888; /* Lighter border on hover */
+    border-color: var(--color-primary-pink); /* Lighter border on hover */
 }
 
 input.dark-mode:focus {
-    border-color: #007bff; /* Blue border on focus */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25); /* Subtle blue glow */
+    border-color: var(--color-primary-pink); /* Blue border on focus */
     outline: none; /* Remove default outline */
 }
 
@@ -447,7 +492,7 @@ input.dark-mode:focus {
     align-items: center;
     cursor: pointer;
     font-size: 1rem; /* Consistent font size */
-    color: #333; /* Default color */
+    color: var(--color-text-dark); /* Default color */
     position: relative;
     padding-left: 30px; /* Space for the custom checkmark */
     margin-bottom: 15px; /* Space between elements */
@@ -468,7 +513,7 @@ input.dark-mode:focus {
     top: 0;
     height: 20px;
     width: 20px;
-    background-color: #f9f9f9; /* Light background */
+    background-color: var( --color-bg-light); /* Light background */
     border: 1px solid #ccc; /* Light border */
     border-radius: 4px; /* Rounded checkmark box */
     transition: background-color 0.3s ease, border-color 0.3s ease;
@@ -476,13 +521,13 @@ input.dark-mode:focus {
 
 /* On hover, change the checkmark box's border */
 .custom-checkbox:hover .checkmark {
-    border-color: #888;
+    border-color: var(--color-hover-border);
 }
 
 /* When the checkbox is checked, show the custom checkmark */
 .custom-checkbox input:checked ~ .checkmark {
-    background-color: #007bff; /* Blue background when checked */
-    border-color: #007bff;
+    background-color: var(--color-primary-pink); /* Blue background when checked */
+    border-color: var(--color-primary-pink);
 }
 
 /* Add the checkmark when checked */
@@ -506,17 +551,17 @@ input.dark-mode:focus {
 
 /* Dark mode for checkbox */
 body.dark-mode .custom-checkbox {
-    color: #e0e0e0; /* Light text for dark mode */
+    color: var( --color-dark-text); /* Light text for dark mode */
 }
 
 body.dark-mode .custom-checkbox .checkmark {
     background-color: #555555; /* Dark background */
-    border: 1px solid #777777; /* Darker border */
+    border: 1px solid var(--color-dark-border); /* Darker border */
 }
 
 body.dark-mode .custom-checkbox input:checked ~ .checkmark {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: var(--color-primary-pink);
+    border-color: var(--color-primary-pink);
 }
 
 /* Elegant Navbar Styling */
@@ -525,7 +570,7 @@ body.dark-mode .custom-checkbox input:checked ~ .checkmark {
     background-color: #6c757d; /* Match button background */
     padding: 10px 20px;
     border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    box-shadow: 0 4px 6px var(--color-shadow-light); /* Subtle shadow */
     margin-bottom: 20px; /* Space below the navbar */
     display: flex;
     justify-content: center; /* Center the navbar */
@@ -534,6 +579,8 @@ body.dark-mode .custom-checkbox input:checked ~ .checkmark {
 .navbar ul {
     list-style-type: none;
     display: flex;
+    align-items: center; /* Centers vertically */
+    justify-content: center; /* Centers horizontally */
     flex-wrap: wrap; /* Allows items to wrap to the next line */
     gap: 8px; 
     padding: 0;
@@ -562,26 +609,26 @@ body.dark-mode .custom-checkbox input:checked ~ .checkmark {
 /* Navbar links styled like buttons */
 .navbar ul li a {
     text-decoration: none;
-    color: #f9f9f9; /* Light text to match buttons */
+    color: var( --color-bg-light); /* Light text to match buttons */
     background-color: #6c757d; /* Button-like background */
     padding: 10px 20px; /* Same padding as buttons */
     border-radius: 5px; /* Rounded corners for buttons */
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Button-like shadow */
+    box-shadow: 0 4px 6px var(--color-shadow-light); /* Button-like shadow */
     font-size: 0.9rem;
 }
 
 .navbar ul li a:hover {
     background-color: #5a6268; /* Same hover effect as buttons */
     color: white; /* White text on hover */
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+    box-shadow: 0 6px 8px var(--color-shadow-deep); /* Deeper shadow on hover */
 }
 
 .navbar ul li a.active {
     background-color: #da5fff; /* Active page background */
     color: white;
     pointer-events: none; /* Disable click on active page */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow */
+    box-shadow: 0 4px 6px var(--color-shadow-deep); /* Slightly stronger shadow */
 }
 
 /* Dark Mode Navbar */
@@ -592,7 +639,7 @@ body.dark-mode .navbar {
 
 body.dark-mode .navbar ul li a {
     background-color: #555; /* Dark mode background */
-    color: #e0e0e0; /* Light text for dark mode */
+    color: var( --color-dark-text); /* Light text for dark mode */
 }
 
 body.dark-mode .navbar ul li a:hover {
@@ -602,7 +649,7 @@ body.dark-mode .navbar ul li a:hover {
 
 body.dark-mode .navbar ul li a.active {
     background-color: #da5fff; /* Active page in dark mode */
-    color: #e0e0e0;
+    color: var( --color-dark-text);
 }
 
 /* Form Container */
@@ -610,15 +657,8 @@ body.dark-mode .navbar ul li a.active {
     display: flex;
     flex-wrap: wrap; /* Allows items to wrap into multiple rows */
     gap: 20px; /* Space between form fields */
-    max-width: 1200px; /* Max width for the entire form */
+    max-width: 100%; /* Max width for the entire form */
     margin: auto; /* Center the form on the page */
-}
-
-.form-99 textarea {
-    width: 100%; /* Ensures the textarea takes full width */
-    padding: 10px;
-    margin-bottom: 15px;
-    flex: 1 1 100%; /* Force textarea to take up the entire row */
 }
 
 /* Prevent inputs*/
@@ -628,7 +668,7 @@ body.dark-mode .navbar ul li a.active {
     margin-bottom: 15px; /* Space between elements */
     border-radius: 5px; /* Rounded corners */
     font-size: 1rem; /* Consistent font size */
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    box-shadow: inset 0 1px 3px var(--color-shadow-light); /* Subtle shadow */
     box-sizing: border-box; /* Include padding in element width */
 }
 
@@ -636,6 +676,7 @@ body.dark-mode .navbar ul li a.active {
 .dial-in-form .form-item, .form-99 .form-item {
     flex: 1 1 48%;
     box-sizing: border-box;
+    max-width: 100%;
 }
 
 /* Buttons Container */
@@ -647,27 +688,6 @@ body.dark-mode .navbar ul li a.active {
     flex-basis: 100%; /* Force it onto a new row */
 }
 
-/* Button Styles */
-.form-buttons button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #6c757d;
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.form-buttons button:hover {
-    background-color: #5a6268;
-    transform: translateY(-2px);
-}
-
-.form-buttons button:focus {
-    outline: 2px solid #007bff;
-    transform: scale(1.05);
-}
 
 input.invalid-field,
 textarea.invalid-field,

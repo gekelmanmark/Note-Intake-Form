@@ -355,13 +355,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function savePartsToLocalStorage() {
-        const partsData = [];
-        document.querySelectorAll('.form-row').forEach(row => {
-            const partNumber = row.querySelector('input[name="partNumber[]"]').value;
-            const quantity = row.querySelector('input[name="quantity[]"]').value;
-            partsData.push({ partNumber, quantity });
-        });
-        localStorage.setItem('partsData', JSON.stringify(partsData));
+        const RmaForm = document.getElementById('rmaForm') || '';
+        if(RmaForm.name === "rmaForm") {
+            const partsData = [];
+            document.querySelectorAll('.form-row').forEach(row => {
+                const partNumber = row.querySelector('input[name="partNumber[]"]').value;
+                const quantity = row.querySelector('input[name="quantity[]"]').value;
+                partsData.push({ partNumber, quantity });
+            });
+            localStorage.setItem('partsData', JSON.stringify(partsData));
+        }
     }
 
     // Clear buttons for forms

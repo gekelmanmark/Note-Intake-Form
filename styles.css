@@ -2,7 +2,8 @@
 
 :root{
     /* Primary Colors */
-    --color-primary-pink: #da5fff;      /* Used for borders, focus, and link color */
+    --saved-color: #da5fff;      /* Used for borders, focus, and link color */
+    --highlight-color: #da5fff;      /* Used for borders, focus, and link color */
     --color-primary-green: #28a745;     /* Notification background */
     --color-primary-red: #dc3545;       /* Light mode remove button */
 
@@ -36,6 +37,82 @@
     --color-hover-dark-remove: #a0222f; /* Darker red for remove button in dark mode */
 }
 
+/* Modal styling */
+.modal {
+    position: absolute;
+    top: 12vh;
+    left: 3.5vh;
+    width: 200px;
+    padding: 20px;
+    border-radius: 8px; 
+    box-shadow: 0 4px 20px var(--color-shadow-light);
+    background: var(--color-bg-container);
+    z-index: 1000;
+    color: var(--color-text-dark);
+  }
+
+  .modal.dark-mode{
+    box-shadow: 0 4px 20px var(--color-shadow-deep);
+    background: var(--color-dark-container-bg);
+    color: var(--color-dark-text);
+  }
+  
+  .modal-content {
+    text-align: center;
+  }
+  
+  .color-preview {
+    margin: 15px 0;
+  }
+  
+  #color-preview-box {
+    width: 75px;
+    height: 25px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    background-color: var(--highlight-color); /* Default color */
+  }
+  
+  /* Button to open the modal */
+  #open-color-selector {
+    position: absolute;
+    top: 4vh;
+    left: 5vh;
+    background-color: transparent;
+    color: transparent;
+    margin: 20px;
+    padding: 10px 15px;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+  }
+  
+  /* Button to open the modal */
+  #open-color-selector:hover {
+    background-color: darkgray;
+    color: white;
+    box-shadow: 0 10px 20px var(--color-shadow-light);
+  }
+
+  #open-color-selector:focus {
+    background-color: darkgray;
+    color: white;
+    box-shadow: 0 10px 20px var(--color-shadow-light);
+  }
+  
+  /* Button to open the modal */
+  #open-color-selector.dark-mode:hover {
+    background-color: var(--color-dark-bg);
+    color: white;
+    box-shadow: 0 10px 20px var(--color-shadow-light);
+  }
+
+  #open-color-selector.dark-mode:focus {
+    background-color: var(--color-dark-bg);
+    color: white;
+    box-shadow: 0 10px 20px var(--color-shadow-light);
+  }
 
 body {
     font-family: 'Roboto', sans-serif;
@@ -76,21 +153,21 @@ select {
 }
 
 select:hover {
-    border-color: var(--color-primary-pink); /* Slightly darker border on hover */
+    border-color: var(--highlight-color); /* Slightly darker border on hover */
 }
 
 select:focus {
-    border-color: var(--color-primary-pink); /* Blue border on focus */
+    border-color: var(--highlight-color); /* Blue border on focus */
     outline: none; /* Remove default outline */
 }
 
 option {
     color: var(--color-text-dark); /* Color for the option text */
-    accent-color: var(--color-primary-pink);
+    accent-color: var(--highlight-color);
 }
 
 option:hover {
-    background-color: var(--color-primary-pink);
+    background-color: var(--highlight-color);
 }
 
 h1 {
@@ -187,12 +264,12 @@ body.dark-mode textarea::-webkit-scrollbar-thumb:hover, body.dark-mode .containe
 
 
 textarea:focus {
-    border-color: var(--color-primary-pink); /* Change border color on focus */
+    border-color: var(--highlight-color); /* Change border color on focus */
     outline: none; /* Remove the default outline */
 }
 
 textarea:hover {
-    border-color: var(--color-primary-pink); /* Change border color on focus */
+    border-color: var(--highlight-color); /* Change border color on focus */
 }
 
 textarea::placeholder {
@@ -207,11 +284,11 @@ textarea.dark-mode, select.dark-mode {
 }
 
 textarea.dark-mode:hover {
-    border-color: var(--color-primary-pink);
+    border-color: var(--highlight-color);
 }
 
 textarea.dark-mode:focus {
-    border-color: var(--color-primary-pink);
+    border-color: var(--highlight-color);
     outline: none; /* Remove the default outline */
 }
 
@@ -255,7 +332,7 @@ button:hover {
 }
 
 button:focus {
-    outline: 2px solid var(--color-primary-pink);
+    outline: 2px solid var(--highlight-color);
     transform: scale(1.05); /* Slightly bigger on focus */
 }
 
@@ -280,7 +357,7 @@ a::after {
     position: absolute;
     left: 5%;
     bottom: -2px;
-    background: var(--color-primary-pink);
+    background: var(--highlight-color);
 }
 
 /* Hover state - animate underline */
@@ -290,7 +367,7 @@ a:hover::after {
 
 /* Focus state - outline for accessibility */
 a:focus {
-    outline: 2px solid var(--color-primary-pink);
+    outline: 2px solid var(--highlight-color);
 }
 
 /* Dark Mode Links */
@@ -299,7 +376,7 @@ body.dark-mode a {
 }
 
 body.dark-mode a::after {
-    background: var(--color-primary-pink);
+    background: var(--highlight-color);
 }
 
 /* Dark Mode Visited Links */
@@ -411,11 +488,11 @@ select.dark-mode {
 }
 
 select.dark-mode:hover {
-    border-color: var(--color-primary-pink); /* Slightly lighter border on hover */
+    border-color: var(--highlight-color); /* Slightly lighter border on hover */
 }
 
 select.dark-mode:focus {
-    border-color: var(--color-primary-pink); /* Blue border on focus */
+    border-color: var(--highlight-color); /* Blue border on focus */
     outline: none; /* Remove default outline */
 }
 
@@ -440,11 +517,11 @@ input {
 }
 
 input:hover {
-    border-color: var(--color-primary-pink); /* Slightly darker border on hover */
+    border-color: var(--highlight-color); /* Slightly darker border on hover */
 }
 
 input:focus {
-    border-color: var(--color-primary-pink); /* Blue border on focus */
+    border-color: var(--highlight-color); /* Blue border on focus */
     outline: none; /* Remove default outline */
 }
 
@@ -458,11 +535,11 @@ input.dark-mode {
 }
 
 input.dark-mode:hover {
-    border-color: var(--color-primary-pink); /* Lighter border on hover */
+    border-color: var(--highlight-color); /* Lighter border on hover */
 }
 
 input.dark-mode:focus {
-    border-color: var(--color-primary-pink); /* Blue border on focus */
+    border-color: var(--highlight-color); /* Blue border on focus */
     outline: none; /* Remove default outline */
 }
 
@@ -526,8 +603,8 @@ input.dark-mode:focus {
 
 /* When the checkbox is checked, show the custom checkmark */
 .custom-checkbox input:checked ~ .checkmark {
-    background-color: var(--color-primary-pink); /* Blue background when checked */
-    border-color: var(--color-primary-pink);
+    background-color: var(--highlight-color); /* Blue background when checked */
+    border-color: var(--highlight-color);
 }
 
 /* Add the checkmark when checked */
@@ -560,8 +637,8 @@ body.dark-mode .custom-checkbox .checkmark {
 }
 
 body.dark-mode .custom-checkbox input:checked ~ .checkmark {
-    background-color: var(--color-primary-pink);
-    border-color: var(--color-primary-pink);
+    background-color: var(--highlight-color);
+    border-color: var(--highlight-color);
 }
 
 /* Elegant Navbar Styling */
@@ -625,7 +702,7 @@ body.dark-mode .custom-checkbox input:checked ~ .checkmark {
 }
 
 .navbar ul li a.active {
-    background-color: #da5fff; /* Active page background */
+    background-color: var( --highlight-color); /* Active page background */
     color: white;
     pointer-events: none; /* Disable click on active page */
     box-shadow: 0 4px 6px var(--color-shadow-deep); /* Slightly stronger shadow */
@@ -648,7 +725,7 @@ body.dark-mode .navbar ul li a:hover {
 }
 
 body.dark-mode .navbar ul li a.active {
-    background-color: #da5fff; /* Active page in dark mode */
+    background-color: var( --highlight-color); /* Active page in dark mode */
     color: var( --color-dark-text);
 }
 

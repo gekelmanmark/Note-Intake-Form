@@ -43,10 +43,10 @@ document.addEventListener('DOMContentLoaded', function () {
             // Load saved parts data
             const savedPartsData = JSON.parse(localStorage.getItem('partsData')) || [];
             savedPartsData.forEach(part => {
-                if (part.partNumber || part.quantity){
+                if (part.partNumber || part.quantity) {
                     const formRow = document.createElement('div');
                     formRow.classList.add('form-row');
-        
+
                     const partNumberInput = document.createElement('input');
                     partNumberInput.type = 'text';
                     partNumberInput.name = 'partNumber[]';
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     partNumberInput.value = part.partNumber;
                     partNumberInput.required = true;
                     partNumberInput.addEventListener('input', savePartsToLocalStorage);
-        
+
                     const quantityInput = document.createElement('input');
                     quantityInput.type = 'number';
                     quantityInput.name = 'quantity[]';
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     quantityInput.value = part.quantity;
                     quantityInput.required = true;
                     quantityInput.addEventListener('input', savePartsToLocalStorage);
-        
+
                     const removeButton = document.createElement('button');
                     removeButton.type = 'button';
                     removeButton.classList.add('remove-button');
@@ -71,13 +71,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         formRow.remove();
                         savePartsToLocalStorage();
                     });
-        
+
                     if (isDarkModeActive()) {
                         partNumberInput.classList.add('dark-mode');
                         quantityInput.classList.add('dark-mode');
                         removeButton.classList.add('dark-mode');
                     }
-        
+
                     formRow.appendChild(partNumberInput);
                     formRow.appendChild(quantityInput);
                     formRow.appendChild(removeButton);
@@ -274,6 +274,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.classList.toggle('dark-mode');
             const elementsToToggle = [
                 document.querySelector('.container'),
+                document.querySelector('.modal'),
                 document.querySelector('h1'),
                 ...document.querySelectorAll('textarea'),
                 ...document.querySelectorAll('select'),
@@ -356,7 +357,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function savePartsToLocalStorage() {
         const RmaForm = document.getElementById('rmaForm') || '';
-        if(RmaForm.name === "rmaForm") {
+        if (RmaForm.name === "rmaForm") {
             const partsData = [];
             document.querySelectorAll('.form-row').forEach(row => {
                 const partNumber = row.querySelector('input[name="partNumber[]"]').value;
@@ -506,7 +507,7 @@ Summary:\n${summary.trim()}`;
                     fullText += `Lithium Battery: ${lithiumBattery}\n`;
                     fullText += `Modem Type: ${modemType}\n`;
                 }
-                if (dialInFee != "Waived") {fullText += `Billing: ${billing}`;}
+                if (dialInFee != "Waived") { fullText += `Billing: ${billing}`; }
 
                 navigator.clipboard.writeText(fullText).then(() => {
                     showNotification();
@@ -636,7 +637,7 @@ Resolution or Next Steps:\n${resolution.trim()}`;
             }
         });
     }
-    
+
     const rmaFormLoaded = document.getElementById('rmaType');
     if (rmaFormLoaded) {
         const savedRmaType = localStorage.getItem('rmaType');
@@ -660,7 +661,7 @@ Resolution or Next Steps:\n${resolution.trim()}`;
             handleWarrantyTypeChange(selectedWarrantyType)
         });
     }
-    
+
     const dialInFormLoaded = document.getElementById('dialInForm');
     if (dialInFormLoaded) {
         const savedSystemType = localStorage.getItem('systemType');
@@ -695,13 +696,13 @@ Resolution or Next Steps:\n${resolution.trim()}`;
         textarea.addEventListener('input', function () {
             autoResizeTextarea(this); // Auto-adjust height as the user types
         });
-    
+
         // Detect user resize
         textarea.addEventListener('mousedown', function (e) {
             // Detect if the user is resizing the textarea manually (bottom-right corner click)
             const initialHeight = textarea.offsetHeight;
             const initialY = e.clientY;
-    
+
             const onMouseMove = (moveEvent) => {
                 const newHeight = initialHeight + (moveEvent.clientY - initialY);
                 if (newHeight !== textarea.scrollHeight) {
@@ -709,31 +710,31 @@ Resolution or Next Steps:\n${resolution.trim()}`;
                     autoResizeTextarea(textarea);
                 }
             };
-    
+
             const onMouseUp = () => {
                 window.removeEventListener('mousemove', onMouseMove);
                 window.removeEventListener('mouseup', onMouseUp);
             };
-    
+
             window.addEventListener('mousemove', onMouseMove);
             window.addEventListener('mouseup', onMouseUp);
         });
-    
+
         let clickCount = 0;
         let clickTimer;
-    
+
         textarea.addEventListener('click', function (event) {
             clickCount++;
-    
+
             if (clickCount === 1) {
                 // Start a timer to reset click count after a short period
                 clickTimer = setTimeout(() => {
                     clickCount = 0;
                 }, 600); // Adjust the timeout duration as needed (500ms is typical for triple-click detection)
             }
-    
+
             if (clickCount === 4) {
-    
+
                 textarea.dataset.userResized = ''; // Reset the user-resized state
                 autoResizeTextarea(textarea); // Reapply automatic resizing
                 // Reset click count and clear the timer
@@ -742,6 +743,53 @@ Resolution or Next Steps:\n${resolution.trim()}`;
             }
         });
     });
+
+    // Elements
+    const colorModal = document.getElementById('color-selector-modal');
+    const openColorSelector = document.getElementById('open-color-selector');
+    const colorPicker = document.getElementById('highlight-color-picker');
+    const colorPreviewBox = document.getElementById('color-preview-box');
+    const applyColorButton = document.getElementById('apply-color');
+    const resetColorButton = document.getElementById('reset-color');
+
+    // CSS Variable for highlights
+    document.documentElement.style.setProperty('--highlight-color', '#da5fff');
+
+    // Open the color selector modal
+    openColorSelector.addEventListener('click', () => {
+        colorModal.classList.toggle('hidden');
+    });
+
+    // Update the preview box when color changes
+    colorPicker.addEventListener('input', (event) => {
+        const selectedColor = event.target.value;
+        colorPreviewBox.style.backgroundColor = selectedColor;
+    });
+
+    // Apply the selected color
+    applyColorButton.addEventListener('click', () => {
+        const selectedColor = colorPicker.value;
+        localStorage.setItem('highlightColor', selectedColor); // Save color
+        document.documentElement.style.setProperty('--highlight-color', selectedColor);
+        colorModal.classList.add('hidden');
+    });
+
+    // Reset to default color
+    resetColorButton.addEventListener('click', () => {
+        const defaultColor = '#da5fff';
+        localStorage.setItem('highlightColor', defaultColor); // Save color
+        document.documentElement.style.setProperty('--highlight-color', defaultColor);
+        colorPicker.value = defaultColor;
+        colorPreviewBox.style.backgroundColor = defaultColor;
+    });
+
+    // Load saved color on page load
+    const savedColor = localStorage.getItem('highlightColor');
+    if (savedColor) {
+        document.documentElement.style.setProperty('--highlight-color', savedColor);
+        colorPicker.value = savedColor;
+        colorPreviewBox.style.backgroundColor = savedColor;
+    }
 
     // Call both functions on page load
     populateFormData();
@@ -767,7 +815,7 @@ function initializeTextareaHeight(textarea) {
 }
 
 // Initialize the textarea height on page load
-window.onload = function() {
+window.onload = function () {
     const textareaElements = document.querySelectorAll('textarea');
     textareaElements.forEach((element) => {
         initializeTextareaHeight(element);

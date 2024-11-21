@@ -8,14 +8,37 @@
         <!-- Inline script to check for dark mode immediately -->
         <script>
             // Apply dark mode instantly if it's the saved preference
-            if (localStorage.getItem('mode') === 'dark') {
-                document.documentElement.classList.add('dark-mode');
+            document.addEventListener('DOMContentLoaded', () => {
+                // Check for saved mode and apply it
+                if (localStorage.getItem('mode') === 'dark') {
+                    document.documentElement.classList.add('dark-mode');
+                }
+            });
+            const savedColor = localStorage.getItem('highlightColor');
+            if (savedColor) {
+                document.documentElement.style.setProperty('--highlight-color', savedColor);
             }
         </script>
 
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
+        <div id="color-selector-modal" class="modal hidden">
+            <div class="modal-content">
+              <h2>Select Highlight Color</h2>
+              <input type="color" id="highlight-color-picker" >
+              <div class="color-preview">
+                <p>Preview Highlight:</p>
+                <div id="color-preview-box"></div>
+              </div>
+              <button id="apply-color">Apply</button>
+              <button id="reset-color">Reset</button>
+            </div>
+          </div>
+          
+          <!-- Button to open the modal -->
+          <button id="open-color-selector">Change Highlight Color</button>
+    
         <div class="container">
             <h1>RMA Form</h1>
             <nav class="navbar">

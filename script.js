@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
             rmaReasonDiv.classList.remove('hidden');
             cgrNotesDiv.classList.add('hidden');
             selfHelp.required = false;
-            rmaReasonDiv.required = true;
+            rmaReason.required = true;
             cgrNotes.required = false;
         }
         else if (queue === 'General Questions') {
@@ -265,7 +265,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const warrantyLevelDiv = document.getElementById('warrantyLevelDiv');
         const warrantyLevelTriage = document.getElementById('warrantyLevelTriage');
         // Display fields based on selected system type
-        console.log(`Status: ${status}`);
         if (status === 'Extended') {
             warrantyLevelDiv.classList.remove('hidden');
             warrantyLevelTriage.required = true;

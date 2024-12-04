@@ -241,7 +241,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const handlePhoneUpdateChange = (status) => {
         const contactNumberTriageDiv = document.getElementById('contactNumberTriageDiv');
         const contactNumberTriage = document.getElementById('contactNumberTriage');
-        console.log(`Update status: ${status}`);
         // Display fields based on selected system type
         if (status === 'Yes') {
             contactNumberTriageDiv.classList.remove('hidden');
@@ -250,6 +249,51 @@ document.addEventListener('DOMContentLoaded', function () {
         else {
             contactNumberTriageDiv.classList.add('hidden');
             contactNumberTriage.required = false;
+        }
+    };
+
+    const handleWarrantyStatusChange = (status) => {
+        const warrantyLevelDiv = document.getElementById('warrantyLevelDiv');
+        const warrantyLevelTriage = document.getElementById('warrantyLevelTriage');
+        // Display fields based on selected system type
+        console.log(`Status: ${status}`);
+        if (status === 'Extended') {
+            warrantyLevelDiv.classList.remove('hidden');
+            warrantyLevelTriage.required = true;
+
+            // // Specify the value of the option to be deleted
+            // const valueToRemove = ['Out of Warranty OnPortal',
+            //     'Out of Warranty FDS Other',
+            //     'Out of Warranty Lock Guest',
+            //     'Out of Warranty Lock Public'];
+
+            // // Loop through the options to find the one to remove
+            // for (let i = 0; i < warrantyLevelTriage.options.length; i++) {
+            //     if (valueToRemove.includes(warrantyLevelTriage.options[i].value)) {
+            //         warrantyLevelTriage.remove(i); // Remove the option by index
+            //     }
+            // }
+        }
+        else if (status === 'Expired') {
+            warrantyLevelDiv.classList.add('hidden');
+            warrantyLevelTriage.required = false;
+
+            // // Specify the value of the option to be deleted
+            // const valueToRemove = ['In Warranty OnPortal',
+            //     'In Warranty FDS Other',
+            //     'In Warranty Lock Guest',
+            //     'In Warranty Lock Public'];
+
+            // // Loop through the options to find the one to remove
+            // for (let i = 0; i < warrantyLevelTriage.options.length; i++) {
+            //     if (valueToRemove.includes(warrantyLevelTriage.options[i].value)) {
+            //         warrantyLevelTriage.remove(i); // Remove the option by index
+            //     }
+            // }
+        }
+        else {
+            warrantyLevelDiv.classList.add('hidden');
+            warrantyLevelTriage.required = false;
         }
     };
 
@@ -448,6 +492,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (form.id === 'triageForm') {
                         handleTransferToChange('Not Selected');
                         handlePhoneUpdateChange('No')
+                        handleWarrantyStatusChange('Not Selected');
                     }
                     form.reset();
                     savePartsToLocalStorage();
@@ -542,6 +587,7 @@ Summary:\n${summary.trim()}`;
                 const emailUpdated = document.getElementById('emailUpdated')?.value || '';
                 const reasonForCall = document.getElementById('reasonForCall')?.value || '';
                 const warrantyStatus = document.getElementById('warrantyStatus')?.value || '';
+                const warrantyLevelTriage = document.getElementById('warrantyLevelTriage')?.value || '';
                 const transferredTo = document.getElementById('transferredTo')?.value || '';
                 const selfHelp = document.getElementById('selfHelp')?.value || '';
                 const rmaReason = document.getElementById('rmaReason')?.value || '';
@@ -555,6 +601,9 @@ Summary:\n${summary.trim()}`;
                 fullText += `Contact Email Updated/Verified: ${emailUpdated}\n`;
                 fullText += `Reason for Call: ${reasonForCall}\n`;
                 fullText += `Warranty Status: ${warrantyStatus}\n`;
+                if (warrantyStatus === "Extended") {
+                    fullText += `Extended Warranty: ${warrantyLevelTriage}\n`;
+                }
                 fullText += `Transferred To: ${transferredTo}\n`;
                 if (transferredTo === "Self Help Provided") {
                     fullText += `Self Help Provided:\n${selfHelp}`;
@@ -817,6 +866,8 @@ Resolution or Next Steps:\n${resolution.trim()}`;
         const transferredTo = document.getElementById('transferredTo');
         const savedPhoneUpdated = localStorage.getItem('phoneUpdated');
         const phoneUpdated = document.getElementById('phoneUpdated');
+        const savedwarrantyStatus = localStorage.getItem('warrantyStatus');
+        const warrantyStatus = document.getElementById('warrantyStatus');
         if (savedTransferredTo) {
             transferredTo.value = savedTransferredTo;
             handleTransferToChange(savedTransferredTo);
@@ -825,11 +876,18 @@ Resolution or Next Steps:\n${resolution.trim()}`;
             phoneUpdated.value = savedPhoneUpdated;
             handlePhoneUpdateChange(savedPhoneUpdated);
         }
+        if (savedwarrantyStatus) {
+            warrantyStatus.value = savedwarrantyStatus;
+            handleWarrantyStatusChange(savedwarrantyStatus);
+        }
         transferredTo.addEventListener('change', function () {
             handleTransferToChange(transferredTo.value);
         });
         phoneUpdated.addEventListener('change', function () {
             handlePhoneUpdateChange(phoneUpdated.value);
+        });
+        warrantyStatus.addEventListener('change', function () {
+            handleWarrantyStatusChange(warrantyStatus.value);
         });
     }
 

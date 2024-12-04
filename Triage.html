@@ -76,31 +76,45 @@
             <textarea id="reasonForCall" rows="3" placeholder="Briefly describe the reason for the call" required></textarea>
 
             <label for="warrantyStatus">Warranty Status:</label>
-                <select id="warrantyStatus" name="warrantyStatus" required>
+            <select id="warrantyStatus" name="warrantyStatus" required>
+                <option value="Not Selected">Not Selected</option>
+                <option value="Expired">Expired</option>
+                <option value="Limited">Limited</option>
+                <option value="Extended">Extended</option>
+            </select>
+
+            <div id="warrantyLevelDiv" class="hidden">
+                <label for="warrantyLevelTriage">Warranty Level:</label>
+                <select name="warrantyLevelTriage" id="warrantyLevelTriage" required>
                     <option value="Not Selected">Not Selected</option>
-                    <option value="Expired">Expired</option>
-                    <option value="Limited">Limited</option>
-                    <option value="Extended">Extended</option>
+                    <option value="Bronze">Bronze</option>
+                    <option value="Gold">Gold</option>
+                    <option value="Platinum">Platinum</option>
+                    <option value="Opal">Opal</option>
+                    <option value="Ruby">Ruby</option>
+                    <option value="Emerald">Emerald</option>
+                    <option value="Diamond">Diamond</option>
                 </select>
+            </div>
 
             <label for="transferredTo">Transferred to:</label>
-                <select id="transferredTo" name="transferredTo" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="In Warranty OnPortal">In Warranty OnPortal</option>
-                    <option value="In Warranty FDS Other">In Warranty FDS Other</option>
-                    <option value="In Warranty Lock Guest">In Warranty Lock Guest</option>
-                    <option value="In Warranty Lock Public">In Warranty Lock Public</option>
-                    <option value="No Warranty OnPortal">No Warranty OnPortal</option>
-                    <option value="No Warranty FDS Other">No Warranty FDS Other</option>
-                    <option value="No Warranty Lock Guest">No Warranty Lock Guest</option>
-                    <option value="No Warranty Lock Public">No Warranty Lock Public</option>
-                    <option value="Integra">Integra</option>
-                    <option value="Self Help Provided">Self Help Provided</option>
-                    <option value="Set up RMA">Set up RMA</option>
-                    <option value="General Questions">General Questions</option>
-                    <option value="Scheduled Dial-In">Scheduled Dial-In</option>
-                    <option value="Scheduled ER">Scheduled ER</option>
-                </select>
+            <select id="transferredTo" name="transferredTo" required>
+                <option value="Not Selected">Not Selected</option>
+                <option value="In Warranty OnPortal">In Warranty OnPortal</option>
+                <option value="In Warranty FDS Other">In Warranty FDS Other</option>
+                <option value="In Warranty Lock Guest">In Warranty Lock Guest</option>
+                <option value="In Warranty Lock Public">In Warranty Lock Public</option>
+                <option value="Out of Warranty OnPortal">Out of Warranty OnPortal</option>
+                <option value="Out of Warranty FDS Other">Out of Warranty FDS Other</option>
+                <option value="Out of Warranty Lock Guest">Out of Warranty Lock Guest</option>
+                <option value="Out of Warranty Lock Public">Out of Warranty Lock Public</option>
+                <option value="Integra">Integra</option>
+                <option value="Self Help Provided">Self Help Provided</option>
+                <option value="Set up RMA">Set up RMA</option>
+                <option value="General Questions">General Questions</option>
+                <option value="Scheduled RCS">Scheduled RCS</option>
+                <option value="Added to ER Queue">Added to ER Queue</option>
+            </select>
             
             <div id="selfHelpDiv" class="hidden">
                 <label for="selfHelp">Self Help Provided:</label>

@@ -85,6 +85,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         }
+        const triageFormLoaded = document.getElementById('triageForm');
+        if (triageFormLoaded) {
+            const phoneUpdated = localStorage.getItem('phoneUpdated');
+            const warrantyStatus = localStorage.getItem('warrantyStatus');
+            const transferredTo = localStorage.getItem('transferredTo');
+            handlePhoneUpdateChange(phoneUpdated);
+            handleWarrantyStatusChange(warrantyStatus);
+            handleTransferToChange(transferredTo);
+        }
     };
 
     // Function to show or hide fields based on RMA Type

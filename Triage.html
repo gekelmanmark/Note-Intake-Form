@@ -52,19 +52,24 @@
         <button id="toggle-mode">Toggle Dark Mode</button>
 
         <form id="triageForm">
-            <label for="customerName">S/W:</label>
-            <textarea id="customerName" rows="2" placeholder="Enter the customer's name" required></textarea>
+            <label for="customerNameTriage">S/W:</label>
+            <textarea id="customerNameTriage" rows="2" placeholder="Enter the customer's name" required></textarea>
         
             <label for="phoneUpdated">Contact Phone Updated/Verified:</label>
             <select id="phoneUpdated" name="phoneUpdated" required>
-                <option value="no">No</option>
-                <option value="yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
             </select>
+
+            <div id="contactNumberTriageDiv" class="hidden">
+                <label for="contactNumberTriage">Contact Number:</label>
+                <input type="text" id="contactNumberTriage" name="contactNumber" required>
+            </div>
 
             <label for="emailUpdated">Contact Email Updated/Verified:</label>
             <select id="emailUpdated" name="emailUpdated" required>
-                <option value="no">No</option>
-                <option value="yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
             </select>
 
             <label for="reasonForCall">Reason for Call:</label>
@@ -89,11 +94,12 @@
                     <option value="No Warranty FDS Other">No Warranty FDS Other</option>
                     <option value="No Warranty Lock Guest">No Warranty Lock Guest</option>
                     <option value="No Warranty Lock Public">No Warranty Lock Public</option>
-                    <option value="Customer General Request">Customer General Request</option>
                     <option value="Integra">Integra</option>
                     <option value="Self Help Provided">Self Help Provided</option>
                     <option value="Set up RMA">Set up RMA</option>
                     <option value="General Questions">General Questions</option>
+                    <option value="Scheduled Dial-In">Scheduled Dial-In</option>
+                    <option value="Scheduled ER">Scheduled ER</option>
                 </select>
             
             <div id="selfHelpDiv" class="hidden">

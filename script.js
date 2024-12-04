@@ -238,6 +238,21 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
+    const handlePhoneUpdateChange = (status) => {
+        const contactNumberTriageDiv = document.getElementById('contactNumberTriageDiv');
+        const contactNumberTriage = document.getElementById('contactNumberTriage');
+        console.log(`Update status: ${status}`);
+        // Display fields based on selected system type
+        if (status === 'Yes') {
+            contactNumberTriageDiv.classList.remove('hidden');
+            contactNumberTriage.required = true;
+        }
+        else {
+            contactNumberTriageDiv.classList.add('hidden');
+            contactNumberTriage.required = false;
+        }
+    };
+
     const handleWarrantyTypeChange = (warrantyType) => {
         const rmaType = document.getElementById('rmaType')?.value || '';
         if (rmaType === 'Warranty ADV Replace') {
@@ -432,6 +447,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                     if (form.id === 'triageForm') {
                         handleTransferToChange('Not Selected');
+                        handlePhoneUpdateChange('No')
                     }
                     form.reset();
                     savePartsToLocalStorage();
@@ -520,8 +536,9 @@ Summary:\n${summary.trim()}`;
                 }
             });
             if (triageForm.checkValidity() && formIsValid) {
-                const customerName = document.getElementById('customerName')?.value || '';
+                const customerNameTriage = document.getElementById('customerNameTriage')?.value || '';
                 const phoneUpdated = document.getElementById('phoneUpdated')?.value || '';
+                const contactNumberTriage = document.getElementById('contactNumberTriage')?.value || '';
                 const emailUpdated = document.getElementById('emailUpdated')?.value || '';
                 const reasonForCall = document.getElementById('reasonForCall')?.value || '';
                 const warrantyStatus = document.getElementById('warrantyStatus')?.value || '';
@@ -530,8 +547,11 @@ Summary:\n${summary.trim()}`;
                 const rmaReason = document.getElementById('rmaReason')?.value || '';
                 const cgrNotes = document.getElementById('cgrNotes')?.value || '';
 
-                let fullText = `S/W: ${customerName}\n`;
+                let fullText = `S/W: ${customerNameTriage}\n`;
                 fullText += `Contact Phone Updated/Verified: ${phoneUpdated}\n`;
+                if (phoneUpdated === "Yes") {
+                    fullText += `Phone Number: ${contactNumberTriage}\n`;
+                }
                 fullText += `Contact Email Updated/Verified: ${emailUpdated}\n`;
                 fullText += `Reason for Call: ${reasonForCall}\n`;
                 fullText += `Warranty Status: ${warrantyStatus}\n`;
@@ -795,12 +815,21 @@ Resolution or Next Steps:\n${resolution.trim()}`;
     if (triageFormLoaded) {
         const savedTransferredTo = localStorage.getItem('transferredTo');
         const transferredTo = document.getElementById('transferredTo');
+        const savedPhoneUpdated = localStorage.getItem('phoneUpdated');
+        const phoneUpdated = document.getElementById('phoneUpdated');
         if (savedTransferredTo) {
             transferredTo.value = savedTransferredTo;
             handleTransferToChange(savedTransferredTo);
         }
+        if (savedPhoneUpdated) {
+            phoneUpdated.value = savedPhoneUpdated;
+            handlePhoneUpdateChange(savedPhoneUpdated);
+        }
         transferredTo.addEventListener('change', function () {
             handleTransferToChange(transferredTo.value);
+        });
+        phoneUpdated.addEventListener('change', function () {
+            handlePhoneUpdateChange(phoneUpdated.value);
         });
     }
 

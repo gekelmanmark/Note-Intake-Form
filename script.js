@@ -260,36 +260,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (status === 'Extended') {
             warrantyLevelDiv.classList.remove('hidden');
             warrantyLevelTriage.required = true;
-
-            // // Specify the value of the option to be deleted
-            // const valueToRemove = ['Out of Warranty OnPortal',
-            //     'Out of Warranty FDS Other',
-            //     'Out of Warranty Lock Guest',
-            //     'Out of Warranty Lock Public'];
-
-            // // Loop through the options to find the one to remove
-            // for (let i = 0; i < warrantyLevelTriage.options.length; i++) {
-            //     if (valueToRemove.includes(warrantyLevelTriage.options[i].value)) {
-            //         warrantyLevelTriage.remove(i); // Remove the option by index
-            //     }
-            // }
-        }
-        else if (status === 'Expired') {
-            warrantyLevelDiv.classList.add('hidden');
-            warrantyLevelTriage.required = false;
-
-            // // Specify the value of the option to be deleted
-            // const valueToRemove = ['In Warranty OnPortal',
-            //     'In Warranty FDS Other',
-            //     'In Warranty Lock Guest',
-            //     'In Warranty Lock Public'];
-
-            // // Loop through the options to find the one to remove
-            // for (let i = 0; i < warrantyLevelTriage.options.length; i++) {
-            //     if (valueToRemove.includes(warrantyLevelTriage.options[i].value)) {
-            //         warrantyLevelTriage.remove(i); // Remove the option by index
-            //     }
-            // }
         }
         else {
             warrantyLevelDiv.classList.add('hidden');

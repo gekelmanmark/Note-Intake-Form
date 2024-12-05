@@ -504,6 +504,9 @@ option.dark-mode {
 
 input {
     width: 100%; /* Full width */
+    display: block;
+    flex-grow: 0; /* Prevent the textarea from growing beyond its container */
+    flex-shrink: 1; /* Allow the textarea to shrink within the container */
     padding: 10px; /* Padding inside input */
     margin-bottom: 15px 15px; /* Space between elements */
     border-radius: 5px; /* Rounded corners */
@@ -511,6 +514,7 @@ input {
     background-color: var( --color-bg-light); /* Light background */
     color: var(--color-text-dark); /* Dark text */
     font-size: 1rem; /* Font size */
+    box-sizing: border-box;
     transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
     appearance: none; /* Remove default styling */
     box-shadow: inset 0 1px 3px var(--color-shadow-light); /* Slight inset shadow */

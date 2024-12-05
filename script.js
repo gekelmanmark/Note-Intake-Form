@@ -85,6 +85,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         }
+        const triageFormLoaded = document.getElementById('triageForm');
+        if (triageFormLoaded) {
+            const phoneUpdated = localStorage.getItem('phoneUpdated');
+            const warrantyStatus = localStorage.getItem('warrantyStatus');
+            const transferredTo = localStorage.getItem('transferredTo');
+            handlePhoneUpdateChange(phoneUpdated);
+            handleWarrantyStatusChange(warrantyStatus);
+            handleTransferToChange(transferredTo);
+        }
     };
 
     // Function to show or hide fields based on RMA Type
@@ -192,6 +201,77 @@ document.addEventListener('DOMContentLoaded', function () {
             creditHoldDiv.classList.remove('hidden');
             reasonWaivedDiv.classList.add('hidden');
             reasonWaivedField.required = false;
+        }
+    };
+
+    const handleTransferToChange = (queue) => {
+        const selfHelpDiv = document.getElementById('selfHelpDiv');
+        const selfHelp = document.getElementById('selfHelp');
+        const rmaReasonDiv = document.getElementById('rmaReasonDiv');
+        const rmaReason = document.getElementById('rmaReason');
+        const cgrNotesDiv = document.getElementById('cgrNotesDiv');
+        const cgrNotes = document.getElementById('cgrNotes');
+
+        // Display fields based on selected system type
+        if (queue === 'Self Help Provided') {
+            selfHelpDiv.classList.remove('hidden');
+            rmaReasonDiv.classList.add('hidden');
+            cgrNotesDiv.classList.add('hidden');
+            selfHelp.required = true;
+            rmaReason.required = false;
+            cgrNotes.required = false;
+        }
+        else if (queue === 'Set up RMA') {
+            selfHelpDiv.classList.add('hidden');
+            rmaReasonDiv.classList.remove('hidden');
+            cgrNotesDiv.classList.add('hidden');
+            selfHelp.required = false;
+            rmaReason.required = true;
+            cgrNotes.required = false;
+        }
+        else if (queue === 'General Questions') {
+            selfHelpDiv.classList.add('hidden');
+            rmaReasonDiv.classList.add('hidden');
+            cgrNotesDiv.classList.remove('hidden');
+            selfHelp.required = false;
+            rmaReason.required = false;
+            cgrNotes.required = true;
+        }
+        else {
+            selfHelpDiv.classList.add('hidden');
+            rmaReasonDiv.classList.add('hidden');
+            cgrNotesDiv.classList.add('hidden');
+            selfHelp.required = false;
+            rmaReason.required = false;
+            cgrNotes.required = false;
+        }
+    };
+
+    const handlePhoneUpdateChange = (status) => {
+        const contactNumberTriageDiv = document.getElementById('contactNumberTriageDiv');
+        const contactNumberTriage = document.getElementById('contactNumberTriage');
+        // Display fields based on selected system type
+        if (status === 'Yes') {
+            contactNumberTriageDiv.classList.remove('hidden');
+            contactNumberTriage.required = true;
+        }
+        else {
+            contactNumberTriageDiv.classList.add('hidden');
+            contactNumberTriage.required = false;
+        }
+    };
+
+    const handleWarrantyStatusChange = (status) => {
+        const warrantyLevelDiv = document.getElementById('warrantyLevelDiv');
+        const warrantyLevelTriage = document.getElementById('warrantyLevelTriage');
+        // Display fields based on selected system type
+        if (status === 'Extended') {
+            warrantyLevelDiv.classList.remove('hidden');
+            warrantyLevelTriage.required = true;
+        }
+        else {
+            warrantyLevelDiv.classList.add('hidden');
+            warrantyLevelTriage.required = false;
         }
     };
 
@@ -378,7 +458,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const undoClearButton = document.getElementById('undoClearButton');
     if (clearButton) {
         clearButton.addEventListener('click', function () {
-            const forms = ['contactForm', 'dialInForm', 'rmaForm', 'product99'];
+            const forms = ['contactForm', 'dialInForm', 'rmaForm', 'product99', 'triageForm'];
             forms.forEach(formId => {
                 const form = document.getElementById(formId);
                 if (form) {
@@ -404,6 +484,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (form.id === 'dialInForm') {
                         handleSystemTypeChange('Not Selected'); // Call the function to show/hide fields
                         handleDialInFeeChange('Not Selected'); // Call the function to show/hide fields
+                    }
+                    if (form.id === 'triageForm') {
+                        handleTransferToChange('Not Selected');
+                        handlePhoneUpdateChange('No')
+                        handleWarrantyStatusChange('Not Selected');
                     }
                     form.reset();
                     savePartsToLocalStorage();
@@ -529,6 +614,69 @@ Summary:\n${summary.trim()}`;
             } else {
                 // If form is invalid, show validation error
                 applyValidationStyles(product99Form);
+            }
+        });
+    }
+
+    const copyButtonTriage = document.getElementById('copyButtonTriage');
+    const triageForm = document.getElementById('triageForm');
+    if (copyButtonTriage && triageForm) {
+        copyButtonTriage.addEventListener('click', function () {
+            clearValidationStyles(triageForm);
+            const selectElements = document.querySelectorAll('select');
+            let formIsValid = true;
+
+            // Loop through all the select elements and check if "None" is selected
+            selectElements.forEach(select => {
+                if (select.value === 'Not Selected' && !isElementOrParentHidden(select)) {
+                    select.classList.add('invalid-field'); // Highlight the field with red
+                    formIsValid = false;
+                } else {
+                    select.classList.remove('invalid-field'); // Remove red highlight if valid
+                }
+            });
+            if (triageForm.checkValidity() && formIsValid) {
+                const customerNameTriage = document.getElementById('customerNameTriage')?.value || '';
+                const phoneUpdated = document.getElementById('phoneUpdated')?.value || '';
+                const contactNumberTriage = document.getElementById('contactNumberTriage')?.value || '';
+                const emailUpdated = document.getElementById('emailUpdated')?.value || '';
+                const reasonForCall = document.getElementById('reasonForCall')?.value || '';
+                const warrantyStatus = document.getElementById('warrantyStatus')?.value || '';
+                const warrantyLevelTriage = document.getElementById('warrantyLevelTriage')?.value || '';
+                const transferredTo = document.getElementById('transferredTo')?.value || '';
+                const selfHelp = document.getElementById('selfHelp')?.value || '';
+                const rmaReason = document.getElementById('rmaReason')?.value || '';
+                const cgrNotes = document.getElementById('cgrNotes')?.value || '';
+
+                let fullText = `S/W: ${customerNameTriage}\n`;
+                fullText += `Contact Phone Updated/Verified: ${phoneUpdated}\n`;
+                if (phoneUpdated === "Yes") {
+                    fullText += `Phone Number: ${contactNumberTriage}\n`;
+                }
+                fullText += `Contact Email Updated/Verified: ${emailUpdated}\n`;
+                fullText += `Reason for Call: ${reasonForCall}\n`;
+                fullText += `Warranty Status: ${warrantyStatus}\n`;
+                if (warrantyStatus === "Extended") {
+                    fullText += `Extended Warranty: ${warrantyLevelTriage}\n`;
+                }
+                fullText += `Transferred To: ${transferredTo}\n`;
+                if (transferredTo === "Self Help Provided") {
+                    fullText += `Self Help Provided:\n${selfHelp}`;
+                }
+                if (transferredTo === "Set up RMA") {
+                    fullText += `RMA Reason:\n${rmaReason}`;
+                }
+                if (transferredTo === "General Questions") {
+                    fullText += `General Questions Notes:\n${cgrNotes}`;
+                }
+                navigator.clipboard.writeText(fullText).then(() => {
+                    showNotification();
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            } else {
+                // If form is invalid, show validation error
+                applyValidationStyles(triageForm);
             }
         });
     }
@@ -764,6 +912,37 @@ Resolution or Next Steps:\n${resolution.trim()}`;
         dialInFeeField.addEventListener('change', function () {
             const selectedDialInFeeType = dialInFeeField.value;
             handleDialInFeeChange(selectedDialInFeeType)
+        });
+    }
+
+    const triageFormLoaded = document.getElementById('triageForm');
+    if (triageFormLoaded) {
+        const savedTransferredTo = localStorage.getItem('transferredTo');
+        const transferredTo = document.getElementById('transferredTo');
+        const savedPhoneUpdated = localStorage.getItem('phoneUpdated');
+        const phoneUpdated = document.getElementById('phoneUpdated');
+        const savedwarrantyStatus = localStorage.getItem('warrantyStatus');
+        const warrantyStatus = document.getElementById('warrantyStatus');
+        if (savedTransferredTo) {
+            transferredTo.value = savedTransferredTo;
+            handleTransferToChange(savedTransferredTo);
+        }
+        if (savedPhoneUpdated) {
+            phoneUpdated.value = savedPhoneUpdated;
+            handlePhoneUpdateChange(savedPhoneUpdated);
+        }
+        if (savedwarrantyStatus) {
+            warrantyStatus.value = savedwarrantyStatus;
+            handleWarrantyStatusChange(savedwarrantyStatus);
+        }
+        transferredTo.addEventListener('change', function () {
+            handleTransferToChange(transferredTo.value);
+        });
+        phoneUpdated.addEventListener('change', function () {
+            handlePhoneUpdateChange(phoneUpdated.value);
+        });
+        warrantyStatus.addEventListener('change', function () {
+            handleWarrantyStatusChange(warrantyStatus.value);
         });
     }
 

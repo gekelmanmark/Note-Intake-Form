@@ -505,7 +505,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (undoClearButton) {
         undoClearButton.addEventListener('click', function () {
             if (lastFormState) {
-                const forms = ['contactForm', 'dialInForm', 'rmaForm', 'product99'];
+                const forms = ['contactForm', 'dialInForm', 'rmaForm', 'product99', 'triageForm'];
                 forms.forEach((formId) => {
                     const form = document.getElementById(formId);
                     if (form) {
@@ -524,6 +524,15 @@ document.addEventListener('DOMContentLoaded', function () {
                                 }
                                 if (element.id === 'dialInFee') {
                                     handleDialInFeeChange(lastFormState[element.id]);
+                                }
+                                if (element.id === 'transferredTo') {
+                                    handleTransferToChange(lastFormState[element.id]);
+                                }
+                                if (element.id === 'phoneUpdated') {
+                                    handlePhoneUpdateChange(lastFormState[element.id]);
+                                }
+                                if (element.id === 'warrantyStatus') {
+                                    handleWarrantyStatusChange(lastFormState[element.id]);
                                 }
                                 element.value = lastFormState[element.id]; // Restore field value
                             }

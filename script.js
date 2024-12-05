@@ -306,7 +306,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const addButton = document.getElementById('addButton');
     if (addButton) {
         addButton.addEventListener('click', function () {
-            // Create a new form row
+            const uniqueRowId = Date.now(); // Generate a unique ID for the row
+
             const formRow = document.createElement('div');
             formRow.classList.add('form-row');
 
@@ -316,6 +317,7 @@ document.addEventListener('DOMContentLoaded', function () {
             partNumberInput.name = 'partNumber[]';
             partNumberInput.placeholder = 'Part Number';
             partNumberInput.required = true;
+            partNumberInput.setAttribute('data-id', `partNumber-${uniqueRowId}`);
 
             // Create the quantity input
             const quantityInput = document.createElement('input');
@@ -323,8 +325,9 @@ document.addEventListener('DOMContentLoaded', function () {
             quantityInput.name = 'quantity[]';
             quantityInput.placeholder = 'Quantity';
             quantityInput.required = true;
+            quantityInput.setAttribute('data-id', `quantity-${uniqueRowId}`); // Append uniqueRowId with a different prefix
 
-            // Add event listeners to save part data to local storage on change
+            // Event listeners to save part data
             partNumberInput.addEventListener('input', savePartsToLocalStorage);
             quantityInput.addEventListener('input', savePartsToLocalStorage);
 
@@ -334,11 +337,11 @@ document.addEventListener('DOMContentLoaded', function () {
             removeButton.classList.add('remove-button');
             removeButton.innerText = 'Remove';
             removeButton.addEventListener('click', function () {
-                formRow.remove(); // Remove the row on click
-                savePartsToLocalStorage(); // Save updated data after removal
+                formRow.remove();
+                savePartsToLocalStorage();
             });
 
-            // Check if dark mode is active and apply the dark-mode class to newly created elements
+            // Apply dark mode class if active
             if (isDarkModeActive()) {
                 partNumberInput.classList.add('dark-mode');
                 quantityInput.classList.add('dark-mode');
@@ -355,6 +358,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+
     function savePartsToLocalStorage() {
         const RmaForm = document.getElementById('rmaForm') || '';
         if (RmaForm.name === "rmaForm") {
@@ -369,17 +373,31 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Clear buttons for forms
+    let lastFormState = null; // Variable to store the form's state before clearing
     const clearButton = document.getElementById('clearButton');
+    const undoClearButton = document.getElementById('undoClearButton');
     if (clearButton) {
         clearButton.addEventListener('click', function () {
             const forms = ['contactForm', 'dialInForm', 'rmaForm', 'product99'];
             forms.forEach(formId => {
                 const form = document.getElementById(formId);
                 if (form) {
+                    // Save the current form state before clearing
+                    lastFormState = {};
+                    const formElements = form.querySelectorAll('input, textarea, select');
+                    formElements.forEach((element) => {
+                        lastFormState[element.id] = element.value; // Save field value
+                    });
                     if (form.id === 'rmaForm') {
                         handleRmaTypeChange('Not Selected'); // Call the function to show/hide fields
                         const container = document.getElementById('dynamicForm');
                         if (container) {
+                            lastFormState.dynamicFieldValues = Array.from(container.querySelectorAll('input')).map((input) => ({
+                                name: input.name,
+                                value: input.value,
+                                dataId: input.getAttribute('data-id') // Save the unique data-id
+                            }));
+                            lastFormState.dynamicFields = container.innerHTML;
                             container.innerHTML = ''; // Clears all child elements
                         }
                     }
@@ -389,11 +407,70 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                     form.reset();
                     savePartsToLocalStorage();
+                    // Hide Undo button if no state is saved
+                    if (Object.keys(lastFormState).length > 0) {
+                        undoClearButton.classList.remove('hidden');; // Show "Undo Clear" button
+                    }
                 }
             });
         });
         clearButton.addEventListener('click', clearFormData);
     }
+
+    if (undoClearButton) {
+        undoClearButton.addEventListener('click', function () {
+            if (lastFormState) {
+                const forms = ['contactForm', 'dialInForm', 'rmaForm', 'product99'];
+                forms.forEach((formId) => {
+                    const form = document.getElementById(formId);
+                    if (form) {
+                        // Restore static form fields
+                        const formElements = form.querySelectorAll('input, textarea, select');
+                        formElements.forEach((element) => {
+                            if (lastFormState[element.id] !== undefined) {
+                                if (element.id === 'rmaType') {
+                                    handleRmaTypeChange(lastFormState[element.id]);
+                                }
+                                if (element.id === 'warranty') {
+                                    handleWarrantyTypeChange(lastFormState[element.id]);
+                                }
+                                if (element.id === 'systemType') {
+                                    handleSystemTypeChange(lastFormState[element.id]);
+                                }
+                                if (element.id === 'dialInFee') {
+                                    handleDialInFeeChange(lastFormState[element.id]);
+                                }
+                                element.value = lastFormState[element.id]; // Restore field value
+                            }
+                        });
+
+                        // Restore dynamic fields
+                        const dynamicFormSection = document.getElementById('dynamicForm');
+                        if (dynamicFormSection && lastFormState.dynamicFields) {
+                            dynamicFormSection.innerHTML = lastFormState.dynamicFields;
+
+                            // Restore values for dynamic fields
+                            lastFormState.dynamicFieldValues?.forEach(({ name, value, dataId }) => {
+                                console.log(`value: ${value}`);
+                                const field = dynamicFormSection.querySelector(`[data-id="${dataId}"]`);
+                                console.log(`[data-id="${dataId}"]`);
+                                if (field) {
+                                    field.value = value; // Restore the saved value
+                                }
+                            });
+                        }
+                        // Clear the saved state
+                        lastFormState = null;
+                        undoClearButton.classList.add('hidden'); // Hide "Undo Clear" button
+                    }
+                });
+            }
+        });
+    }
+
+
+
+
 
     const copyButton99 = document.getElementById('copyButton99');
     const product99Form = document.getElementById('product99');

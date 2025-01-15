@@ -649,7 +649,7 @@ Summary:\n${summary.trim()}`;
                 const phoneUpdated = document.getElementById('phoneUpdated')?.value || '';
                 const contactNumberTriage = document.getElementById('contactNumberTriage')?.value || '';
                 const emailUpdated = document.getElementById('emailUpdated')?.value || '';
-                const reasonForCall = document.getElementById('reasonForCall')?.value || '';
+                const reasonForCall = document.getElementById('triageReasonForCall')?.value || '';
                 const warrantyStatus = document.getElementById('warrantyStatus')?.value || '';
                 const warrantyLevelTriage = document.getElementById('warrantyLevelTriage')?.value || '';
                 const transferredTo = document.getElementById('transferredTo')?.value || '';

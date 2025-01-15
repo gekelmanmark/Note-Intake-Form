@@ -831,7 +831,9 @@ Resolution or Next Steps:\n${resolution.trim()}`;
 
                 let fullText = `RMA Type: ${rmaType}`;
                 if (inspectionChecked === "Yes") {
-                    fullText += ` **08 Inspection Requested**`;
+                    if (rmaType === 'Warranty ADV Replace' || rmaType === 'Paid Repair - HT22X / Safe-XPP Only') {
+                        fullText += ` **08 Inspection Requested**`;
+                    }
                 }
                 if (rmaType === 'Warranty ADV Replace') {
                     if (warrantyField === 'Limited' || warrantyField === 'Extended') {

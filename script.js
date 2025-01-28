@@ -122,8 +122,8 @@ document.addEventListener('DOMContentLoaded', function () {
             } else if (warranty.value === 'Extended') {
                 inspectionField.classList.remove('hidden');
                 warrantyField.classList.remove('hidden');
-                bsoField.classList.add('hidden');
-                bso.required = false;
+                bsoField.classList.remove('hidden');
+                bso.required = true;
                 warrantyLevelField.classList.remove('hidden');
             } else {
                 inspectionField.classList.remove('hidden');
@@ -138,8 +138,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     bso.required = true;
                     warrantyLevelField?.classList.add('hidden');
                 } else if (warranty.value === 'Extended') {
-                    bsoField?.classList.add('hidden');
-                    bso.required = false;
+                    bsoField?.classList.remove('hidden');
+                    bso.required = true;
                     warrantyLevelField?.classList.remove('hidden');
                 }
                 else {
@@ -283,8 +283,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 bso.required = true;
                 warrantyLevelField?.classList.add('hidden');
             } else if (warrantyType === 'Extended') {
-                bsoField?.classList.add('hidden');
-                bso.required = false;
+                bsoField?.classList.remove('hidden');
+                bso.required = true;
                 warrantyLevelField?.classList.remove('hidden');
             }
             else {
@@ -839,15 +839,16 @@ Resolution or Next Steps:\n${resolution.trim()}`;
                     if (warrantyField === 'Limited' || warrantyField === 'Extended') {
                         fullText += `\nWarranty: ${warrantyField}`;
                         if (warrantyField === 'Limited') {
-                            fullText += `\nWarranty Limited BSO: ${bsoNumber}`;
+                            fullText += `\nBSO: ${bsoNumber}`;
                         }
                         if (warrantyField === 'Extended') {
-                            fullText += `\nWarranty Extended Level: ${warrantyLevel}`;
+                            fullText += `\nBSO: ${bsoNumber}`;
+                            fullText += `\nWarranty Type: ${warrantyLevel}`;
                         }
                     }
                 }
                 fullText += `\nFailure Reason: ${failureReason.trim()}`;
-                fullText += `\nShipping Type: ${shippingType}`;
+                fullText += `\nShipping Method: ${shippingType}`;
                 fullText += `\nRed Dot: ${redDot}`;
                 fullText += `\nCall Tag: ${callTag}`;
 

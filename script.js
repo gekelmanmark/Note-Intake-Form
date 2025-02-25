@@ -737,7 +737,7 @@ Summary:\n${summary.trim()}`;
                 fullText += `Dial-In Type: ${dialInType}\n`;
                 fullText += `Dial-In Fee: ${dialInFee}\n`;
                 if (dialInFee != "Waived") { 
-                    fullText += `Billing: ${billing}`; 
+                    fullText += `Billing: ${billing}\n`; 
                 }
                 fullText += `Oracle ID: ${oracleID}\n`;
                 if (dialInFee != "Waived") {

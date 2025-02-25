@@ -860,7 +860,7 @@ Resolution or Next Steps:\n${resolution.trim()}`;
                     partNumbers.forEach((partNumberInput, index) => {
                         const partNumber = partNumberInput.value || 'N/A';
                         const quantity = quantities[index]?.value || 'N/A';
-                        fullText += `Part Number: ${partNumber.trim()}, Quantity: ${quantity}\n`;
+                        fullText += `Part Number: ${partNumber.trim()}, Quantity: ${quantity.trim()}\n`;
                     });
                 }
 

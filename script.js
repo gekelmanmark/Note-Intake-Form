@@ -734,23 +734,26 @@ Summary:\n${summary.trim()}`;
                 let fullText = `Contact Name: ${contactName}\n`;
                 fullText += `Contact Number: ${contactNumber}\n`;
                 fullText += `System Type: ${systemType}\n`;
-                fullText += `Under Warranty?: ${underWarranty}\n`;
                 fullText += `Dial-In Type: ${dialInType}\n`;
-                fullText += `Oracle ID: ${oracleID}\n`;
                 fullText += `Dial-In Fee: ${dialInFee}\n`;
+                if (dialInFee != "Waived") { 
+                    fullText += `Billing: ${billing}`; 
+                }
+                fullText += `Oracle ID: ${oracleID}\n`;
                 if (dialInFee != "Waived") {
                     fullText += `Credit Hold: ${creditHold}\n`;
                 }
                 if (dialInFee === "Waived") {
-                    fullText += `Waived Fee Reason:\n${reasonWaived}\n`;
+                    fullText += `Under Warranty?: ${underWarranty}\n`;
                 }
                 if (systemType === 'HT22X') {
                     fullText += `Battery Check: ${batteryCheck}\n`;
                     fullText += `Lithium Battery: ${lithiumBattery}\n`;
                     fullText += `Modem Type: ${modemType}\n`;
                 }
-                if (dialInFee != "Waived") { fullText += `Billing: ${billing}`; }
-
+                if (dialInFee === "Waived") {
+                    fullText += `Waived Fee Reason:\n${reasonWaived}\n`;
+                }
                 navigator.clipboard.writeText(fullText).then(() => {
                     showNotification();
                 }).catch(err => {

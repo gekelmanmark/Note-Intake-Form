@@ -185,20 +185,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const handleDialInFeeChange = (status) => {
         const billingDiv = document.getElementById('billingDiv');
+        const underWarrantyDiv = document.getElementById('underWarrantyDiv');
         const creditHoldDiv = document.getElementById('creditHoldDiv');
         const reasonWaivedDiv = document.getElementById('reasonWaivedDiv');
         const reasonWaivedField = document.getElementById('reasonWaived');
 
-        // Display fields based on selected system type
+        // Display fields based on select
         if (status === 'Waived') {
             billingDiv.classList.add('hidden');
+            underWarrantyDiv.classList.remove('hidden');
             creditHoldDiv.classList.add('hidden');
             reasonWaivedDiv.classList.remove('hidden');
             reasonWaivedField.required = true;
-        } else {
-            // Show all conditional fields for other system types
+        } else if (status === 'Charged') {
+            underWarrantyDiv.classList.add('hidden');
             billingDiv.classList.remove('hidden');
             creditHoldDiv.classList.remove('hidden');
+            reasonWaivedDiv.classList.add('hidden');
+            reasonWaivedField.required = false;
+        } else {
+            underWarrantyDiv.classList.add('hidden');
+            billingDiv.classList.add('hidden');
+            creditHoldDiv.classList.add('hidden');
             reasonWaivedDiv.classList.add('hidden');
             reasonWaivedField.required = false;
         }

@@ -76,16 +76,6 @@
             </div>
 
             <div class="form-item">
-                <label for="underWarranty">Warranty:</label>
-                <select id="underWarranty" name="underWarranty" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="Prepay">Prepay</option>
-                    <option value="Limited">Limited</option>
-                    <option value="Extended">Extended</option>
-                </select>
-            </div>
-
-            <div class="form-item">
                 <label for="dialInType">Dial-In Type:</label>
                 <select id="dialInType" name="dialInType" required>
                     <option value="Not Selected">Not Selected</option>
@@ -100,12 +90,7 @@
                     <option value="Specialist Troubleshooting">Specialist Troubleshooting</option>
                 </select>
             </div>
-
-            <div class="form-item">
-                <label for="oracleID">Oracle ID:</label>
-                <input type="number" id="oracleID" name="oracleID" required>
-            </div>
-
+            
             <div class="form-item">
                 <label for="dialInFee">Dial-In Fee:</label>
                 <select id="dialInFee" name="dialInFee" required>
@@ -113,68 +98,76 @@
                     <option value="Waived">Waived</option>
                     <option value="Charged">Charged</option>
                 </select>
-                <div id="reasonWaivedDiv" class="hidden">
-                    <label for="reasonWaived">Waived Fee Reason:</label>
-                    <textarea id="reasonWaived" rows="2" placeholder="Why is the fee waived?" required></textarea>
-                </div>
             </div>
 
 
-            <div class="form-item">
-                <div id="creditHoldDiv">
-                    <label for="creditHold">Credit Hold:</label>
-                    <select id="creditHold" name="creditHold" required>
-                        <option value="Not Selected">Not Selected</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
+            <div id="billingDiv" class="form-item">
+                <label for="billing">Billing:</label>
+                <select id="billing" name="billing" required>
+                    <option value="Not Selected">Not Selected</option>
+                    <option value="Net">Net</option>
+                    <option value="Prepay">Prepay</option>
+                </select>
             </div>
 
             <div class="form-item">
-                <div id="batteryCheckDiv" class="hidden">
-                    <label for="batteryCheck">Battery Check:</label>
-                    <select id="batteryCheck" name="batteryCheck" required>
-                        <option value="Not Selected">Not Selected</option>
-                        <option value="OK">OK</option>
-                        <option value="Low">Low</option>
-                    </select>
-                </div>
+                <label for="oracleID">Oracle ID:</label>
+                <input type="number" id="oracleID" name="oracleID" required>
+            </div>
+            
+            <div id="underWarrantyDiv" class="hidden form-item">
+                <label for="underWarranty">Warranty:</label>
+                <select id="underWarranty" name="underWarranty" required>
+                    <option value="Not Selected">Not Selected</option>
+                    <option value="No Warranty">No Warranty</option>
+                    <option value="Limited">Limited</option>
+                    <option value="Extended">Extended</option>
+                </select>
             </div>
 
-            <div class="form-item">
-                <div id="lithiumBatteryDiv" class="hidden">
-                    <label for="lithiumBattery">Lithium Battery:</label>
-                    <select id="lithiumBattery" name="lithiumBattery" required>
-                        <option value="Not Selected">Not Selected</option>
-                        <option value="OK">OK</option>
-                        <option value="Low">Low</option>
-                    </select>
-                </div>
+
+            <div id="creditHoldDiv" class="form-item">
+                <label for="creditHold">Credit Hold:</label>
+                <select id="creditHold" name="creditHold" required>
+                    <option value="Not Selected">Not Selected</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
             </div>
 
-            <div class="form-item">
-                <div id="modemTypeDiv" class="hidden">
-                    <label for="modemType">Modem Type:</label>
-                    <select id="modemType" name="modemType" required>
-                        <option value="Not Selected">Not Selected</option>
-                        <option value="Internal">Internal</option>
-                        <option value="External">External</option>
-                        <option value="Needs to Order/Find">Needs to Order/Find</option>
-                    </select>
-                </div>
+            <div id="batteryCheckDiv" class="hidden form-item">
+                <label for="batteryCheck">Battery Check:</label>
+                <select id="batteryCheck" name="batteryCheck" required>
+                    <option value="Not Selected">Not Selected</option>
+                    <option value="OK">OK</option>
+                    <option value="Low">Low</option>
+                </select>
             </div>
 
-            <div class="form-item">
-                <div id="billingDiv">
-                    <label for="billing">Billing:</label>
-                    <select id="billing" name="billing" required>
-                        <option value="Not Selected">Not Selected</option>
-                        <option value="Net">Net</option>
-                        <option value="Prepay">Prepay</option>
-                    </select>
-                </div>
+            <div id="lithiumBatteryDiv" class="hidden form-item">
+                <label for="lithiumBattery">Lithium Battery:</label>
+                <select id="lithiumBattery" name="lithiumBattery" required>
+                    <option value="Not Selected">Not Selected</option>
+                    <option value="OK">OK</option>
+                    <option value="Low">Low</option>
+                </select>
             </div>
+
+            <div id="modemTypeDiv" class="hidden form-item">
+                <label for="modemType">Modem Type:</label>
+                <select id="modemType" name="modemType" required>
+                    <option value="Not Selected">Not Selected</option>
+                    <option value="Internal">Internal</option>
+                    <option value="External">External</option>
+                    <option value="Needs to Order/Find">Needs to Order/Find</option>
+                </select>
+            </div>
+
+            <div id="reasonWaivedDiv" class="hidden form-item">
+                <label for="reasonWaived">Waived Fee Reason:</label>
+                <textarea id="reasonWaived" rows="2" placeholder="Why is the fee waived?" required></textarea>
+            </div>
+
             <div class="form-buttons">
                 <button type="button" id="copyButtonDialIn">Copy</button>
                 <button type="button" id="clearButton">Clear</button>

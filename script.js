@@ -608,20 +608,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 const propertyAddress = document.getElementById('propertyAddress')?.value || '';
                 const summary = document.getElementById('summary')?.value || '';
 
-                const fullText = `Report Date: ${reportDate}\n
-Incident Date: ${incidentDate}\n
-Contact Name: ${contactName}\n
-Contact Number: ${contactNumber}\n
-Email Address: ${email}\n\n
-Product Type: ${productType}\n
-Lock Case Type: ${lockCaseType}\n
-Number of Rooms in Hotel: ${numberOfRoomsInHotel}\n
-Warranty Start Date: ${warrantyStartDate}\n
-Account Number: ${accountNumber}\n
-Case Number: ${caseNumber}\n\n
-Property Name: ${propertyName}\n
-Property Address: ${propertyAddress}\n\n
-Summary:\n${summary.trim()}`;
+                let fullText = `Report Date: ${reportDate}\n`;
+                fullText += `Incident Date: ${incidentDate}\n`;
+                fullText += `Contact Name: ${contactName}\n`;
+                fullText += `Contact Number: ${contactNumber}\n`;
+                fullText += `Email Address: ${email}\n\n`;
+                fullText += `Product Type: ${productType}\n`;
+                fullText += `Lock Case Type: ${lockCaseType}\n`;
+                fullText += `Number of Rooms in Hotel: ${numberOfRoomsInHotel}\n`;
+                fullText += `Warranty Start Date: ${warrantyStartDate}\n`;
+                fullText += `Account Number: ${accountNumber}\n`;
+                fullText += `Case Number: ${caseNumber}\n\n`;
+                fullText += `Property Name: ${propertyName}\n`;
+                fullText += `Property Address: ${propertyAddress}\n\n`;
+                fullText += `Summary:\n${summary.trim()}`;
 
                 navigator.clipboard.writeText(fullText).then(() => {
                     showNotification();
@@ -790,10 +790,10 @@ Summary:\n${summary.trim()}`;
                 const troubleshooting = document.getElementById('troubleshooting')?.value || '';
                 const resolution = document.getElementById('resolution')?.value || '';
 
-                const fullText = `S/W:\n${customerName.trim()}\n
-Reason for Call:\n${reasonForCall.trim()}\n
-Troubleshooting Performed:\n${troubleshooting.trim()}\n
-Resolution or Next Steps:\n${resolution.trim()}`;
+                let fullText = `S/W:\n${customerName.trim()}\n\n`;
+                fullText += `Reason for Call:\n${reasonForCall.trim()}\n\n`;
+                fullText += `Troubleshooting Performed:\n${troubleshooting.trim()}\n\n`;
+                fullText += `Resolution or Next Steps:\n${resolution.trim()}`;
 
                 navigator.clipboard.writeText(fullText).then(() => {
                     showNotification();
@@ -926,6 +926,8 @@ Resolution or Next Steps:\n${resolution.trim()}`;
             if (savedDialInFeeType) {
                 document.getElementById('dialInFee').value = savedDialInFeeType;
                 handleDialInFeeChange(savedDialInFeeType)
+            } else {
+                handleDialInFeeChange('Not Selected')
             }
         }
         systemTypeField.addEventListener('change', function () {

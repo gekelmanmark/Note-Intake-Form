@@ -595,8 +595,8 @@ document.addEventListener('DOMContentLoaded', function () {
             if (product99Form.checkValidity() && formIsValid) {
                 const reportDate = document.getElementById('reportDate')?.value || '';
                 const incidentDate = document.getElementById('incidentDate')?.value || '';
-                const contactName = document.getElementById('contactName')?.value || '';
-                const contactNumber = document.getElementById('contactNumber')?.value || '';
+                const contactName = document.getElementById('contactName99')?.value || '';
+                const contactNumber = document.getElementById('contactNumber99')?.value || '';
                 const email = document.getElementById('email')?.value || '';
                 const productType = document.getElementById('productType')?.value || '';
                 const lockCaseType = document.getElementById('lockCaseType')?.value || '';
@@ -665,26 +665,26 @@ document.addEventListener('DOMContentLoaded', function () {
                 const rmaReason = document.getElementById('rmaReason')?.value || '';
                 const cgrNotes = document.getElementById('cgrNotes')?.value || '';
 
-                let fullText = `S/W: ${customerNameTriage}\n`;
+                let fullText = `S/W: ${customerNameTriage.trim()}\n`;
                 fullText += `Contact Phone Updated/Verified: ${phoneUpdated}\n`;
                 if (phoneUpdated === "Yes") {
                     fullText += `Phone Number: ${contactNumberTriage}\n`;
                 }
                 fullText += `Contact Email Updated/Verified: ${emailUpdated}\n`;
-                fullText += `Reason for Call: ${reasonForCall}\n`;
+                fullText += `Reason for Call: ${reasonForCall.trim()}\n`;
                 fullText += `Warranty Status: ${warrantyStatus}\n`;
                 if (warrantyStatus === "Extended") {
                     fullText += `Extended Warranty: ${warrantyLevelTriage}\n`;
                 }
                 fullText += `Transferred To: ${transferredTo}\n`;
                 if (transferredTo === "Self Help Provided") {
-                    fullText += `Self Help Provided:\n${selfHelp}`;
+                    fullText += `Self Help Provided:\n${selfHelp.trim()}`;
                 }
                 if (transferredTo === "Set up RMA") {
-                    fullText += `RMA Reason:\n${rmaReason}`;
+                    fullText += `RMA Reason:\n${rmaReason.trim()}`;
                 }
                 if (transferredTo === "General Questions") {
-                    fullText += `General Questions Notes:\n${cgrNotes}`;
+                    fullText += `General Questions Notes:\n${cgrNotes.trim()}`;
                 }
                 navigator.clipboard.writeText(fullText).then(() => {
                     showNotification();

@@ -736,8 +736,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 fullText += `System Type: ${systemType}\n`;
                 fullText += `Dial-In Type: ${dialInType}\n`;
                 fullText += `Dial-In Fee: ${dialInFee}\n`;
-                if (dialInFee != "Waived") { 
-                    fullText += `Billing: ${billing}\n`; 
+                if (dialInFee != "Waived") {
+                    fullText += `Billing: ${billing}\n`;
                 }
                 fullText += `Oracle ID: ${oracleID}\n`;
                 if (dialInFee != "Waived") {
@@ -839,47 +839,52 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const bsoNumber = document.getElementById('bso')?.value || '';
                 const warrantyLevel = document.getElementById('warrantyLevel')?.value || '';
-
-                let fullText = `RMA Type: ${rmaType}`;
-                if (inspectionChecked === "Yes") {
-                    if (rmaType === 'Warranty ADV Replace' || rmaType === 'Paid Repair - HT22X / Safe-XPP Only') {
-                        fullText += ` **08 Inspection Requested**`;
-                    }
-                }
-                if (rmaType === 'Warranty ADV Replace') {
-                    if (warrantyField === 'Limited' || warrantyField === 'Extended') {
-                        fullText += `\nWarranty: ${warrantyField}`;
-                        if (warrantyField === 'Limited') {
-                            fullText += `\nBSO: ${bsoNumber}`;
-                        }
-                        if (warrantyField === 'Extended') {
-                            fullText += `\nBSO: ${bsoNumber}`;
-                            fullText += `\nWarranty Type: ${warrantyLevel}`;
-                        }
-                    }
-                }
-                fullText += `\nFailure Reason: ${failureReason.trim()}`;
-                fullText += `\nShipping Method: ${shippingType}`;
-                fullText += `\nRed Dot: ${redDot}`;
-                fullText += `\nCall Tag: ${callTag}`;
+                const addButton = document.getElementById('addButton');
 
                 const partNumbers = document.querySelectorAll('input[name="partNumber[]"]');
                 const quantities = document.querySelectorAll('input[name="quantity[]"]');
 
                 if (partNumbers.length > 0 && quantities.length > 0) {
+                    addButton.classList.remove('invalid-field');
+                    let fullText = `RMA Type: ${rmaType}`;
+                    if (inspectionChecked === "Yes") {
+                        if (rmaType === 'Warranty ADV Replace' || rmaType === 'Paid Repair - HT22X / Safe-XPP Only') {
+                            fullText += ` **08 Inspection Requested**`;
+                        }
+                    }
+                    if (rmaType === 'Warranty ADV Replace') {
+                        if (warrantyField === 'Limited' || warrantyField === 'Extended') {
+                            fullText += `\nWarranty: ${warrantyField}`;
+                            if (warrantyField === 'Limited') {
+                                fullText += `\nBSO: ${bsoNumber}`;
+                            }
+                            if (warrantyField === 'Extended') {
+                                fullText += `\nBSO: ${bsoNumber}`;
+                                fullText += `\nWarranty Type: ${warrantyLevel}`;
+                            }
+                        }
+                    }
+                    fullText += `\nFailure Reason: ${failureReason.trim()}`;
+                    fullText += `\nShipping Method: ${shippingType}`;
+                    fullText += `\nRed Dot: ${redDot}`;
+                    fullText += `\nCall Tag: ${callTag}`;
+
                     fullText += `\n\nParts List:\n`;
                     partNumbers.forEach((partNumberInput, index) => {
                         const partNumber = partNumberInput.value || 'N/A';
                         const quantity = quantities[index]?.value || 'N/A';
                         fullText += `Part Number: ${partNumber.trim()}, Quantity: ${quantity.trim()}\n`;
                     });
-                }
 
-                navigator.clipboard.writeText(fullText).then(() => {
-                    showNotification();
-                }).catch(err => {
-                    console.error('Failed to copy: ', err);
-                });
+                    navigator.clipboard.writeText(fullText).then(() => {
+                        showNotification();
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                    });
+
+                }  else {
+                    addButton.classList.add('invalid-field');
+                }
             } else {
                 applyValidationStyles(rmaForm); // Apply validation styles
             }

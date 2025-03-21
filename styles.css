@@ -772,18 +772,21 @@ body.dark-mode .navbar ul li a.active {
 
 input.invalid-field,
 textarea.invalid-field,
-select.invalid-field {
+select.invalid-field,
+button.invalid-field {
     border: 2px solid red; /* Force red border */
 }
 
 input.invalid-field:focus,
 textarea.invalid-field:focus,
-select.invalid-field:focus {
+select.invalid-field:focus,
+button.invalid-field:focus {
     border-color: red; /* Keep red border on focus */
 }
 
 input.invalid-field:hover,
 textarea.invalid-field:hover,
-select.invalid-field:hover {
+select.invalid-field:hover,
+button.invalid-field:hover {
     border-color: rgb(255, 191, 0); /* Keep red border on focus */
 }

@@ -1,78 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Customer Support Form</title>
     <!-- Inline script to check for dark mode immediately -->
     <script>
-        // Apply dark mode instantly if it's the saved preference
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check for saved mode and apply it
-            if (localStorage.getItem('mode') === 'dark') {
-                document.documentElement.classList.add('dark-mode');
-            }
-        });
-        const savedColor = localStorage.getItem('highlightColor');
-        if (savedColor) {
-            document.documentElement.style.setProperty('--highlight-color', savedColor);
+      // Apply dark mode instantly if it's the saved preference
+      document.addEventListener("DOMContentLoaded", () => {
+        // Check for saved mode and apply it
+        if (localStorage.getItem("mode") === "dark") {
+          document.documentElement.classList.add("dark-mode");
         }
+      });
+      const savedColor = localStorage.getItem("highlightColor");
+      if (savedColor) {
+        document.documentElement.style.setProperty(
+          "--highlight-color",
+          savedColor
+        );
+      }
     </script>
 
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <div id="color-selector-modal" class="modal hidden">
-        <div class="modal-content">
-          <h2>Select Highlight Color</h2>
-          <input type="color" id="highlight-color-picker">
-          <div class="color-preview">
-            <p>Preview Highlight:</p>
-            <div id="color-preview-box"></div>
-          </div>
-          <button id="apply-color">Apply</button>
-          <button id="reset-color">Reset</button>
+      <div class="modal-content">
+        <h2>Select Highlight Color</h2>
+        <input type="color" id="highlight-color-picker" />
+        <div class="color-preview">
+          <p>Preview Highlight:</p>
+          <div id="color-preview-box"></div>
         </div>
+        <button id="apply-color">Apply</button>
+        <button id="reset-color">Reset</button>
+      </div>
     </div>
-      
+
     <!-- Button to open the modal -->
     <button id="open-color-selector">Change Highlight Color</button>
 
     <div class="container">
-        <h1>Customer Support Form</h1>
-        <nav class="navbar">
-            <ul>
-                <li><a href="index.html" class="nav-link">Notes</a></li>
-                <li><a href="RMA.html" class="nav-link">RMA</a></li>
-                <li><a href="Dial-in.html" class="nav-link">Dial-In</a></li>
-                <li><a href="Triage.html" class="nav-link">Triage</a></li>
-                <li><a href="Product99.html" class="nav-link">Product 99</a></li>
-            </ul>
-        </nav>
-        <button id="toggle-mode">Toggle Dark Mode</button>
+      <h1>Customer Support Form</h1>
+      <nav class="navbar">
+        <ul>
+          <li><a href="index.html" class="nav-link">Notes</a></li>
+          <li><a href="RMA.html" class="nav-link">RMA</a></li>
+          <li><a href="Dial-in.html" class="nav-link">Dial-In</a></li>
+          <li><a href="Triage.html" class="nav-link">Triage</a></li>
+          <li><a href="Product99.html" class="nav-link">Product 99</a></li>
+        </ul>
+      </nav>
+      <button id="toggle-mode">Toggle Dark Mode</button>
 
-        <form id="contactForm">
-            <label for="customerName">S/W:</label>
-            <textarea id="customerName" rows="2" placeholder="Enter the customer's name" required></textarea>
-        
-            <label for="reasonForCall">Reason for Call:</label>
-            <textarea id="reasonForCall" rows="2" placeholder="Briefly describe the reason for the call" required></textarea>
-        
-            <label for="troubleshooting">Troubleshooting Performed:</label>
-            <textarea id="troubleshooting" rows="8" placeholder="Detail the troubleshooting steps performed" required></textarea>
-        
-            <label for="resolution">Resolution or Next Steps:</label>
-            <textarea id="resolution" rows="2" placeholder="Enter the resolution or next steps" required></textarea>
-        
-            <div class="form-buttons">
-                <button type="button" id="copyButton">Copy</button>
-                <button type="button" id="clearButton">Clear</button>
-                <button type="button" id="undoClearButton" class="hidden">Undo</button>
-            </div>
-        </form>
-        <div id="copyNotification" class="notification hidden">Copied to clipboard!</div>
+      <form id="contactForm">
+        <label for="customerName">S/W:</label>
+        <textarea
+          id="customerName"
+          rows="2"
+          placeholder="Enter the customer's name"
+          required
+        ></textarea>
+
+        <label for="reasonForCall">Reason for Call:</label>
+        <textarea
+          id="reasonForCall"
+          rows="2"
+          placeholder="Briefly describe the reason for the call"
+          required
+        ></textarea>
+
+        <label for="troubleshooting">Troubleshooting Performed:</label>
+        <textarea
+          id="troubleshooting"
+          rows="8"
+          placeholder="Detail the troubleshooting steps performed"
+          required
+        ></textarea>
+
+        <label for="resolution">Resolution or Next Steps:</label>
+        <textarea
+          id="resolution"
+          rows="2"
+          placeholder="Enter the resolution or next steps"
+          required
+        ></textarea>
+
+        <label for="fdsStatus">FDS Status at End-of-Call:</label>
+        <select id="fdsStatus" name="fdsStatus" required>
+          <option value="Not Selected">Not Selected</option>
+          <option value="Not Applicable">Not Applicable</option>
+          <option value="Fully Operational">Fully Operational</option>
+          <option value="Able to make keys manually">
+            Able to make keys manually
+          </option>
+          <option value="No encoders operational">
+            No encoders operational
+          </option>
+        </select>
+
+        <div class="form-buttons">
+          <button type="button" id="copyButton">Copy</button>
+          <button type="button" id="clearButton">Clear</button>
+          <button type="button" id="undoClearButton" class="hidden">
+            Undo
+          </button>
+        </div>
+      </form>
+      <div id="copyNotification" class="notification hidden">
+        Copied to clipboard!
+      </div>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

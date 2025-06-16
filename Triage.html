@@ -1,146 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Triage Form</title>
     <!-- Inline script to check for dark mode immediately -->
     <script>
-        // Apply dark mode instantly if it's the saved preference
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check for saved mode and apply it
-            if (localStorage.getItem('mode') === 'dark') {
-                document.documentElement.classList.add('dark-mode');
-            }
-        });
-        const savedColor = localStorage.getItem('highlightColor');
-        if (savedColor) {
-            document.documentElement.style.setProperty('--highlight-color', savedColor);
+      // Apply dark mode instantly if it's the saved preference
+      document.addEventListener("DOMContentLoaded", () => {
+        // Check for saved mode and apply it
+        if (localStorage.getItem("mode") === "dark") {
+          document.documentElement.classList.add("dark-mode");
         }
+      });
+      const savedColor = localStorage.getItem("highlightColor");
+      if (savedColor) {
+        document.documentElement.style.setProperty(
+          "--highlight-color",
+          savedColor
+        );
+      }
     </script>
 
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <div id="color-selector-modal" class="modal hidden">
-        <div class="modal-content">
-          <h2>Select Highlight Color</h2>
-          <input type="color" id="highlight-color-picker">
-          <div class="color-preview">
-            <p>Preview Highlight:</p>
-            <div id="color-preview-box"></div>
-          </div>
-          <button id="apply-color">Apply</button>
-          <button id="reset-color">Reset</button>
+      <div class="modal-content">
+        <h2>Select Highlight Color</h2>
+        <input type="color" id="highlight-color-picker" />
+        <div class="color-preview">
+          <p>Preview Highlight:</p>
+          <div id="color-preview-box"></div>
         </div>
+        <button id="apply-color">Apply</button>
+        <button id="reset-color">Reset</button>
+      </div>
     </div>
-      
+
     <!-- Button to open the modal -->
     <button id="open-color-selector">Change Highlight Color</button>
 
     <div class="container">
-        <h1>Triage Support Form</h1>
-        <nav class="navbar">
-            <ul>
-                <li><a href="index.html" class="nav-link">Notes</a></li>
-                <li><a href="RMA.html" class="nav-link">RMA</a></li>
-                <li><a href="Dial-in.html" class="nav-link">Dial-In</a></li>
-                <li><a href="Triage.html" class="nav-link">Triage</a></li>
-                <li><a href="Product99.html" class="nav-link">Product 99</a></li>
-            </ul>
-        </nav>
-        <button id="toggle-mode">Toggle Dark Mode</button>
+      <h1>Triage Support Form</h1>
+      <nav class="navbar">
+        <ul>
+          <li><a href="index.html" class="nav-link">Notes</a></li>
+          <li><a href="RMA.html" class="nav-link">RMA</a></li>
+          <li><a href="Dial-in.html" class="nav-link">Dial-In</a></li>
+          <li><a href="Triage.html" class="nav-link">Triage</a></li>
+          <li><a href="Product99.html" class="nav-link">Product 99</a></li>
+        </ul>
+      </nav>
+      <button id="toggle-mode">Toggle Dark Mode</button>
 
-        <form id="triageForm">
-            <label for="customerNameTriage">S/W:</label>
-            <textarea id="customerNameTriage" rows="2" placeholder="Enter the customer's name" required></textarea>
-        
-            <label for="phoneUpdated">Contact Phone Updated/Verified:</label>
-            <select id="phoneUpdated" name="phoneUpdated" required>
-                <option value="No">No</option>
-                <option value="Yes">Yes</option>
-            </select>
+      <form id="triageForm">
+        <label for="customerNameTriage">S/W:</label>
+        <textarea
+          id="customerNameTriage"
+          rows="2"
+          placeholder="Enter the customer's name"
+          required
+        ></textarea>
 
-            <div id="contactNumberTriageDiv" class="hidden">
-                <label for="contactNumberTriage">Contact Number:</label>
-                <input type="text" id="contactNumberTriage" name="contactNumber" required>
-            </div>
+        <label for="phoneUpdated">Contact Phone Updated/Verified:</label>
+        <select id="phoneUpdated" name="phoneUpdated" required>
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
 
-            <label for="emailUpdated">Contact Email Updated/Verified:</label>
-            <select id="emailUpdated" name="emailUpdated" required>
-                <option value="No">No</option>
-                <option value="Yes">Yes</option>
-            </select>
+        <div id="contactNumberTriageDiv" class="hidden">
+          <label for="contactNumberTriage">Contact Number:</label>
+          <input
+            type="text"
+            id="contactNumberTriage"
+            name="contactNumber"
+            required
+          />
+        </div>
 
-            <label for="triageReasonForCall">Reason for Call:</label>
-            <textarea id="triageReasonForCall" rows="3" placeholder="Briefly describe the reason for the call" required></textarea>
+        <label for="emailUpdated">Contact Email Updated/Verified:</label>
+        <select id="emailUpdated" name="emailUpdated" required>
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
 
-            <label for="warrantyStatus">Warranty Status:</label>
-            <select id="warrantyStatus" name="warrantyStatus" required>
-                <option value="Not Selected">Not Selected</option>
-                <option value="Expired">Expired</option>
-                <option value="Limited">Limited</option>
-                <option value="Extended">Extended</option>
-            </select>
+        <label for="triageReasonForCall">Reason for Call:</label>
+        <textarea
+          id="triageReasonForCall"
+          rows="3"
+          placeholder="Briefly describe the reason for the call"
+          required
+        ></textarea>
 
-            <div id="warrantyLevelDiv" class="hidden">
-                <label for="warrantyLevelTriage">Warranty Level:</label>
-                <select name="warrantyLevelTriage" id="warrantyLevelTriage" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="Bronze">Bronze</option>
-                    <option value="Gold">Gold</option>
-                    <option value="Platinum">Platinum</option>
-                    <option value="Opal">Opal</option>
-                    <option value="Ruby">Ruby</option>
-                    <option value="Emerald">Emerald</option>
-                    <option value="Diamond">Diamond</option>
-                </select>
-            </div>
+        <label for="warrantyStatus">Warranty Status:</label>
+        <select id="warrantyStatus" name="warrantyStatus" required>
+          <option value="Not Selected">Not Selected</option>
+          <option value="Expired">Expired</option>
+          <option value="Limited">Limited</option>
+          <option value="Extended">Extended</option>
+        </select>
 
-            <label for="transferredTo">Transferred to:</label>
-            <select id="transferredTo" name="transferredTo" required>
-                <option value="Not Selected">Not Selected</option>
-                <option value="In Warranty OnPortal">In Warranty OnPortal</option>
-                <option value="In Warranty FDS Other">In Warranty FDS Other</option>
-                <option value="In Warranty Lock Guest">In Warranty Lock Guest</option>
-                <option value="In Warranty Lock Public">In Warranty Lock Public</option>
-                <option value="Out of Warranty OnPortal">Out of Warranty OnPortal</option>
-                <option value="Out of Warranty FDS Other">Out of Warranty FDS Other</option>
-                <option value="Out of Warranty Lock Guest">Out of Warranty Lock Guest</option>
-                <option value="Out of Warranty Lock Public">Out of Warranty Lock Public</option>
-                <option value="Integra">Integra</option>
-                <option value="Self Help Provided">Self Help Provided</option>
-                <option value="Customer Service">Customer Service</option>
-                <option value="Set up RMA">Set up RMA</option>
-                <option value="General Questions">General Questions</option>
-                <option value="Scheduled RCS">Scheduled RCS</option>
-                <option value="Added to ER Queue">Added to ER Queue</option>
-            </select>
-            
-            <div id="selfHelpDiv" class="hidden">
-                <label for="selfHelp">Self Help Provided:</label>
-                <textarea id="selfHelp" rows="3" placeholder="Briefly describe the self help provided" required></textarea>
-            </div>
-            
-            <div id="rmaReasonDiv" class="hidden">
-                <label for="rmaReason">RMA Reason:</label>
-                <textarea id="rmaReason" rows="3" placeholder="Reason for RMA" required></textarea>
-            </div>
+        <div id="warrantyLevelDiv" class="hidden">
+          <label for="warrantyLevelTriage">Warranty Level:</label>
+          <select name="warrantyLevelTriage" id="warrantyLevelTriage" required>
+            <option value="Not Selected">Not Selected</option>
+            <option value="Bronze">Bronze</option>
+            <option value="Gold">Gold</option>
+            <option value="Platinum">Platinum</option>
+            <option value="Opal">Opal</option>
+            <option value="Ruby">Ruby</option>
+            <option value="Emerald">Emerald</option>
+            <option value="Diamond">Diamond</option>
+          </select>
+        </div>
 
-            <div id="cgrNotesDiv" class="hidden">
-                <label for="cgrNotes">General Questions Notes:</label>
-                <textarea id="cgrNotes" rows="3" placeholder="What did the customer ask? What did we provide?" required></textarea>
-            </div>
+        <label for="transferredTo">Transferred to:</label>
+        <select id="transferredTo" name="transferredTo" required>
+          <option value="Not Selected">Not Selected</option>
+          <option value="In Warranty OnPortal">In Warranty OnPortal</option>
+          <option value="In Warranty FDS Other">In Warranty FDS Other</option>
+          <option value="In Warranty Lock Guest">In Warranty Lock Guest</option>
+          <option value="In Warranty Lock Public">
+            In Warranty Lock Public
+          </option>
+          <option value="Out of Warranty OnPortal">
+            Out of Warranty OnPortal
+          </option>
+          <option value="Out of Warranty FDS Other">
+            Out of Warranty FDS Other
+          </option>
+          <option value="Out of Warranty Lock Guest">
+            Out of Warranty Lock Guest
+          </option>
+          <option value="Out of Warranty Lock Public">
+            Out of Warranty Lock Public
+          </option>
+          <option value="Integra">Integra</option>
+          <option value="Self Help Provided">Self Help Provided</option>
+          <option value="Customer Service">Customer Service</option>
+          <option value="Set up RMA">Set up RMA</option>
+          <option value="General Questions">General Questions</option>
+          <option value="Scheduled RCS">Scheduled RCS</option>
+          <option value="Added to ER Queue">Added to ER Queue</option>
+        </select>
 
-            <div class="form-buttons">
-                <button type="button" id="copyButtonTriage">Copy</button>
-                <button type="button" id="clearButton">Clear</button>
-                <button type="button" id="undoClearButton" class="hidden">Undo</button>
-            </div>
-        </form>
-        <div id="copyNotification" class="notification hidden">Copied to clipboard!</div>
+        <div id="selfHelpDiv" class="hidden">
+          <label for="selfHelp">Self Help Provided:</label>
+          <textarea
+            id="selfHelp"
+            rows="3"
+            placeholder="Briefly describe the self help provided"
+            required
+          ></textarea>
+        </div>
+
+        <div id="rmaReasonDiv" class="hidden">
+          <label for="rmaReason">RMA Reason:</label>
+          <textarea
+            id="rmaReason"
+            rows="3"
+            placeholder="Reason for RMA"
+            required
+          ></textarea>
+        </div>
+
+        <div id="cgrNotesDiv" class="hidden">
+          <label for="cgrNotes">General Questions Notes:</label>
+          <textarea
+            id="cgrNotes"
+            rows="3"
+            placeholder="What did the customer ask? What did we provide?"
+            required
+          ></textarea>
+        </div>
+
+        <div class="form-buttons">
+          <button type="button" id="copyButtonTriage">Copy</button>
+          <button type="button" id="clearButton">Clear</button>
+          <button type="button" id="undoClearButton" class="hidden">
+            Undo
+          </button>
+        </div>
+      </form>
+      <div id="copyNotification" class="notification hidden">
+        Copied to clipboard!
+      </div>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

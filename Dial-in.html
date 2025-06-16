@@ -1,182 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dial-In Form</title>
 
     <!-- Inline script to check for dark mode immediately -->
     <script>
-        // Apply dark mode instantly if it's the saved preference
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check for saved mode and apply it
-            if (localStorage.getItem('mode') === 'dark') {
-                document.documentElement.classList.add('dark-mode');
-            }
-        });
-        const savedColor = localStorage.getItem('highlightColor');
-        if (savedColor) {
-            document.documentElement.style.setProperty('--highlight-color', savedColor);
+      // Apply dark mode instantly if it's the saved preference
+      document.addEventListener("DOMContentLoaded", () => {
+        // Check for saved mode and apply it
+        if (localStorage.getItem("mode") === "dark") {
+          document.documentElement.classList.add("dark-mode");
         }
+      });
+      const savedColor = localStorage.getItem("highlightColor");
+      if (savedColor) {
+        document.documentElement.style.setProperty(
+          "--highlight-color",
+          savedColor
+        );
+      }
     </script>
 
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <div id="color-selector-modal" class="modal hidden">
-        <div class="modal-content">
-          <h2>Select Highlight Color</h2>
-          <input type="color" id="highlight-color-picker" >
-          <div class="color-preview">
-            <p>Preview Highlight:</p>
-            <div id="color-preview-box"></div>
-          </div>
-          <button id="apply-color">Apply</button>
-          <button id="reset-color">Reset</button>
+      <div class="modal-content">
+        <h2>Select Highlight Color</h2>
+        <input type="color" id="highlight-color-picker" />
+        <div class="color-preview">
+          <p>Preview Highlight:</p>
+          <div id="color-preview-box"></div>
         </div>
+        <button id="apply-color">Apply</button>
+        <button id="reset-color">Reset</button>
       </div>
-      
-      <!-- Button to open the modal -->
-      <button id="open-color-selector">Change Highlight Color</button>
+    </div>
+
+    <!-- Button to open the modal -->
+    <button id="open-color-selector">Change Highlight Color</button>
 
     <div class="container">
-        <h1>Dial-In Form</h1>
-        <nav class="navbar">
-            <ul>
-                <li><a href="index.html" class="nav-link">Notes</a></li>
-                <li><a href="RMA.html" class="nav-link">RMA</a></li>
-                <li><a href="Dial-in.html" class="nav-link">Dial-In</a></li>
-                <li><a href="Triage.html" class="nav-link">Triage</a></li>
-                <li><a href="Product99.html" class="nav-link">Product 99</a></li>
-            </ul>
-        </nav>
-        <button id="toggle-mode">Toggle Dark Mode</button>
+      <h1>Dial-In Form</h1>
+      <nav class="navbar">
+        <ul>
+          <li><a href="index.html" class="nav-link">Notes</a></li>
+          <li><a href="RMA.html" class="nav-link">RMA</a></li>
+          <li><a href="Dial-in.html" class="nav-link">Dial-In</a></li>
+          <li><a href="Triage.html" class="nav-link">Triage</a></li>
+          <li><a href="Product99.html" class="nav-link">Product 99</a></li>
+        </ul>
+      </nav>
+      <button id="toggle-mode">Toggle Dark Mode</button>
 
-        <!-- Compact, Two-Column Dial-In Form -->
-        <form class="dial-in-form" id="dialInForm">
-            <div class="form-item">
-                <label for="contactName">Contact Name:</label>
-                <input type="text" id="contactName" name="contactName" required>
-            </div>
+      <!-- Compact, Two-Column Dial-In Form -->
+      <form class="dial-in-form" id="dialInForm">
+        <div class="form-item">
+          <label for="contactName">Contact Name:</label>
+          <input type="text" id="contactName" name="contactName" required />
+        </div>
 
-            <div class="form-item">
-                <label for="contactNumber">Contact Number:</label>
-                <input type="text" id="contactNumber" name="contactNumber" required>
-            </div>
+        <div class="form-item">
+          <label for="contactNumber">Contact Number:</label>
+          <input type="text" id="contactNumber" name="contactNumber" required />
+        </div>
 
-            <div class="form-item">
-                <label for="systemType">System Type:</label>
-                <select id="systemType" name="systemType" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="HT22X">HT22X</option>
-                    <option value="HT28">HT28</option>
-                    <option value="OnPoint">OnPoint</option>
-                    <option value="OnPortal">OnPortal</option>
-                </select>
-            </div>
+        <div class="form-item">
+          <label for="systemType">System Type:</label>
+          <select id="systemType" name="systemType" required>
+            <option value="Not Selected">Not Selected</option>
+            <option value="HT22X">HT22X</option>
+            <option value="HT28">HT28</option>
+            <option value="OnPoint">OnPoint</option>
+            <option value="OnPortal">OnPortal</option>
+          </select>
+        </div>
 
-            <div class="form-item">
-                <label for="dialInType">Dial-In Type:</label>
-                <select id="dialInType" name="dialInType" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="No Valid Data">No Valid Data</option>
-                    <option value="No Valid Program">No Valid Program</option>
-                    <option value="Corruption">Corruption</option>
-                    <option value="Locking Plan Mod">Locking Plan Mod</option>
-                    <option value="PW Reset">PW Reset</option>
-                    <option value="FW Upgrade">FW Upgrade</option>
-                    <option value="Install">Install</option>
-                    <option value="License/Security Renewal">License/Security Renewal</option>
-                    <option value="Specialist Troubleshooting">Specialist Troubleshooting</option>
-                </select>
-            </div>
-            
-            <div class="form-item">
-                <label for="dialInFee">Dial-In Fee:</label>
-                <select id="dialInFee" name="dialInFee" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="Waived">Waived</option>
-                    <option value="Charged">Charged</option>
-                </select>
-            </div>
+        <div class="form-item">
+          <label for="dialInType">Dial-In Type:</label>
+          <select id="dialInType" name="dialInType" required>
+            <option value="Not Selected">Not Selected</option>
+            <option value="No Valid Data">No Valid Data</option>
+            <option value="No Valid Program">No Valid Program</option>
+            <option value="Corruption">Corruption</option>
+            <option value="Locking Plan Mod">Locking Plan Mod</option>
+            <option value="PW Reset">PW Reset</option>
+            <option value="FW Upgrade">FW Upgrade</option>
+            <option value="Install">Install</option>
+            <option value="License/Security Renewal">
+              License/Security Renewal
+            </option>
+            <option value="Specialist Troubleshooting">
+              Specialist Troubleshooting
+            </option>
+          </select>
+        </div>
 
+        <div class="form-item">
+          <label for="dialInFee">Dial-In Fee:</label>
+          <select id="dialInFee" name="dialInFee" required>
+            <option value="Not Selected">Not Selected</option>
+            <option value="Waived">Waived</option>
+            <option value="Charged">Charged</option>
+          </select>
+        </div>
 
-            <div id="billingDiv" class="form-item">
-                <label for="billing">Billing:</label>
-                <select id="billing" name="billing" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="Net">Net</option>
-                    <option value="Prepay">Prepay</option>
-                </select>
-            </div>
+        <div id="billingDiv" class="form-item">
+          <label for="billing">Billing:</label>
+          <select id="billing" name="billing" required>
+            <option value="Not Selected">Not Selected</option>
+            <option value="Net">Net</option>
+            <option value="Prepay">Prepay</option>
+          </select>
+        </div>
 
-            <div class="form-item">
-                <label for="oracleID">Oracle ID:</label>
-                <input type="number" id="oracleID" name="oracleID" required>
-            </div>
-            
-            <div id="underWarrantyDiv" class="hidden form-item">
-                <label for="underWarranty">Warranty:</label>
-                <select id="underWarranty" name="underWarranty" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="No Warranty">No Warranty</option>
-                    <option value="Limited">Limited</option>
-                    <option value="Extended">Extended</option>
-                </select>
-            </div>
+        <div class="form-item">
+          <label for="oracleID">Oracle ID:</label>
+          <input type="number" id="oracleID" name="oracleID" required />
+        </div>
 
+        <div id="underWarrantyDiv" class="hidden form-item">
+          <label for="underWarranty">Warranty:</label>
+          <select id="underWarranty" name="underWarranty" required>
+            <option value="Not Selected">Not Selected</option>
+            <option value="No Warranty">No Warranty</option>
+            <option value="Limited">Limited</option>
+            <option value="Extended">Extended</option>
+          </select>
+        </div>
 
-            <div id="creditHoldDiv" class="form-item">
-                <label for="creditHold">Credit Hold:</label>
-                <select id="creditHold" name="creditHold" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                </select>
-            </div>
+        <div id="creditHoldDiv" class="form-item">
+          <label for="creditHold">Credit Hold:</label>
+          <select id="creditHold" name="creditHold" required>
+            <option value="Not Selected">Not Selected</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
 
-            <div id="batteryCheckDiv" class="hidden form-item">
-                <label for="batteryCheck">Battery Check:</label>
-                <select id="batteryCheck" name="batteryCheck" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="OK">OK</option>
-                    <option value="Low">Low</option>
-                </select>
-            </div>
+        <div id="batteryCheckDiv" class="hidden form-item">
+          <label for="batteryCheck">Battery Check:</label>
+          <select id="batteryCheck" name="batteryCheck" required>
+            <option value="Not Selected">Not Selected</option>
+            <option value="OK">OK</option>
+            <option value="Low">Low</option>
+          </select>
+        </div>
 
-            <div id="lithiumBatteryDiv" class="hidden form-item">
-                <label for="lithiumBattery">Lithium Battery:</label>
-                <select id="lithiumBattery" name="lithiumBattery" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="OK">OK</option>
-                    <option value="Low">Low</option>
-                </select>
-            </div>
+        <div id="lithiumBatteryDiv" class="hidden form-item">
+          <label for="lithiumBattery">Lithium Battery:</label>
+          <select id="lithiumBattery" name="lithiumBattery" required>
+            <option value="Not Selected">Not Selected</option>
+            <option value="OK">OK</option>
+            <option value="Low">Low</option>
+          </select>
+        </div>
 
-            <div id="modemTypeDiv" class="hidden form-item">
-                <label for="modemType">Modem Type:</label>
-                <select id="modemType" name="modemType" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="Internal">Internal</option>
-                    <option value="External">External</option>
-                    <option value="Needs to Order/Find">Needs to Order/Find</option>
-                </select>
-            </div>
+        <div id="modemTypeDiv" class="hidden form-item">
+          <label for="modemType">Modem Type:</label>
+          <select id="modemType" name="modemType" required>
+            <option value="Not Selected">Not Selected</option>
+            <option value="Internal">Internal</option>
+            <option value="External">External</option>
+            <option value="Needs to Order/Find">Needs to Order/Find</option>
+          </select>
+        </div>
 
-            <div id="reasonWaivedDiv" class="hidden form-item">
-                <label for="reasonWaived">Waived Fee Reason:</label>
-                <textarea id="reasonWaived" rows="2" placeholder="Why is the fee waived?" required></textarea>
-            </div>
+        <div id="reasonWaivedDiv" class="hidden form-item">
+          <label for="reasonWaived">Waived Fee Reason:</label>
+          <textarea
+            id="reasonWaived"
+            rows="2"
+            placeholder="Why is the fee waived?"
+            required
+          ></textarea>
+        </div>
 
-            <div class="form-buttons">
-                <button type="button" id="copyButtonDialIn">Copy</button>
-                <button type="button" id="clearButton">Clear</button>
-                <button type="button" id="undoClearButton" class="hidden">Undo</button>
-            </div>
-        </form>
-        <div id="copyNotification" class="notification hidden">Copied to clipboard!</div>
+        <div class="form-buttons">
+          <button type="button" id="copyButtonDialIn">Copy</button>
+          <button type="button" id="clearButton">Clear</button>
+          <button type="button" id="undoClearButton" class="hidden">
+            Undo
+          </button>
+        </div>
+      </form>
+      <div id="copyNotification" class="notification hidden">
+        Copied to clipboard!
+      </div>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

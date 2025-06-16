@@ -1,147 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>RMA Form</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RMA Form</title>
 
-        <!-- Inline script to check for dark mode immediately -->
-        <script>
-            // Apply dark mode instantly if it's the saved preference
-            document.addEventListener('DOMContentLoaded', () => {
-                // Check for saved mode and apply it
-                if (localStorage.getItem('mode') === 'dark') {
-                    document.documentElement.classList.add('dark-mode');
-                }
-            });
-            const savedColor = localStorage.getItem('highlightColor');
-            if (savedColor) {
-                document.documentElement.style.setProperty('--highlight-color', savedColor);
-            }
-        </script>
+    <!-- Inline script to check for dark mode immediately -->
+    <script>
+      // Apply dark mode instantly if it's the saved preference
+      document.addEventListener("DOMContentLoaded", () => {
+        // Check for saved mode and apply it
+        if (localStorage.getItem("mode") === "dark") {
+          document.documentElement.classList.add("dark-mode");
+        }
+      });
+      const savedColor = localStorage.getItem("highlightColor");
+      if (savedColor) {
+        document.documentElement.style.setProperty(
+          "--highlight-color",
+          savedColor
+        );
+      }
+    </script>
 
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
-        <div id="color-selector-modal" class="modal hidden">
-            <div class="modal-content">
-              <h2>Select Highlight Color</h2>
-              <input type="color" id="highlight-color-picker" >
-              <div class="color-preview">
-                <p>Preview Highlight:</p>
-                <div id="color-preview-box"></div>
-              </div>
-              <button id="apply-color">Apply</button>
-              <button id="reset-color">Reset</button>
-            </div>
-          </div>
-          
-          <!-- Button to open the modal -->
-          <button id="open-color-selector">Change Highlight Color</button>
-    
-        <div class="container">
-            <h1>RMA Form</h1>
-            <nav class="navbar">
-                <ul>
-                    <li><a href="index.html" class="nav-link">Notes</a></li>
-                    <li><a href="RMA.html" class="nav-link">RMA</a></li>
-                    <li><a href="Dial-in.html" class="nav-link">Dial-In</a></li>
-                    <li><a href="Triage.html" class="nav-link">Triage</a></li>
-                    <li><a href="Product99.html" class="nav-link">Product 99</a></li>
-                </ul>
-            </nav>
-            <button id="toggle-mode">Toggle Dark Mode</button>
-            <form id="rmaForm" name=rmaForm>
-                <label for="rmaType">RMA Type:</label>
-                <select id="rmaType" name="RMATYPE" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="Paid Repair - HT22X / Safe-XPP Only">Paid Repair - HT22X / Safe-XPP Only</option>
-                    <option value="Warranty ADV Replace">Warranty ADV Replace</option>
-                    <option value="Concession ADV Replace">Concession ADV Replace</option>
-                    <option value="Sample">Sample</option>
-                </select>
-                
-                <!-- 08 Inspection Field (Initially Hidden) -->
-                <div id="inspectionField" class="hidden">
-                    <label class="custom-checkbox">
-                        <input type="checkbox" name="08CHECK" id="inspectionCheckbox">
-                        <span class="checkmark"></span>
-                        08 Inspection
-                    </label>
-                </div>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="color-selector-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Select Highlight Color</h2>
+        <input type="color" id="highlight-color-picker" />
+        <div class="color-preview">
+          <p>Preview Highlight:</p>
+          <div id="color-preview-box"></div>
+        </div>
+        <button id="apply-color">Apply</button>
+        <button id="reset-color">Reset</button>
+      </div>
+    </div>
 
-                <!-- Warranty Field (Initially Hidden) -->
-                <div id="warrantyField" class="hidden">
-                    <label for="warranty">Warranty:</label>
-                    <select name="WARRANTYTYPE" id="warranty">
-                        <option value="Not Selected">Not Selected</option>
-                        <option value="Limited">Limited</option>
-                        <option value="Extended">Extended</option>
-                        <option value="Concession">Concession</option>
-                    </select>
-                </div>
-                <div id="bsoField" class="hidden">
-                    <label for="bso">BSO Number:</label>
-                    <input name="BSOFIELD" type="number" id="bso" name="bso"></input>
-                </div>
+    <!-- Button to open the modal -->
+    <button id="open-color-selector">Change Highlight Color</button>
 
-                <div id="warrantyLevelField" class="hidden">
-                    <label for="warrantyLevel">Warranty Level:</label>
-                    <select name="WARRANTYLEVEL" id="warrantyLevel" required>
-                        <option value="Not Selected">Not Selected</option>
-                        <option value="Bronze">Bronze</option>
-                        <option value="Gold">Gold</option>
-                        <option value="Platinum">Platinum</option>
-                        <option value="Opal">Opal</option>
-                        <option value="Ruby">Ruby</option>
-                        <option value="Emerald">Emerald</option>
-                        <option value="Diamond">Diamond</option>
-                    </select>
-                </div>
-                
-                <label for="failureReason">Failure Reason:</label>
-                <textarea name="FAILUREREASON" id="failureReason" rows="2" required></textarea>
-                
-                <label for="shippingType">Shipping Type:</label>
-                <select name="SHIPPINGTYPE" id="shippingType" required>
-                    <option value="Not Selected">Not Selected</option>
-                    <option value="Ground">Ground</option>
-                    <option value="Overnight">Overnight</option>
-                    <option value="Overnight Saturday">Overnight Saturday</option>
-                    <option value="Overnight AM">Overnight AM</option>
-                </select>
-                
-                <label for="redDot">Red Dot:</label>
-                <div class="user-note">
-                    <strong>Note:</strong> Emergency Shipment - Only works if submitted before 11am
-                </div>
-                <select name="REDDOT" id="redDot" required>
-                    <option value="No">No</option>
-                    <option value="Yes Chatter Tracy Gassaway & Anne Kelly on the case">Yes Chatter Tracy Gassaway & Anne Kelly on the case</option>
-                </select>
-                
-                <label for="callTag">Call Tag:</label>
-                <div class="user-note">
-                    <strong>Definition:</strong> Pre-paid return shipping label
-                </div>
-                <select name="CALLTAG" id="callTag" required>
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
+    <div class="container">
+      <h1>RMA Form</h1>
+      <nav class="navbar">
+        <ul>
+          <li><a href="index.html" class="nav-link">Notes</a></li>
+          <li><a href="RMA.html" class="nav-link">RMA</a></li>
+          <li><a href="Dial-in.html" class="nav-link">Dial-In</a></li>
+          <li><a href="Triage.html" class="nav-link">Triage</a></li>
+          <li><a href="Product99.html" class="nav-link">Product 99</a></li>
+        </ul>
+      </nav>
+      <button id="toggle-mode">Toggle Dark Mode</button>
+      <form id="rmaForm" name="rmaForm">
+        <label for="rmaType">RMA Type:</label>
+        <select id="rmaType" name="RMATYPE" required>
+          <option value="Not Selected">Not Selected</option>
+          <option value="Paid Repair - HT22X / Safe-XPP Only">
+            Paid Repair - HT22X / Safe-XPP Only
+          </option>
+          <option value="Warranty ADV Replace">Warranty ADV Replace</option>
+          <option value="Concession ADV Replace">Concession ADV Replace</option>
+          <option value="Sample">Sample</option>
+        </select>
 
-                <label>Parts:</label>
-                <div id="dynamicForm"></div>
-                <button id="addButton">Add Part</button>
-                
-                <div class="form-buttons">
-                    <button name="COPY" type="button" id="copyButtonRMA">Copy</button>
-                    <button name="CLEAR" type="button" id="clearButton">Clear</button>
-                    <button type="button" id="undoClearButton" class="hidden">Undo</button>
-                </div>
-            </form>            
-        <div id="copyNotification" class="notification hidden">Copied to clipboard!</div>
+        <!-- 08 Inspection Field (Initially Hidden) -->
+        <div id="inspectionField" class="hidden">
+          <label class="custom-checkbox">
+            <input type="checkbox" name="08CHECK" id="inspectionCheckbox" />
+            <span class="checkmark"></span>
+            08 Inspection
+          </label>
+        </div>
+
+        <!-- Warranty Field (Initially Hidden) -->
+        <div id="warrantyField" class="hidden">
+          <label for="warranty">Warranty:</label>
+          <select name="WARRANTYTYPE" id="warranty">
+            <option value="Not Selected">Not Selected</option>
+            <option value="Limited">Limited</option>
+            <option value="Extended">Extended</option>
+            <option value="Concession">Concession</option>
+          </select>
+        </div>
+        <div id="bsoField" class="hidden">
+          <label for="bso">BSO Number:</label>
+          <input name="BSOFIELD" type="number" id="bso" />
+        </div>
+
+        <div id="warrantyLevelField" class="hidden">
+          <label for="warrantyLevel">Warranty Level:</label>
+          <select name="WARRANTYLEVEL" id="warrantyLevel" required>
+            <option value="Not Selected">Not Selected</option>
+            <option value="Bronze">Bronze</option>
+            <option value="Gold">Gold</option>
+            <option value="Platinum">Platinum</option>
+            <option value="Opal">Opal</option>
+            <option value="Ruby">Ruby</option>
+            <option value="Emerald">Emerald</option>
+            <option value="Diamond">Diamond</option>
+          </select>
+        </div>
+
+        <label for="failureReason">Failure Reason:</label>
+        <textarea
+          name="FAILUREREASON"
+          id="failureReason"
+          rows="2"
+          required
+        ></textarea>
+
+        <label for="shippingType">Shipping Type:</label>
+        <select name="SHIPPINGTYPE" id="shippingType" required>
+          <option value="Not Selected">Not Selected</option>
+          <option value="Ground">Ground</option>
+          <option value="Overnight">Overnight</option>
+          <option value="Overnight Saturday">Overnight Saturday</option>
+          <option value="Overnight AM">Overnight AM</option>
+        </select>
+
+        <label for="redDot">Red Dot:</label>
+        <div class="user-note">
+          <strong>Note:</strong> Emergency Shipment - Only works if submitted
+          before 11am
+        </div>
+        <select name="REDDOT" id="redDot" required>
+          <option value="No">No</option>
+          <option value="Yes Chatter Tracy Gassaway & Anne Kelly on the case">
+            Yes Chatter Tracy Gassaway & Anne Kelly on the case
+          </option>
+        </select>
+
+        <label for="callTag">Call Tag:</label>
+        <div class="user-note">
+          <strong>Definition:</strong> Pre-paid return shipping label
+        </div>
+        <select name="CALLTAG" id="callTag" required>
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+
+        <label>Parts:</label>
+        <div id="dynamicForm"></div>
+        <button id="addButton">Add Part</button>
+
+        <div class="form-buttons">
+          <button name="COPY" type="button" id="copyButtonRMA">Copy</button>
+          <button name="CLEAR" type="button" id="clearButton">Clear</button>
+          <button type="button" id="undoClearButton" class="hidden">
+            Undo
+          </button>
+        </div>
+      </form>
+      <div id="copyNotification" class="notification hidden">
+        Copied to clipboard!
+      </div>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

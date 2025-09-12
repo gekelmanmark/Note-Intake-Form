@@ -250,21 +250,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  // const handlePhoneUpdateChange = (status) => {
-  //   const contactNumberTriageDiv = document.getElementById(
-  //     "contactNumberTriageDiv"
-  //   );
-  //   const contactNumberTriage = document.getElementById("contactNumberTriage");
-  //   // Display fields based on selected system type
-  //   if (status === "Yes") {
-  //     contactNumberTriageDiv.classList.remove("hidden");
-  //     contactNumberTriage.required = true;
-  //   } else {
-  //     contactNumberTriageDiv.classList.add("hidden");
-  //     contactNumberTriage.required = false;
-  //   }
-  // };
-
   const handleWarrantyStatusChange = (status) => {
     const warrantyLevelDiv = document.getElementById("warrantyLevelDiv");
     const warrantyLevelTriage = document.getElementById("warrantyLevelTriage");
@@ -507,7 +492,6 @@ document.addEventListener("DOMContentLoaded", function () {
           }
           if (form.id === "triageForm") {
             handleTransferToChange("Not Selected");
-            handlePhoneUpdateChange("No");
             handleWarrantyStatusChange("Not Selected");
           }
           form.reset();

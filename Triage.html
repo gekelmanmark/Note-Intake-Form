@@ -63,27 +63,19 @@
           required
         ></textarea>
 
-        <label for="phoneUpdated">Contact Phone Updated/Verified:</label>
+        <!-- <label for="phoneUpdated">Contact Phone Updated/Verified:</label>
         <select id="phoneUpdated" name="phoneUpdated" required>
           <option value="No">No</option>
           <option value="Yes">Yes</option>
-        </select>
+        </select> -->
 
-        <div id="contactNumberTriageDiv" class="hidden">
+        <div id="contactNumberTriageDiv">
           <label for="contactNumberTriage">Contact Number:</label>
-          <input
-            type="text"
-            id="contactNumberTriage"
-            name="contactNumber"
-            required
-          />
+          <input type="text" id="contactNumberTriage" name="contactNumber" required />
         </div>
 
-        <label for="emailUpdated">Contact Email Updated/Verified:</label>
-        <select id="emailUpdated" name="emailUpdated" required>
-          <option value="No">No</option>
-          <option value="Yes">Yes</option>
-        </select>
+        <label for="emailUpdated">Contact Email:</label>
+        <input type="text" id="emailUpdated" name="emailUpdated" required />
 
         <label for="triageReasonForCall">Reason for Call:</label>
         <textarea

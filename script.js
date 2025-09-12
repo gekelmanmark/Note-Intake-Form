@@ -88,10 +88,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     const triageFormLoaded = document.getElementById("triageForm");
     if (triageFormLoaded) {
-      const phoneUpdated = localStorage.getItem("phoneUpdated");
       const warrantyStatus = localStorage.getItem("warrantyStatus");
       const transferredTo = localStorage.getItem("transferredTo");
-      handlePhoneUpdateChange(phoneUpdated);
       handleWarrantyStatusChange(warrantyStatus);
       handleTransferToChange(transferredTo);
     }
@@ -252,20 +250,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  const handlePhoneUpdateChange = (status) => {
-    const contactNumberTriageDiv = document.getElementById(
-      "contactNumberTriageDiv"
-    );
-    const contactNumberTriage = document.getElementById("contactNumberTriage");
-    // Display fields based on selected system type
-    if (status === "Yes") {
-      contactNumberTriageDiv.classList.remove("hidden");
-      contactNumberTriage.required = true;
-    } else {
-      contactNumberTriageDiv.classList.add("hidden");
-      contactNumberTriage.required = false;
-    }
-  };
+  // const handlePhoneUpdateChange = (status) => {
+  //   const contactNumberTriageDiv = document.getElementById(
+  //     "contactNumberTriageDiv"
+  //   );
+  //   const contactNumberTriage = document.getElementById("contactNumberTriage");
+  //   // Display fields based on selected system type
+  //   if (status === "Yes") {
+  //     contactNumberTriageDiv.classList.remove("hidden");
+  //     contactNumberTriage.required = true;
+  //   } else {
+  //     contactNumberTriageDiv.classList.add("hidden");
+  //     contactNumberTriage.required = false;
+  //   }
+  // };
 
   const handleWarrantyStatusChange = (status) => {
     const warrantyLevelDiv = document.getElementById("warrantyLevelDiv");
@@ -558,9 +556,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (element.id === "transferredTo") {
                   handleTransferToChange(lastFormState[element.id]);
                 }
-                if (element.id === "phoneUpdated") {
-                  handlePhoneUpdateChange(lastFormState[element.id]);
-                }
                 if (element.id === "warrantyStatus") {
                   handleWarrantyStatusChange(lastFormState[element.id]);
                 }
@@ -692,8 +687,6 @@ document.addEventListener("DOMContentLoaded", function () {
       if (triageForm.checkValidity() && formIsValid) {
         const customerNameTriage =
           document.getElementById("customerNameTriage")?.value || "";
-        const phoneUpdated =
-          document.getElementById("phoneUpdated")?.value || "";
         const contactNumberTriage =
           document.getElementById("contactNumberTriage")?.value || "";
         const emailUpdated =
@@ -711,11 +704,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const cgrNotes = document.getElementById("cgrNotes")?.value || "";
 
         let fullText = `S/W: ${customerNameTriage.trim()}\n`;
-        fullText += `Contact Phone Updated/Verified: ${phoneUpdated}\n`;
-        if (phoneUpdated === "Yes") {
-          fullText += `Phone Number: ${contactNumberTriage}\n`;
-        }
-        fullText += `Contact Email Updated/Verified: ${emailUpdated}\n`;
+        fullText += `Phone Number: ${contactNumberTriage.trim()}\n`;
+
+        fullText += `Contact Email: ${emailUpdated.trim()}\n`;
         fullText += `Reason for Call: ${reasonForCall.trim()}\n`;
         fullText += `Warranty Status: ${warrantyStatus}\n`;
         if (warrantyStatus === "Extended") {
@@ -1029,17 +1020,11 @@ document.addEventListener("DOMContentLoaded", function () {
   if (triageFormLoaded) {
     const savedTransferredTo = localStorage.getItem("transferredTo");
     const transferredTo = document.getElementById("transferredTo");
-    const savedPhoneUpdated = localStorage.getItem("phoneUpdated");
-    const phoneUpdated = document.getElementById("phoneUpdated");
     const savedwarrantyStatus = localStorage.getItem("warrantyStatus");
     const warrantyStatus = document.getElementById("warrantyStatus");
     if (savedTransferredTo) {
       transferredTo.value = savedTransferredTo;
       handleTransferToChange(savedTransferredTo);
-    }
-    if (savedPhoneUpdated) {
-      phoneUpdated.value = savedPhoneUpdated;
-      handlePhoneUpdateChange(savedPhoneUpdated);
     }
     if (savedwarrantyStatus) {
       warrantyStatus.value = savedwarrantyStatus;
@@ -1047,9 +1032,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     transferredTo.addEventListener("change", function () {
       handleTransferToChange(transferredTo.value);
-    });
-    phoneUpdated.addEventListener("change", function () {
-      handlePhoneUpdateChange(phoneUpdated.value);
     });
     warrantyStatus.addEventListener("change", function () {
       handleWarrantyStatusChange(warrantyStatus.value);

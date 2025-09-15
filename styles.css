@@ -146,7 +146,8 @@ select {
   background-repeat: no-repeat;
   background-position: right 10px center; /* Position the arrow */
   background-size: 12px; /* Size of the custom arrow */
-  font-size: 1rem; /* Set font size */
+  font-size: 0.9rem; /* Set font size */
+  font-family: "Roboto", sans-serif; /* Match textarea font */
   cursor: pointer; /* Change cursor on hover */
   transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
 }
@@ -515,18 +516,16 @@ option.dark-mode {
 input {
   width: 100%; /* Full width */
   display: block;
-  flex-grow: 0; /* Prevent the textarea from growing beyond its container */
-  flex-shrink: 1; /* Allow the textarea to shrink within the container */
+  appearance: none; /* Remove default styling */
   padding: 10px; /* Padding inside input */
-  margin-bottom: 15px 15px; /* Space between elements */
   border-radius: 5px; /* Rounded corners */
   border: 1px solid #ccc; /* Subtle border */
   background-color: var(--color-bg-light); /* Light background */
   color: var(--color-text-dark); /* Dark text */
-  font-size: 1rem; /* Font size */
+  font-size: 0.9rem; /* Font size */
+  font-family: "Roboto", sans-serif; /* Match textarea font */
   box-sizing: border-box;
   transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
-  appearance: none; /* Remove default styling */
   box-shadow: inset 0 1px 3px var(--color-shadow-light); /* Slight inset shadow */
 }
 

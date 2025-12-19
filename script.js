@@ -100,49 +100,49 @@ document.addEventListener("DOMContentLoaded", function () {
     const inspectionField = document.getElementById("inspectionField");
     const warrantyField = document.getElementById("warrantyField");
     const warranty = document.getElementById("warranty");
-    const bsoField = document.getElementById("bsoField");
-    const bso = document.getElementById("bso");
+    const orderField = document.getElementById("orderField");
+    const order = document.getElementById("order");
     const warrantyLevelField = document.getElementById("warrantyLevelField");
 
     // Display fields based on selected RMA type
     if (rmaType === "Paid Repair - HT22X / Safe-XPP Only") {
       inspectionField.classList.remove("hidden");
       warrantyField.classList.add("hidden");
-      bsoField.classList.add("hidden");
-      bso.required = false;
+      orderField.classList.add("hidden");
+      order.required = false;
       warrantyLevelField.classList.add("hidden");
     } else if (rmaType === "Warranty ADV Replace") {
       if (warranty.value === "Limited") {
         inspectionField.classList.remove("hidden");
         warrantyField.classList.remove("hidden");
-        bsoField.classList.remove("hidden");
-        bso.required = true;
+        orderField.classList.remove("hidden");
+        order.required = true;
         warrantyLevelField.classList.add("hidden");
       } else if (warranty.value === "Extended") {
         inspectionField.classList.remove("hidden");
         warrantyField.classList.remove("hidden");
-        bsoField.classList.remove("hidden");
-        bso.required = true;
+        orderField.classList.remove("hidden");
+        order.required = true;
         warrantyLevelField.classList.remove("hidden");
       } else {
         inspectionField.classList.remove("hidden");
         warrantyField.classList.remove("hidden");
-        bsoField.classList.add("hidden");
-        bso.required = false;
+        orderField.classList.add("hidden");
+        order.required = false;
         warrantyLevelField.classList.add("hidden");
       }
       warranty.addEventListener("change", function () {
         if (warranty.value === "Limited") {
-          bsoField?.classList.remove("hidden");
-          bso.required = true;
+          orderField?.classList.remove("hidden");
+          order.required = true;
           warrantyLevelField?.classList.add("hidden");
         } else if (warranty.value === "Extended") {
-          bsoField?.classList.remove("hidden");
-          bso.required = true;
+          orderField?.classList.remove("hidden");
+          order.required = true;
           warrantyLevelField?.classList.remove("hidden");
         } else {
-          bsoField?.classList.add("hidden");
-          bso.required = false;
+          orderField?.classList.add("hidden");
+          order.required = false;
           warrantyLevelField?.classList.add("hidden");
         }
       });
@@ -150,8 +150,8 @@ document.addEventListener("DOMContentLoaded", function () {
       // Hide all conditional fields for other RMA types
       inspectionField.classList.add("hidden");
       warrantyField.classList.add("hidden");
-      bsoField.classList.add("hidden");
-      bsoField.required = false;
+      orderField.classList.add("hidden");
+      order.required = false;
       warrantyLevelField.classList.add("hidden");
     }
   };
@@ -267,16 +267,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const rmaType = document.getElementById("rmaType")?.value || "";
     if (rmaType === "Warranty ADV Replace") {
       if (warrantyType === "Limited") {
-        bsoField?.classList.remove("hidden");
-        bso.required = true;
+        orderField?.classList.remove("hidden");
+        order.required = true;
         warrantyLevelField?.classList.add("hidden");
       } else if (warrantyType === "Extended") {
-        bsoField?.classList.remove("hidden");
-        bso.required = true;
+        orderField?.classList.remove("hidden");
+        order.required = true;
         warrantyLevelField?.classList.remove("hidden");
       } else {
-        bsoField?.classList.add("hidden");
-        bso.required = false;
+        orderField?.classList.add("hidden");
+        order.required = false;
         warrantyLevelField?.classList.add("hidden");
       }
     }
@@ -750,7 +750,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const underWarranty =
           document.getElementById("underWarranty")?.value || "";
         const dialInType = document.getElementById("dialInType")?.value || "";
-        const oracleID = document.getElementById("oracleID")?.value || "";
+        const SAP = document.getElementById("SAP")?.value || "";
         const dialInFee = document.getElementById("dialInFee")?.value || "";
         const creditHold = document.getElementById("creditHold")?.value || "";
         const batteryCheck =
@@ -770,7 +770,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (dialInFee != "Waived") {
           fullText += `Billing: ${billing}\n`;
         }
-        fullText += `Oracle ID: ${oracleID}\n`;
+        fullText += `ERP Account (SAP): ${SAP}\n`;
         if (dialInFee != "Waived") {
           fullText += `Credit Hold: ${creditHold}\n`;
         }
@@ -882,7 +882,7 @@ document.addEventListener("DOMContentLoaded", function () {
           ? "Yes"
           : "No";
 
-        const bsoNumber = document.getElementById("bso")?.value || "";
+        const orderNumber = document.getElementById("order")?.value || "";
         const warrantyLevel =
           document.getElementById("warrantyLevel")?.value || "";
         const addButton = document.getElementById("addButton");
@@ -909,10 +909,10 @@ document.addEventListener("DOMContentLoaded", function () {
             if (warrantyField === "Limited" || warrantyField === "Extended") {
               fullText += `\nWarranty: ${warrantyField}`;
               if (warrantyField === "Limited") {
-                fullText += `\nBSO: ${bsoNumber}`;
+                fullText += `\nOrder Number: ${orderNumber}`;
               }
               if (warrantyField === "Extended") {
-                fullText += `\nBSO: ${bsoNumber}`;
+                fullText += `\nOrder Number: ${orderNumber}`;
                 fullText += `\nWarranty Type: ${warrantyLevel}`;
               }
             }

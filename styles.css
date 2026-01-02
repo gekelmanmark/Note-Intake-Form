@@ -136,7 +136,6 @@ body {
 select {
   width: 100%;
   padding: 10px; /* Add padding inside the select box */
-  margin-bottom: 15px; /* Space below each select element */
   border-radius: 5px; /* Rounded corners */
   border: 1px solid #ccc; /* Subtle border */
   background-color: var(--color-bg-light); /* Light background color */
@@ -195,7 +194,6 @@ textarea {
   display: block;
   flex-grow: 0; /* Prevent the textarea from growing beyond its container */
   flex-shrink: 1; /* Allow the textarea to shrink within the container */
-  margin-bottom: 15px;
   margin-right: 60px;
   border-radius: 8px; /* Softer border */
   border: 1px solid #ccc;
@@ -327,7 +325,7 @@ body.dark-mode .user-note {
 }
 
 button {
-  margin: 5px 10px;
+  margin-top: 20px;
   margin-left: 0;
   padding: 10px 15px;
   border: none;
@@ -459,7 +457,7 @@ button.dark-mode:hover {
   color: white;
   border: none;
   cursor: pointer;
-  margin-left: 10px;
+  margin-top: 0;
   border-radius: 4px; /* Rounded corners for consistency */
   transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
   box-shadow: 0 4px 6px var(--color-shadow-light); /* Light shadow */
@@ -559,10 +557,12 @@ input.dark-mode:focus {
 .form-row {
   display: flex;
   margin-bottom: 10px;
+  align-items: center;
 }
 
 .form-row input {
   margin-right: 10px;
+  padding: none;
 }
 
 /* Wider part number field */

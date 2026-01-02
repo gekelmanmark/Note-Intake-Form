@@ -86,13 +86,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     }
-    const triageFormLoaded = document.getElementById("triageForm");
-    if (triageFormLoaded) {
-      const warrantyStatus = localStorage.getItem("warrantyStatus");
-      const transferredTo = localStorage.getItem("transferredTo");
-      handleWarrantyStatusChange(warrantyStatus);
-      handleTransferToChange(transferredTo);
-    }
+    // const triageFormLoaded = document.getElementById("triageForm");
+    // if (triageFormLoaded) {
+    //   const warrantyStatus = localStorage.getItem("warrantyStatus");
+    //   const transferredTo = localStorage.getItem("transferredTo");
+    //   handleWarrantyStatusChange(warrantyStatus);
+    //   handleTransferToChange(transferredTo);
+    // }
   };
 
   // Function to show or hide fields based on RMA Type
@@ -686,11 +686,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const selfHelp = document.getElementById("selfHelp")?.value || "";
         const rmaReason = document.getElementById("rmaReason")?.value || "";
         const cgrNotes = document.getElementById("cgrNotes")?.value || "";
+        const systemType = document.getElementById("systemTypeTriage")?.value || "";
 
         let fullText = `S/W: ${customerNameTriage.trim()}\n`;
         fullText += `Phone Number: ${contactNumberTriage.trim()}\n`;
 
         fullText += `Contact Email: ${emailUpdated.trim()}\n`;
+        fullText += `System Type: ${systemType.trim()}\n`;
         fullText += `Reason for Call: ${reasonForCall.trim()}\n`;
         fullText += `Warranty Status: ${warrantyStatus}\n`;
         if (warrantyStatus === "Extended") {

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -18,7 +18,7 @@
       if (savedColor) {
         document.documentElement.style.setProperty(
           "--highlight-color",
-          savedColor
+          savedColor,
         );
       }
     </script>
@@ -104,15 +104,6 @@
           </select>
         </div>
 
-        <label for="failureReason">Failure Reason:</label>
-        <textarea
-          name="FAILUREREASON"
-          id="failureReason"
-          rows="2"
-          placeholder="What is the reason for the RMA?"
-          required
-        ></textarea>
-
         <label for="shippingType">Shipping Type:</label>
         <select name="SHIPPINGTYPE" id="shippingType" required>
           <option value="Not Selected">Not Selected</option>
@@ -142,6 +133,41 @@
           <option value="No">No</option>
           <option value="Yes">Yes</option>
         </select>
+
+        <label for="reasonForReturn">Reason for Return:</label>
+        <select name="REASONFORRETURN" id="reasonForReturn" required>
+          <option value="Not Selected">Not Selected</option>
+          <option value="Hardware defect">Hardware defect</option>
+          <option value="DOA (Dead on Arrival)">DOA (Dead on Arrival)</option>
+          <option value="Incorrect item received">
+            Incorrect item received
+          </option>
+        </select>
+
+        <label for="failureReason">Failure Reason:</label>
+        <textarea
+          name="FAILUREREASON"
+          id="failureReason"
+          rows="1"
+          placeholder="What is the reason for the RMA?"
+          required
+        ></textarea>
+
+        <label for="rmaTroubleshooting">Troubleshooting Performed:</label>
+        <textarea
+          name="RMA_TROUBLESHOOTING"
+          id="rmaTroubleshooting"
+          rows="3"
+          placeholder="How was it determined that the unit is faulty?"
+          required
+        ></textarea>
+        <label for="sku/sn">( Optional ) - SKU / SN:</label>
+        <textarea
+          name="SKU_SN"
+          id="skuSn"
+          rows="1"
+          placeholder="Optional SKU/SN information"
+        ></textarea>
 
         <label for="dynamicForm">Parts:</label>
         <div id="dynamicForm"></div>

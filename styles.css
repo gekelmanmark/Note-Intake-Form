@@ -117,7 +117,9 @@ body {
   font-family: "Roboto", sans-serif;
   margin: 40px;
   background-color: var(--color-bg-body);
-  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out; /* Smooth transition for dark mode */
+  transition:
+    background-color 0.5s ease-in-out,
+    color 0.5s ease-in-out; /* Smooth transition for dark mode */
 }
 
 .container {
@@ -130,7 +132,9 @@ body {
   box-shadow: 0 4px 20px var(--color-shadow-light);
   max-width: 700px;
   margin: auto;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease; /* Smooth transition */
 }
 
 select {
@@ -148,7 +152,9 @@ select {
   font-size: 0.9rem; /* Set font size */
   font-family: "Roboto", sans-serif; /* Match textarea font */
   cursor: pointer; /* Change cursor on hover */
-  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease; /* Smooth transitions */
 }
 
 select:hover {
@@ -198,7 +204,9 @@ textarea {
   border-radius: 8px; /* Softer border */
   border: 1px solid #ccc;
   box-shadow: inset 0 1px 3px var(--color-shadow-light);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease,
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
     background-color 0.3s ease; /* Smooth transition */
   background-color: var(--color-bg-light);
   font-size: 0.9rem; /* Slightly larger font */
@@ -207,7 +215,9 @@ textarea {
   max-width: 100%; /* Prevent it from growing wider than the container */
   min-height: 3rem;
   box-sizing: border-box; /* Include padding and border in the textarea's size */
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 /* Custom Scroll Bar Styling */
@@ -334,7 +344,9 @@ button {
   color: rgb(218, 218, 218);
   cursor: pointer;
   box-shadow: 0 4px 6px var(--color-shadow-light);
-  transition: background-color 0.3s ease, transform 0.3s ease,
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease,
     box-shadow 0.3s ease; /* Smoother transitions */
 }
 
@@ -408,7 +420,9 @@ body.dark-mode a:visited {
   box-shadow: 0 4px 6px var(--color-shadow-light);
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
   z-index: 1000;
 }
 
@@ -459,7 +473,9 @@ button.dark-mode:hover {
   cursor: pointer;
   margin-top: 0;
   border-radius: 4px; /* Rounded corners for consistency */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease; /* Smooth transition */
   box-shadow: 0 4px 6px var(--color-shadow-light); /* Light shadow */
 }
 
@@ -492,7 +508,9 @@ select.dark-mode {
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 12px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease,
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
     background-color 0.3s ease;
 }
 
@@ -523,7 +541,9 @@ input {
   font-size: 0.9rem; /* Font size */
   font-family: "Roboto", sans-serif; /* Match textarea font */
   box-sizing: border-box;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease; /* Smooth transitions */
   box-shadow: inset 0 1px 3px var(--color-shadow-light); /* Slight inset shadow */
 }
 
@@ -542,7 +562,9 @@ input.dark-mode {
   color: var(--color-dark-text); /* Light text */
   border: 1px solid var(--color-dark-border); /* Softer border in dark mode */
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4); /* Deeper inset shadow */
-  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease; /* Smooth transitions */
 }
 
 input.dark-mode:hover {
@@ -556,7 +578,8 @@ input.dark-mode:focus {
 
 .form-row {
   display: flex;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
+  padding: 5px 0;
   align-items: center;
 }
 
@@ -605,7 +628,9 @@ input.dark-mode:focus {
   background-color: var(--color-bg-light); /* Light background */
   border: 1px solid #ccc; /* Light border */
   border-radius: 4px; /* Rounded checkmark box */
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 /* On hover, change the checkmark box's border */
@@ -702,7 +727,10 @@ body.dark-mode .custom-checkbox input:checked ~ .checkmark {
   background-color: #6c757d; /* Button-like background */
   padding: 10px 20px; /* Same padding as buttons */
   border-radius: 5px; /* Rounded corners for buttons */
-  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease;
   box-shadow: 0 4px 6px var(--color-shadow-light); /* Button-like shadow */
   font-size: 0.9rem;
 }

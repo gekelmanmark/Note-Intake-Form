@@ -298,15 +298,38 @@ document.addEventListener("DOMContentLoaded", function () {
   // Function to apply custom styles to invalid fields
   function applyValidationStyles(form) {
     const formElements = form.querySelectorAll("input, textarea, select");
+
     formElements.forEach((element) => {
-      if (
-        !element.checkValidity() ||
-        (element.tagName === "SELECT" && element.value === "Not Selected")
-      ) {
-        // Skip elements that are hidden or have hidden parents
-        if (!isElementOrParentHidden(element)) {
-          element.classList.add("invalid-field"); // Add a custom invalid class to highlight
-        }
+      // Skip elements that won't be validated by the browser (e.g., disabled, type="hidden")
+      if (!element.willValidate) return;
+
+      // Determine requirement (consider ARIA too if you use it)
+      const isRequired =
+        element.required || element.getAttribute("aria-required") === "true";
+
+      // Handle "empty" consistently across inputs and selects
+      const isSelect = element.tagName === "SELECT";
+      const isEmpty =
+        (isSelect &&
+          (element.selectedIndex === -1 ||
+            element.value === "" ||
+            element.value === "Not Selected")) ||
+        (!isSelect && element.value === "");
+
+      // Optional fields should be styled only if they have a value and are invalid
+      const shouldConsider = isRequired || (!isRequired && !isEmpty); // required OR (optional but user entered something)
+
+      // Browser validity + your custom "Not Selected" placeholder rule for <select>
+      const isInvalid =
+        !element.validity.valid ||
+        (isSelect && element.value === "Not Selected");
+
+      // Only apply styles if we decided to consider the field AND it’s invalid AND it’s visible
+      if (shouldConsider && isInvalid && !isElementOrParentHidden(element)) {
+        element.classList.add("invalid-field");
+      } else {
+        // Always clear the class if it no longer applies
+        element.classList.remove("invalid-field");
       }
     });
   }
@@ -440,7 +463,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const partsData = [];
       document.querySelectorAll(".form-row").forEach((row) => {
         const partNumber = row.querySelector(
-          'input[name="partNumber[]"]'
+          'input[name="partNumber[]"]',
         ).value;
         const quantity = row.querySelector('input[name="quantity[]"]').value;
         partsData.push({ partNumber, quantity });
@@ -476,7 +499,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const container = document.getElementById("dynamicForm");
             if (container) {
               lastFormState.dynamicFieldValues = Array.from(
-                container.querySelectorAll("input")
+                container.querySelectorAll("input"),
               ).map((input) => ({
                 name: input.name,
                 value: input.value,
@@ -521,7 +544,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (form) {
             // Restore static form fields
             const formElements = form.querySelectorAll(
-              "input, textarea, select"
+              "input, textarea, select",
             );
             formElements.forEach((element) => {
               if (lastFormState[element.id] !== undefined) {
@@ -557,13 +580,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 ({ name, value, dataId }) => {
                   console.log(`value: ${value}`);
                   const field = dynamicFormSection.querySelector(
-                    `[data-id="${dataId}"]`
+                    `[data-id="${dataId}"]`,
                   );
                   console.log(`[data-id="${dataId}"]`);
                   if (field) {
                     field.value = value; // Restore the saved value
                   }
-                }
+                },
               );
             }
             // Clear the saved state
@@ -686,7 +709,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const selfHelp = document.getElementById("selfHelp")?.value || "";
         const rmaReason = document.getElementById("rmaReason")?.value || "";
         const cgrNotes = document.getElementById("cgrNotes")?.value || "";
-        const systemType = document.getElementById("systemTypeTriage")?.value || "";
+        const systemType =
+          document.getElementById("systemTypeTriage")?.value || "";
 
         let fullText = `S/W: ${customerNameTriage.trim()}\n`;
         fullText += `Phone Number: ${contactNumberTriage.trim()}\n`;
@@ -871,9 +895,14 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       if (rmaForm.checkValidity() && formIsValid) {
-        const rmaType = document.getElementById("rmaType")?.value || "";
+        const skuSn = document.getElementById("skuSn")?.value || "";
+        const reasonForReturn =
+          document.getElementById("reasonForReturn")?.value || "";
         const failureReason =
           document.getElementById("failureReason")?.value || "";
+        const rmaTroubleshooting =
+          document.getElementById("rmaTroubleshooting")?.value || "";
+        const rmaType = document.getElementById("rmaType")?.value || "";
         const redDot = document.getElementById("redDot")?.value || "";
         const shippingType =
           document.getElementById("shippingType")?.value || "";
@@ -890,10 +919,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const addButton = document.getElementById("addButton");
 
         const partNumbers = document.querySelectorAll(
-          'input[name="partNumber[]"]'
+          'input[name="partNumber[]"]',
         );
         const quantities = document.querySelectorAll(
-          'input[name="quantity[]"]'
+          'input[name="quantity[]"]',
         );
 
         if (partNumbers.length > 0 && quantities.length > 0) {
@@ -919,10 +948,13 @@ document.addEventListener("DOMContentLoaded", function () {
               }
             }
           }
-          fullText += `\nFailure Reason: ${failureReason.trim()}`;
           fullText += `\nShipping Method: ${shippingType}`;
           fullText += `\nRed Dot: ${redDot}`;
-          fullText += `\nCall Tag: ${callTag}`;
+          fullText += `\nCall Tag: ${callTag}\n`;
+          fullText += `\nReason for Return: ${reasonForReturn.trim()}`;
+          fullText += `\nFailure Reason: ${failureReason.trim()}\n`;
+          fullText += `\nTroubleshooting Performed:\n${rmaTroubleshooting.trim()}`;
+          fullText += skuSn ? `\n\nSKU / SN: ${skuSn.trim()}` : "";
 
           fullText += `\n\nParts List:\n`;
           partNumbers.forEach((partNumberInput, index) => {
@@ -1105,7 +1137,7 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.setItem("highlightColor", selectedColor); // Save color
     document.documentElement.style.setProperty(
       "--highlight-color",
-      selectedColor
+      selectedColor,
     );
     colorModal.classList.add("hidden");
   });
@@ -1116,7 +1148,7 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.setItem("highlightColor", defaultColor); // Save color
     document.documentElement.style.setProperty(
       "--highlight-color",
-      defaultColor
+      defaultColor,
     );
     colorPicker.value = defaultColor;
     colorPreviewBox.style.backgroundColor = defaultColor;

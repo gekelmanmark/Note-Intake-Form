@@ -112,6 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
       order.required = false;
       warrantyLevelField.classList.add("hidden");
     } else if (rmaType === "Warranty ADV Replace") {
+      warranty.required = true;
       if (warranty.value === "Limited") {
         inspectionField.classList.remove("hidden");
         warrantyField.classList.remove("hidden");

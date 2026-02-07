@@ -13,7 +13,7 @@
           document.documentElement.classList.add("dark-mode");
         }
       });
-      const savedColor = localStorage.getItem("highlightColor");
+      var savedColor = localStorage.getItem("highlightColor");
       if (savedColor) {
         document.documentElement.style.setProperty(
           "--highlight-color",

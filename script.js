@@ -1,98 +1,149 @@
 const currentPage = window.location.pathname.split("/").pop(); // Get the current page name
-const navLinks = document.querySelectorAll(".nav-link");
+const NotesPage = 'index.html'
+const RMAPage = 'RMA.html'
+const DialInPage = 'Dial-in.html'
+const TriagePage = 'Triage.html'
+const Prod99Page = 'Product99.html'
+
+
+function createRMAPartRow(rowId, partNumber="", partQuantity="") {
+  var formRow = document.createElement("div");
+  formRow.classList.add("form-row");
+
+  // Create the part number input
+  var partNumberInput = document.createElement("input");
+  partNumberInput.type = "text";
+  partNumberInput.name = "partNumber[]";
+  partNumberInput.placeholder = "Part Number";
+  partNumberInput.value = partNumber;
+  partNumberInput.required = true;
+  //partNumberInput.setAttribute("data-id", `partNumber-${rowId}`);
+
+  // Create the quantity input
+  var quantityInput = document.createElement("input");
+  quantityInput.type = "number";
+  quantityInput.name = "quantity[]";
+  quantityInput.placeholder = "Quantity";
+  quantityInput.value = partQuantity
+  quantityInput.required = true;
+  //quantityInput.setAttribute("data-id", `quantity-${rowId}`); // Append uniqueRowId with a different prefix
+
+  // Event listeners to save part data
+  partNumberInput.addEventListener("input", savePartsToLocalStorage);
+  quantityInput.addEventListener("input", savePartsToLocalStorage);
+
+  // Create the remove button
+  var removeButton = document.createElement("button");
+  removeButton.type = "button";
+  removeButton.classList.add("remove-button");
+  removeButton.innerText = "Remove";
+  removeButton.addEventListener("click", function() {
+    formRow.remove();
+    savePartsToLocalStorage();
+  });
+
+  // Apply dark mode class if active
+  if (isDarkModeActive()) {
+    partNumberInput.classList.add("dark-mode");
+    quantityInput.classList.add("dark-mode");
+    removeButton.classList.add("dark-mode");
+  }
+
+  // Append inputs and remove button to the row
+  formRow.appendChild(partNumberInput);
+  formRow.appendChild(quantityInput);
+  formRow.appendChild(removeButton);
+
+  return formRow
+}
+
+
+// Retrieve form data from local storage and populate the fields
+
+const formElements = document.querySelectorAll("input, textarea, select");
+
+formElements.forEach((element) => {
+    const savedValue = localStorage.getItem(element.id);
+    if (savedValue !== null) {
+        if (element.type === "checkbox") {
+        element.checked = savedValue === "true"; // Convert string back to boolean
+        } else {
+        element.value = savedValue;
+        }
+    }
+});
+
+// Load saved parts data if on RMA form
+if (document.getElementById("rmaType")) {
+    const savedPartsData = JSON.parse(localStorage.getItem("partsData")) || [];
+    savedPartsData.forEach((part) => {
+        if (part.partNumber || part.quantity) {
+        const formRow = createRMAPartRow("", part.partNumber, part.quantity)
+        document.getElementById("dynamicForm").appendChild(formRow);
+        }
+    });
+}
 
 // Save form data to local storage on every input change
-const saveFormData = () => {
-  const formElements = document.querySelectorAll("input, textarea, select");
-  formElements.forEach((element) => {
+formElements.forEach((element) => {
     element.addEventListener("input", () => {
-      if (element.type === "checkbox") {
+        if (element.type === "checkbox") {
         localStorage.setItem(element.id, element.checked);
-      } else {
+        } else {
         localStorage.setItem(element.id, element.value);
-      }
+        }
     });
-  });
-};
+});
 
 // Clear local storage when form is reset
-const clearFormData = () => {
-  const formElements = document.querySelectorAll("input, textarea, select");
+function ClearFormData() {
   formElements.forEach((element) => {
     localStorage.removeItem(element.id);
   });
-};
 
-// Retrieve form data from local storage and populate the fields
-const populateFormData = () => {
-  const formElements = document.querySelectorAll("input, textarea, select");
-  formElements.forEach((element) => {
-    const savedValue = localStorage.getItem(element.id);
-    if (savedValue !== null) {
-      if (element.type === "checkbox") {
-        element.checked = savedValue === "true"; // Convert string back to boolean
-      } else {
-        element.value = savedValue;
-      }
-    }
-  });
-
-  const rmaFormLoaded = document.getElementById("rmaType");
-  if (rmaFormLoaded) {
-    // Load saved parts data
-    const savedPartsData =
-      JSON.parse(localStorage.getItem("partsData")) || [];
-    savedPartsData.forEach((part) => {
-      if (part.partNumber || part.quantity) {
-        const formRow = document.createElement("div");
-        formRow.classList.add("form-row");
-
-        const partNumberInput = document.createElement("input");
-        partNumberInput.type = "text";
-        partNumberInput.name = "partNumber[]";
-        partNumberInput.placeholder = "Part Number";
-        partNumberInput.value = part.partNumber;
-        partNumberInput.required = true;
-        partNumberInput.addEventListener("input", savePartsToLocalStorage);
-
-        const quantityInput = document.createElement("input");
-        quantityInput.type = "number";
-        quantityInput.name = "quantity[]";
-        quantityInput.placeholder = "Quantity";
-        quantityInput.value = part.quantity;
-        quantityInput.required = true;
-        quantityInput.addEventListener("input", savePartsToLocalStorage);
-
-        const removeButton = document.createElement("button");
-        removeButton.type = "button";
-        removeButton.classList.add("remove-button");
-        removeButton.innerText = "Remove";
-        removeButton.addEventListener("click", function () {
-          formRow.remove();
-          savePartsToLocalStorage();
-        });
-
-        if (isDarkModeActive()) {
-          partNumberInput.classList.add("dark-mode");
-          quantityInput.classList.add("dark-mode");
-          removeButton.classList.add("dark-mode");
-        }
-
-        formRow.appendChild(partNumberInput);
-        formRow.appendChild(quantityInput);
-        formRow.appendChild(removeButton);
-        document.getElementById("dynamicForm").appendChild(formRow);
-      }
-    });
+  if (currentPage == RMAPage) {
+    localStorage.removeItem("partsData")
   }
-  // const triageFormLoaded = document.getElementById("triageForm");
-  // if (triageFormLoaded) {
-  //   const warrantyStatus = localStorage.getItem("warrantyStatus");
-  //   const transferredTo = localStorage.getItem("transferredTo");
-  //   handleWarrantyStatusChange(warrantyStatus);
-  //   handleTransferToChange(transferredTo);
-  // }
 };
+
+function BackupFormData() {
+  formElements.forEach((element) => {
+    if (element.type === "checkbox") {
+      localStorage.setItem(element.id + "backup", element.checked);
+    } else {
+      localStorage.setItem(element.id + "backup", element.value);
+    }
+  })
+
+  if (currentPage == RMAPage) {
+    var backupParts = localStorage.getItem("partsData")
+    if (backupParts){
+      localStorage.setItem("partsDatabackup", backupParts)
+    }
+  }
+}
+
+function RestoreFormData() {
+  formElements.forEach((element) => {
+    var backupValue = localStorage.getItem(element.id + "backup");
+    if (backupValue) {
+      localStorage.setItem(element.id, backupValue)
+      localStorage.removeItem(element.id + "backup")
+    } else {
+      localStorage.removeItem(element.id)
+    }
+  })
+
+  if (currentPage == RMAPage) {
+    var backupParts = localStorage.getItem("partsDatabackup")
+    if (backupParts){
+      localStorage.setItem("partsData", backupParts)
+      localStorage.removeItem("partsDatabackup")
+    } else {
+      localStorage.removeItem("partsData")
+    }
+  }
+}
 
 // Function to show or hide fields based on RMA Type
 const handleRmaTypeChange = (rmaType) => {
@@ -156,11 +207,7 @@ const handleRmaTypeChange = (rmaType) => {
   }
 };
 
-navLinks.forEach((link) => {
-  if (link.getAttribute("href") === currentPage) {
-    link.classList.add("active"); // Add 'active' class to the current page's link
-  }
-});
+
 
 // Function to show or hide fields based on System Type Type
 const handleSystemTypeChange = (systemType) => {
@@ -401,56 +448,13 @@ function isDarkModeActive() {
   return document.body.classList.contains("dark-mode");
 }
 
+
 // Add more parts (Part Number and Quantity) functionality
-const addButton = document.getElementById("addButton");
-if (addButton) {
+if (currentPage == RMAPage) {
+  var addButton = document.getElementById("addButton");
   addButton.addEventListener("click", function () {
-    const uniqueRowId = Date.now(); // Generate a unique ID for the row
-
-    const formRow = document.createElement("div");
-    formRow.classList.add("form-row");
-
-    // Create the part number input
-    const partNumberInput = document.createElement("input");
-    partNumberInput.type = "text";
-    partNumberInput.name = "partNumber[]";
-    partNumberInput.placeholder = "Part Number";
-    partNumberInput.required = true;
-    partNumberInput.setAttribute("data-id", `partNumber-${uniqueRowId}`);
-
-    // Create the quantity input
-    const quantityInput = document.createElement("input");
-    quantityInput.type = "number";
-    quantityInput.name = "quantity[]";
-    quantityInput.placeholder = "Quantity";
-    quantityInput.required = true;
-    quantityInput.setAttribute("data-id", `quantity-${uniqueRowId}`); // Append uniqueRowId with a different prefix
-
-    // Event listeners to save part data
-    partNumberInput.addEventListener("input", savePartsToLocalStorage);
-    quantityInput.addEventListener("input", savePartsToLocalStorage);
-
-    // Create the remove button
-    const removeButton = document.createElement("button");
-    removeButton.type = "button";
-    removeButton.classList.add("remove-button");
-    removeButton.innerText = "Remove";
-    removeButton.addEventListener("click", function () {
-      formRow.remove();
-      savePartsToLocalStorage();
-    });
-
-    // Apply dark mode class if active
-    if (isDarkModeActive()) {
-      partNumberInput.classList.add("dark-mode");
-      quantityInput.classList.add("dark-mode");
-      removeButton.classList.add("dark-mode");
-    }
-
-    // Append inputs and remove button to the row
-    formRow.appendChild(partNumberInput);
-    formRow.appendChild(quantityInput);
-    formRow.appendChild(removeButton);
+    var uniqueRowId = Date.now(); // Generate a unique ID for the row
+    var formRow = createRMAPartRow(uniqueRowId);
 
     // Append the new row to the dynamic form section
     document.getElementById("dynamicForm").appendChild(formRow);
@@ -458,21 +462,22 @@ if (addButton) {
 }
 
 function savePartsToLocalStorage() {
-  const RmaForm = document.getElementById("rmaForm") || "";
-  if (RmaForm.name === "rmaForm") {
-    const partsData = [];
-    document.querySelectorAll(".form-row").forEach((row) => {
-      const partNumber = row.querySelector(
-        'input[name="partNumber[]"]',
-      ).value;
-      const quantity = row.querySelector('input[name="quantity[]"]').value;
-      partsData.push({ partNumber, quantity });
-    });
-    localStorage.setItem("partsData", JSON.stringify(partsData));
-  }
+  if (currentPage != RMAPage) { return; }
+  
+  const partsData = [];
+  document.querySelectorAll(".form-row").forEach((row) => {
+    var partNumber = row.querySelector('input[name="partNumber[]"]').value;
+    var quantity = row.querySelector('input[name="quantity[]"]').value;
+    partsData.push({ partNumber, quantity });
+  });
+  localStorage.setItem("partsData", JSON.stringify(partsData));
 }
 
 function doClearButton() {
+  if (currentPage == RMAPage)
+    savePartsToLocalStorage();
+  BackupFormData();
+
   const forms = [
       "contactForm",
       "dialInForm",
@@ -483,45 +488,23 @@ function doClearButton() {
     forms.forEach((formId) => {
       const form = document.getElementById(formId);
       if (form) {
-        // Save the current form state before clearing
-        lastFormState = {};
-        const formElements = form.querySelectorAll("input, textarea, select");
-        formElements.forEach((element) => {
-          lastFormState[element.id] = element.value; // Save field value
-        });
-        if (form.id === "rmaForm") {
-          handleRmaTypeChange("Not Selected"); // Call the function to show/hide fields
-          const container = document.getElementById("dynamicForm");
-          if (container) {
-            lastFormState.dynamicFieldValues = Array.from(
-              container.querySelectorAll("input"),
-            ).map((input) => ({
-              name: input.name,
-              value: input.value,
-              dataId: input.getAttribute("data-id"), // Save the unique data-id
-            }));
-            lastFormState.dynamicFields = container.innerHTML;
-            container.innerHTML = ""; // Clears all child elements
-          }
+        if (currentPage == RMAPage) {
+          handleRmaTypeChange("Not Selected");
         }
-        if (form.id === "dialInForm") {
-          handleSystemTypeChange("Not Selected"); // Call the function to show/hide fields
-          handleDialInFeeChange("Not Selected"); // Call the function to show/hide fields
+        if (currentPage == DialInPage) {
+          handleSystemTypeChange("Not Selected");
+          handleDialInFeeChange("Not Selected");
         }
-        if (form.id === "triageForm") {
+        if (currentPage == TriagePage) {
           handleTransferToChange("Not Selected");
           handleWarrantyStatusChange("Not Selected");
         }
         form.reset();
-        savePartsToLocalStorage();
-        // Hide Undo button if no state is saved
-        if (Object.keys(lastFormState).length > 0) {
-          undoClearButton.classList.remove("hidden"); // Show "Undo Clear" button
-        }
       }
     });
 
-    clearFormData();
+    undoClearButton.classList.remove("hidden");
+    ClearFormData();
 }
 
 // Clear buttons for forms
@@ -529,7 +512,6 @@ let lastFormState = null; // Variable to store the form's state before clearing
 const clearButton = document.getElementById("clearButton");
 var pressTimer;
 const clearButtonTimer = 500;
-const undoClearButton = document.getElementById("undoClearButton");
 if (clearButton) {
   clearButton.addEventListener('mousedown', function() {
     pressTimer = window.setTimeout(doClearButton, clearButtonTimer)
@@ -537,84 +519,32 @@ if (clearButton) {
   clearButton.addEventListener('mouseup', function() { clearTimeout(pressTimer) })
   clearButton.addEventListener('mouseleave', function() { clearTimeout(pressTimer)})
   clearButton.addEventListener('dblclick', doClearButton)
-  //clearButton.addEventListener("click", function () {
-    
-  //});
-  //clearButton.addEventListener("click", clearFormData);
+
+  //clearButton.addEventListener("click", ClearFormData);
 }
 
+const undoClearButton = document.getElementById("undoClearButton");
 if (undoClearButton) {
-  undoClearButton.addEventListener("click", function () {
-    if (lastFormState) {
-      const forms = [
-        "contactForm",
-        "dialInForm",
-        "rmaForm",
-        "product99",
-        "triageForm",
-      ];
-      forms.forEach((formId) => {
-        const form = document.getElementById(formId);
-        if (form) {
-          // Restore static form fields
-          const formElements = form.querySelectorAll(
-            "input, textarea, select",
-          );
-          formElements.forEach((element) => {
-            if (lastFormState[element.id] !== undefined) {
-              if (element.id === "rmaType") {
-                handleRmaTypeChange(lastFormState[element.id]);
-              }
-              if (element.id === "warranty") {
-                handleWarrantyTypeChange(lastFormState[element.id]);
-              }
-              if (element.id === "systemType") {
-                handleSystemTypeChange(lastFormState[element.id]);
-              }
-              if (element.id === "dialInFee") {
-                handleDialInFeeChange(lastFormState[element.id]);
-              }
-              if (element.id === "transferredTo") {
-                handleTransferToChange(lastFormState[element.id]);
-              }
-              if (element.id === "warrantyStatus") {
-                handleWarrantyStatusChange(lastFormState[element.id]);
-              }
-              element.value = lastFormState[element.id]; // Restore field value
-            }
-          });
-
-          // Restore dynamic fields
-          const dynamicFormSection = document.getElementById("dynamicForm");
-          if (dynamicFormSection && lastFormState.dynamicFields) {
-            dynamicFormSection.innerHTML = lastFormState.dynamicFields;
-
-            // Restore values for dynamic fields
-            lastFormState.dynamicFieldValues?.forEach(
-              ({ name, value, dataId }) => {
-                console.log(`value: ${value}`);
-                const field = dynamicFormSection.querySelector(
-                  `[data-id="${dataId}"]`,
-                );
-                console.log(`[data-id="${dataId}"]`);
-                if (field) {
-                  field.value = value; // Restore the saved value
-                }
-              },
-            );
-          }
-          // Clear the saved state
-          lastFormState = null;
-          undoClearButton.classList.add("hidden"); // Hide "Undo Clear" button
-        }
-      });
-    }
+  undoClearButton.addEventListener("click", function() { 
+    RestoreFormData();
+    location.reload();
   });
+  
+  // Check if a backup exists
+  var backupAvailable = false
+  for (let i = 0; i < formElements.length; i++) {
+    if (localStorage.getItem(formElements[i].id + "backup")) {
+      backupAvailable = true
+      break
+    }
+  }
+  if (backupAvailable) {
+    undoClearButton.classList.remove("hidden");
+  }
 }
 
-const copyButton99 = document.getElementById("copyButton99");
-const product99Form = document.getElementById("product99");
-if (copyButton99 && product99Form) {
+if (currentPage == Prod99Page) {
+  var copyButton99 = document.getElementById("copyButton99");
   copyButton99.addEventListener("click", function () {
     clearValidationStyles(product99Form);
     const selectElements = document.querySelectorAll("select");
@@ -685,9 +615,8 @@ if (copyButton99 && product99Form) {
   });
 }
 
-const copyButtonTriage = document.getElementById("copyButtonTriage");
-const triageForm = document.getElementById("triageForm");
-if (copyButtonTriage && triageForm) {
+if (currentPage == TriagePage) {
+  var copyButtonTriage = document.getElementById("copyButtonTriage");
   copyButtonTriage.addEventListener("click", function () {
     clearValidationStyles(triageForm);
     const selectElements = document.querySelectorAll("select");
@@ -762,9 +691,8 @@ if (copyButtonTriage && triageForm) {
 }
 
 // Copy button for Dial-In page
-const copyButtonDialIn = document.getElementById("copyButtonDialIn");
-const dialInForm = document.getElementById("dialInForm");
-if (copyButtonDialIn && dialInForm) {
+if (currentPage == DialInPage) {
+  var copyButtonDialIn = document.getElementById("copyButtonDialIn");
   copyButtonDialIn.addEventListener("click", function () {
     clearValidationStyles(dialInForm);
     const selectElements = document.querySelectorAll("select");
@@ -840,9 +768,9 @@ if (copyButtonDialIn && dialInForm) {
   });
 }
 
-const copyButton = document.getElementById("copyButton");
-const customerSupportForm = document.getElementById("contactForm"); // Assuming the form has an id
-if (copyButton && customerSupportForm) {
+
+if (currentPage == NotesPage) {
+  var copyButton = document.getElementById("copyButton");
   copyButton.addEventListener("click", function () {
     clearValidationStyles(customerSupportForm); // Clear previous validation styles
     const selectElements = customerSupportForm.querySelectorAll("select");
@@ -994,8 +922,7 @@ if (copyButtonRMA && rmaForm) {
   });
 }
 
-const rmaFormLoaded = document.getElementById("rmaType");
-if (rmaFormLoaded) {
+if (currentPage == RMAPage) {
   const savedRmaType = localStorage.getItem("rmaType");
   const savedWarrantyType = localStorage.getItem("warranty");
   const RmaTypeField = document.getElementById("rmaType");
@@ -1018,8 +945,7 @@ if (rmaFormLoaded) {
   });
 }
 
-const dialInFormLoaded = document.getElementById("dialInForm");
-if (dialInFormLoaded) {
+if (currentPage == DialInPage) {
   const savedSystemType = localStorage.getItem("systemType");
   const savedDialInFeeType = localStorage.getItem("dialInFee");
   const systemTypeField = document.getElementById("systemType");
@@ -1048,8 +974,7 @@ if (dialInFormLoaded) {
   });
 }
 
-const triageFormLoaded = document.getElementById("triageForm");
-if (triageFormLoaded) {
+if (currentPage == TriagePage) {
   const savedTransferredTo = localStorage.getItem("transferredTo");
   const transferredTo = document.getElementById("transferredTo");
   const savedwarrantyStatus = localStorage.getItem("warrantyStatus");
@@ -1130,9 +1055,7 @@ const colorPicker = document.getElementById("highlight-color-picker");
 const colorPreviewBox = document.getElementById("color-preview-box");
 const applyColorButton = document.getElementById("apply-color");
 const resetColorButton = document.getElementById("reset-color");
-
-// CSS Variable for highlights
-document.documentElement.style.setProperty("--highlight-color", "#da5fff");
+const defaultHighlightColor = "#da5fff";
 
 // Open the color selector modal
 openColorSelector.addEventListener("click", () => {
@@ -1158,27 +1081,21 @@ applyColorButton.addEventListener("click", () => {
 
 // Reset to default color
 resetColorButton.addEventListener("click", () => {
-  const defaultColor = "#da5fff";
-  localStorage.setItem("highlightColor", defaultColor); // Save color
+  localStorage.setItem("highlightColor", defaultHighlightColor); // Save color
   document.documentElement.style.setProperty(
     "--highlight-color",
-    defaultColor,
+    defaultHighlightColor,
   );
-  colorPicker.value = defaultColor;
-  colorPreviewBox.style.backgroundColor = defaultColor;
+  colorPicker.value = defaultHighlightColor;
+  colorPreviewBox.style.backgroundColor = defaultHighlightColor;
 });
 
 // Load saved color on page load
-var savedColor = localStorage.getItem("highlightColor");
-if (savedColor) {
-  document.documentElement.style.setProperty("--highlight-color", savedColor);
-  colorPicker.value = savedColor;
-  colorPreviewBox.style.backgroundColor = savedColor;
-}
+var savedColor = localStorage.getItem("highlightColor") || defaultHighlightColor;
+document.documentElement.style.setProperty("--highlight-color", savedColor);
+colorPicker.value = savedColor;
+colorPreviewBox.style.backgroundColor = savedColor;
 
-// Call both functions on page load
-populateFormData();
-saveFormData();
 
 // Function to automatically adjust textarea height
 function autoResizeTextarea(textarea) {

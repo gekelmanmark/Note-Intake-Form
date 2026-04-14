@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
   const currentPage = window.location.pathname.split("/").pop(); // Get the current page name
-  const navLinks = document.querySelectorAll(".nav-link");
 
   // Save form data to local storage on every input change
   const saveFormData = () => {
@@ -157,11 +156,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  navLinks.forEach((link) => {
-    if (link.getAttribute("href") === currentPage) {
-      link.classList.add("active"); // Add 'active' class to the current page's link
-    }
-  });
 
   // Function to show or hide fields based on System Type Type
   const handleSystemTypeChange = (systemType) => {

@@ -1,9 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Customer Support Form</title>
+    <title>Triage Form</title>
     <!-- Inline script to check for dark mode immediately -->
     <script>
       // Apply dark mode instantly if it's the saved preference
@@ -17,7 +17,7 @@
       if (savedColor) {
         document.documentElement.style.setProperty(
           "--highlight-color",
-          savedColor,
+          savedColor
         );
       }
     </script>
@@ -42,71 +42,55 @@
     <button id="open-color-selector">Change Highlight Color</button>
 
     <div class="container">
-      <h1>Onity Support Form</h1>
+      <h1>Inncom Triage Support Form</h1>
       <nav class="navbar">
         <ul>
-          <li><a href="index.html" class="nav-link active">Notes</a></li>
+          <li><a href="index.html" class="nav-link">Notes</a></li>
           <li><a href="RMA.html" class="nav-link">RMA</a></li>
           <li><a href="Dial-in.html" class="nav-link">Dial-In</a></li>
-          <li><a href="Triage.html" class="nav-link">Triage</a></li>
+          <li><a href="Triage.html" class="nav-link active">Triage</a></li>
           <li><a href="Product99.html" class="nav-link">Product 99</a></li>
         </ul>
       </nav>
-      <button ><a>Onity</a></button>
-      <button id=""><a href="inncomtech.html">Inncom</a></button>
+      <button ><a href="Triage.html">Onity</a></button>
+      <button id=""><a>Inncom</a></button>
       <button id="toggle-mode">Toggle Dark Mode</button>
 
-      <form id="contactForm">
-        <label for="customerName">S/W:</label>
+      <form id="triageForm">
+        <label for="customerNameTriage">S/W:</label>
         <textarea
-          id="customerName"
+          id="customerNameTriage"
           rows="2"
           placeholder="Enter the customer's name"
           required
         ></textarea>
 
-        <label for="reasonForCall">Reason for Call:</label>
+        <div id="contactNumberTriageDiv">
+          <label for="contactNumberTriage">Contact Number:</label>
+          <input type="text" id="contactNumberTriage" name="contactNumber" required />
+        </div>
+
+        <label for="emailUpdated">Contact Email:</label>
+        <input type="email" id="emailUpdated" name="emailUpdated" required />
+
+        <label for="customerPropertyTriage">Property:</label>
         <textarea
-          id="reasonForCall"
+          id="customerPropertyTriage"
           rows="2"
+          placeholder="Enter the property name"
+          required
+        ></textarea>
+
+        <label for="triageReasonForCall">Reason for Call:</label>
+        <textarea
+          id="triageReasonForCall"
+          rows="3"
           placeholder="Briefly describe the reason for the call"
           required
         ></textarea>
 
-        <label for="troubleshooting">Troubleshooting Performed:</label>
-        <textarea
-          id="troubleshooting"
-          rows="8"
-          placeholder="Detail the troubleshooting steps performed"
-          required
-        ></textarea>
-
-        <label for="resolution">Resolution or Next Steps:</label>
-        <textarea
-          id="resolution"
-          rows="2"
-          placeholder="Enter the resolution or next steps"
-          required
-        ></textarea>
-
-        <label for="fdsStatus">FDS Status at End-of-Call:</label>
-        <select id="fdsStatus" name="fdsStatus" required>
-          <option value="Not Selected">Not Selected</option>
-          <option value="Not Applicable">Not Applicable</option>
-          <option value="Fully Operational">Fully Operational</option>
-          <option value="Partially Functional With PMS">
-            Partially functional with PMS
-          </option>
-          <option value="Able to make keys manually">
-            Able to make keys manually
-          </option>
-          <option value="No encoders operational">
-            No encoders operational
-          </option>
-        </select>
-
         <div class="form-buttons">
-          <button type="button" id="copyButton">Copy</button>
+          <button type="button" id="copyButtonTriage">Copy</button>
           <button type="button" id="clearButton">Clear</button>
           <button type="button" id="undoClearButton" class="hidden">
             Undo

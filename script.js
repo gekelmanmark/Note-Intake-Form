@@ -1,5 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
   const currentPage = window.location.pathname.split("/").pop(); // Get the current page name
+  const NotesPage = 'index.html'
+  const InncomNotesPage = 'inncomtech.html'
+  const RMAPage = 'RMA.html'
+  const DialInPage = 'Dial-in.html'
+  const TriagePage = 'Triage.html'
+  const InncomTriagePage = 'inncomtriage.html'
+  const Prod99Page = 'Product99.html'
 
   // Save form data to local storage on every input change
   const saveFormData = () => {
@@ -37,8 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    const rmaFormLoaded = document.getElementById("rmaType");
-    if (rmaFormLoaded) {
+    if (currentPage == RMAPage) {
       // Load saved parts data
       const savedPartsData =
         JSON.parse(localStorage.getItem("partsData")) || [];
@@ -85,13 +91,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     }
-    // const triageFormLoaded = document.getElementById("triageForm");
-    // if (triageFormLoaded) {
-    //   const warrantyStatus = localStorage.getItem("warrantyStatus");
-    //   const transferredTo = localStorage.getItem("transferredTo");
-    //   handleWarrantyStatusChange(warrantyStatus);
-    //   handleTransferToChange(transferredTo);
-    // }
   };
 
   // Function to show or hide fields based on RMA Type
@@ -397,8 +396,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Add more parts (Part Number and Quantity) functionality
-  const addButton = document.getElementById("addButton");
-  if (addButton) {
+  if (currentPage == RMAPage) {
+    const addButton = document.getElementById("addButton");
     addButton.addEventListener("click", function () {
       const uniqueRowId = Date.now(); // Generate a unique ID for the row
 
@@ -453,8 +452,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function savePartsToLocalStorage() {
-    const RmaForm = document.getElementById("rmaForm") || "";
-    if (RmaForm.name === "rmaForm") {
+    if (currentPage == RMAPage) {
       const partsData = [];
       document.querySelectorAll(".form-row").forEach((row) => {
         const partNumber = row.querySelector(
@@ -489,7 +487,7 @@ document.addEventListener("DOMContentLoaded", function () {
           formElements.forEach((element) => {
             lastFormState[element.id] = element.value; // Save field value
           });
-          if (form.id === "rmaForm") {
+          if (currentPage == RMAPage) {
             handleRmaTypeChange("Not Selected"); // Call the function to show/hide fields
             const container = document.getElementById("dynamicForm");
             if (container) {
@@ -504,11 +502,11 @@ document.addEventListener("DOMContentLoaded", function () {
               container.innerHTML = ""; // Clears all child elements
             }
           }
-          if (form.id === "dialInForm") {
+          if (currentPage == DialInPage) {
             handleSystemTypeChange("Not Selected"); // Call the function to show/hide fields
             handleDialInFeeChange("Not Selected"); // Call the function to show/hide fields
           }
-          if (form.id === "triageForm") {
+          if (currentPage == TriagePage) {
             handleTransferToChange("Not Selected");
             handleWarrantyStatusChange("Not Selected");
           }
@@ -593,9 +591,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  const copyButton99 = document.getElementById("copyButton99");
-  const product99Form = document.getElementById("product99");
-  if (copyButton99 && product99Form) {
+  if (currentPage == Prod99Page) {
+    const copyButton99 = document.getElementById("copyButton99");
+    const product99Form = document.getElementById("product99");
     copyButton99.addEventListener("click", function () {
       clearValidationStyles(product99Form);
       const selectElements = document.querySelectorAll("select");
@@ -666,9 +664,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  const copyButtonTriage = document.getElementById("copyButtonTriage");
-  const triageForm = document.getElementById("triageForm");
-  if (copyButtonTriage && triageForm) {
+  if (currentPage == TriagePage) {
+    const copyButtonTriage = document.getElementById("copyButtonTriage");
+    const triageForm = document.getElementById("triageForm");
     copyButtonTriage.addEventListener("click", function () {
       clearValidationStyles(triageForm);
       const selectElements = document.querySelectorAll("select");
@@ -742,10 +740,56 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Copy button for Dial-In page
-  const copyButtonDialIn = document.getElementById("copyButtonDialIn");
-  const dialInForm = document.getElementById("dialInForm");
-  if (copyButtonDialIn && dialInForm) {
+  if (currentPage == InncomTriagePage) {
+    const copyButtonTriage = document.getElementById("copyButtonTriage");
+    const triageForm = document.getElementById("triageForm");
+    copyButtonTriage.addEventListener("click", function () {
+      clearValidationStyles(triageForm);
+      const selectElements = document.querySelectorAll("select");
+      let formIsValid = true;
+
+      // Loop through all the select elements and check if "None" is selected
+      selectElements.forEach((select) => {
+        if (select.value === "Not Selected" && !isElementOrParentHidden(select)) {
+          select.classList.add("invalid-field"); // Highlight the field with red
+          formIsValid = false;
+        } else {
+          select.classList.remove("invalid-field"); // Remove red highlight if valid
+        }
+      });
+      if (triageForm.checkValidity() && formIsValid) {
+        const customerNameTriage =
+          document.getElementById("customerNameTriage")?.value || "";
+        const contactNumberTriage =
+          document.getElementById("contactNumberTriage")?.value || "";
+        const emailUpdated =
+          document.getElementById("emailUpdated")?.value || "";
+        const reasonForCall =
+          document.getElementById("triageReasonForCall")?.value || "";
+
+        let fullText = `S/W: ${customerNameTriage.trim()}\n`;
+        fullText += `Phone Number: ${contactNumberTriage.trim()}\n`;
+
+        fullText += `Contact Email: ${emailUpdated.trim()}\n`;
+        fullText += `Reason for Call: ${reasonForCall.trim()}\n`;
+        navigator.clipboard
+          .writeText(fullText)
+          .then(() => {
+            showNotification();
+          })
+          .catch((err) => {
+            console.error("Failed to copy: ", err);
+          });
+      } else {
+        // If form is invalid, show validation error
+        applyValidationStyles(triageForm);
+      }
+    });
+  }
+
+  if (currentPage == DialInPage) {
+    const copyButtonDialIn = document.getElementById("copyButtonDialIn");
+    const dialInForm = document.getElementById("dialInForm");
     copyButtonDialIn.addEventListener("click", function () {
       clearValidationStyles(dialInForm);
       const selectElements = document.querySelectorAll("select");
@@ -821,9 +865,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  const copyButton = document.getElementById("copyButton");
-  const customerSupportForm = document.getElementById("contactForm"); // Assuming the form has an id
-  if (copyButton && customerSupportForm) {
+  if (currentPage == NotesPage) {
+    const copyButton = document.getElementById("copyButton");
+    const customerSupportForm = document.getElementById("contactForm"); // Assuming the form has an id
     copyButton.addEventListener("click", function () {
       clearValidationStyles(customerSupportForm); // Clear previous validation styles
       const selectElements = customerSupportForm.querySelectorAll("select");
@@ -869,9 +913,55 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  const copyButtonRMA = document.getElementById("copyButtonRMA");
-  const rmaForm = document.getElementById("rmaForm");
-  if (copyButtonRMA && rmaForm) {
+  if (currentPage == InncomNotesPage) {
+    const copyButton = document.getElementById("copyButton");
+    const customerSupportForm = document.getElementById("contactForm"); // Assuming the form has an id
+    copyButton.addEventListener("click", function () {
+      clearValidationStyles(customerSupportForm); // Clear previous validation styles
+      const selectElements = customerSupportForm.querySelectorAll("select");
+      let formIsValid = true;
+
+      // Validate "None" selections
+      selectElements.forEach((select) => {
+        if (select.value === "Not Selected") {
+          select.classList.add("invalid-field");
+          formIsValid = false;
+        } else {
+          select.classList.remove("invalid-field");
+        }
+      });
+
+      if (customerSupportForm.checkValidity() && formIsValid) {
+        const customerName =
+          document.getElementById("customerName")?.value || "";
+        const reasonForCall =
+          document.getElementById("reasonForCall")?.value || "";
+        const troubleshooting =
+          document.getElementById("troubleshooting")?.value || "";
+        const resolution = document.getElementById("resolution")?.value || "";
+
+        let fullText = `S/W:\n${customerName.trim()}\n\n`;
+        fullText += `Reason for Call:\n${reasonForCall.trim()}\n\n`;
+        fullText += `Troubleshooting Performed:\n${troubleshooting.trim()}\n\n`;
+        fullText += `Resolution or Next Steps:\n${resolution.trim()}`;
+
+        navigator.clipboard
+          .writeText(fullText)
+          .then(() => {
+            showNotification();
+          })
+          .catch((err) => {
+            console.error("Failed to copy: ", err);
+          });
+      } else {
+        applyValidationStyles(customerSupportForm); // Apply validation styles
+      }
+    });
+  }
+
+  if (currentPage == RMAPage) {
+    const copyButtonRMA = document.getElementById("copyButtonRMA");
+    const rmaForm = document.getElementById("rmaForm");
     copyButtonRMA.addEventListener("click", function () {
       clearValidationStyles(rmaForm); // Clear previous validation styles
       const selectElements = rmaForm.querySelectorAll("select");
@@ -975,8 +1065,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  const rmaFormLoaded = document.getElementById("rmaType");
-  if (rmaFormLoaded) {
+  if (currentPage == RMAPage) {
     const savedRmaType = localStorage.getItem("rmaType");
     const savedWarrantyType = localStorage.getItem("warranty");
     const RmaTypeField = document.getElementById("rmaType");
@@ -999,8 +1088,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  const dialInFormLoaded = document.getElementById("dialInForm");
-  if (dialInFormLoaded) {
+  if (currentPage == DialInPage) {
     const savedSystemType = localStorage.getItem("systemType");
     const savedDialInFeeType = localStorage.getItem("dialInFee");
     const systemTypeField = document.getElementById("systemType");
@@ -1029,8 +1117,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  const triageFormLoaded = document.getElementById("triageForm");
-  if (triageFormLoaded) {
+  if (currentPage == TriagePage) {
     const savedTransferredTo = localStorage.getItem("transferredTo");
     const transferredTo = document.getElementById("transferredTo");
     const savedwarrantyStatus = localStorage.getItem("warrantyStatus");

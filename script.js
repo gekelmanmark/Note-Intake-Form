@@ -764,13 +764,17 @@ document.addEventListener("DOMContentLoaded", function () {
           document.getElementById("contactNumberTriage")?.value || "";
         const emailUpdated =
           document.getElementById("emailUpdated")?.value || "";
+        const propertyName =
+          document.getElementById("customerPropertyTriage")?.value || "";
         const reasonForCall =
           document.getElementById("triageReasonForCall")?.value || "";
+        
 
         let fullText = `S/W: ${customerNameTriage.trim()}\n`;
         fullText += `Phone Number: ${contactNumberTriage.trim()}\n`;
 
         fullText += `Contact Email: ${emailUpdated.trim()}\n`;
+        fullText += `Property: ${propertyName.trim()}\n`;
         fullText += `Reason for Call: ${reasonForCall.trim()}\n`;
         navigator.clipboard
           .writeText(fullText)

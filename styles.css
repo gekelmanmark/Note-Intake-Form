@@ -747,6 +747,18 @@ body.dark-mode .custom-checkbox input:checked ~ .checkmark {
   pointer-events: none; /* Disable click on active page */
   box-shadow: 0 4px 6px var(--color-shadow-deep); /* Slightly stronger shadow */
 }
+button.active {
+  background-color: var(--highlight-color); /* Active page background */
+  color: white;
+  pointer-events: none; /* Disable click on active page */
+  box-shadow: 0 4px 6px var(--color-shadow-deep); /* Slightly stronger shadow */
+}
+.team-link {
+  display: inline-block;
+}
+.team-link button {
+  margin: 0px 10px;
+}
 
 /* Dark Mode Navbar */
 body.dark-mode .navbar {
@@ -765,6 +777,10 @@ body.dark-mode .navbar ul li a:hover {
 }
 
 body.dark-mode .navbar ul li a.active {
+  background-color: var(--highlight-color); /* Active page in dark mode */
+  color: var(--color-dark-text);
+}
+button.active {
   background-color: var(--highlight-color); /* Active page in dark mode */
   color: var(--color-dark-text);
 }

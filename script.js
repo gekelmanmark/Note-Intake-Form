@@ -395,6 +395,40 @@ document.addEventListener("DOMContentLoaded", function () {
     return document.body.classList.contains("dark-mode");
   }
 
+  
+  // Expand Border
+  const expandButton = document.getElementById("toggle-border");
+  if (expandButton) {
+    expandButton.addEventListener("click", () => {
+      toggleExpandModeClasses();
+      const isExpanded = document.body.classList.contains("expand-mode");
+      localStorage.setItem("expandmode", isExpanded ? "expanded" : "normal");
+    });
+
+    // Function to toggle dark mode classes
+    function toggleExpandModeClasses() {
+      document.body.classList.toggle("expand-mode");
+      const elementsToToggle = [
+        document.querySelector(".container"),
+        document.querySelector(".navbar"),
+        document.querySelector("header"),
+      ];
+
+      elementsToToggle.forEach((el) => {
+        if (el) el.classList.toggle("expand-mode");
+      });
+
+      var icon = document.getElementById("toggle-border").getElementsByClassName('material-icons')[0]
+      icon.innerHTML = document.body.classList.contains('expand-mode') ? 'fullscreen_exit' : 'fullscreen'
+    }
+
+    // Apply saved dark mode from localStorage
+    const expandMode = localStorage.getItem("expandmode") || "normal";
+    if (expandMode === "expanded") {
+      toggleExpandModeClasses();
+    }
+  }
+
   // Add more parts (Part Number and Quantity) functionality
   if (currentPage == RMAPage) {
     const addButton = document.getElementById("addButton");
@@ -1197,7 +1231,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Elements
   const colorModal = document.getElementById("color-selector-modal");
-  const openColorSelector = document.getElementById("open-color-selector");
   const colorPicker = document.getElementById("highlight-color-picker");
   const colorPreviewBox = document.getElementById("color-preview-box");
   const applyColorButton = document.getElementById("apply-color");
@@ -1206,9 +1239,12 @@ document.addEventListener("DOMContentLoaded", function () {
   // CSS Variable for highlights
   document.documentElement.style.setProperty("--highlight-color", "#da5fff");
 
+  const openSettings = document.getElementById("toggle-settings")
   // Open the color selector modal
-  openColorSelector.addEventListener("click", () => {
+  openSettings.addEventListener("click", () => {
     colorModal.classList.toggle("hidden");
+    var icon = openSettings.getElementsByClassName('material-icons')[0]
+    icon.innerHTML = colorModal.classList.contains('hidden') ? 'settings' : 'close'
   });
 
   // Update the preview box when color changes

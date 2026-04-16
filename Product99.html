@@ -13,6 +13,9 @@
         if (localStorage.getItem("mode") === "dark") {
           document.documentElement.classList.add("dark-mode");
         }
+        if (localStorage.getItem("expandmode") === "expanded") {
+          document.documentElement.classList.add("expand-mode");
+        }
       });
       const savedColor = localStorage.getItem("highlightColor");
       if (savedColor) {
@@ -24,6 +27,7 @@
     </script>
 
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   </head>
   <body>
     <div id="color-selector-modal" class="modal hidden">
@@ -36,14 +40,18 @@
         </div>
         <button id="apply-color">Apply</button>
         <button id="reset-color">Reset</button>
+        </br>
+        <button id="toggle-mode"><i class="material-icons">dark_mode</i></button>
+        <button id="toggle-border"><i class="material-icons">fullscreen</i></button>
       </div>
     </div>
 
-    <!-- Button to open the modal -->
-    <button id="open-color-selector">Change Highlight Color</button>
-
     <div class="container">
-      <h1>Product 99 Form</h1>
+      <header>
+        <h1>Inncom Triage Support Form</h1>
+        <button id="toggle-settings"><i class="material-icons">settings</i></button>
+      </header>
+
       <nav class="navbar">
         <ul>
           <li><a href="index.html" class="nav-link">Notes</a></li>
@@ -53,10 +61,6 @@
           <li><a href="Product99.html" class="nav-link active">Product 99</a></li>
         </ul>
       </nav>
-      
-      <div class="team-link">
-        <button id="toggle-mode">Toggle Dark Mode</button>
-      </div>
 
       <form id="product99" class="form-99">
         <div class="form-item">

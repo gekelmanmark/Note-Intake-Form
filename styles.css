@@ -39,8 +39,8 @@
 /* Modal styling */
 .modal {
   position: absolute;
-  top: 12vh;
-  left: 3.5vh;
+  top: 100px;
+  right: 3.5vh;
   width: 200px;
   padding: 20px;
   border-radius: 8px;
@@ -73,46 +73,6 @@
   background-color: var(--highlight-color); /* Default color */
 }
 
-/* Button to open the modal */
-#open-color-selector {
-  position: absolute;
-  top: 4vh;
-  left: 5vh;
-  background-color: transparent;
-  color: transparent;
-  margin: 20px;
-  padding: 10px 15px;
-  border: none;
-  box-shadow: none;
-  cursor: pointer;
-}
-
-/* Button to open the modal */
-#open-color-selector:hover {
-  background-color: darkgray;
-  color: white;
-  box-shadow: 0 10px 20px var(--color-shadow-light);
-}
-
-#open-color-selector:focus {
-  background-color: darkgray;
-  color: white;
-  box-shadow: 0 10px 20px var(--color-shadow-light);
-}
-
-/* Button to open the modal */
-#open-color-selector.dark-mode:hover {
-  background-color: var(--color-dark-bg);
-  color: white;
-  box-shadow: 0 10px 20px var(--color-shadow-light);
-}
-
-#open-color-selector.dark-mode:focus {
-  background-color: var(--color-dark-bg);
-  color: white;
-  box-shadow: 0 10px 20px var(--color-shadow-light);
-}
-
 body {
   font-family: "Roboto", sans-serif;
   margin: 40px;
@@ -127,7 +87,7 @@ body {
   flex-direction: column;
   align-items: center;
   background: var(--color-bg-container);
-  padding: 40px;
+  padding: 5px 40px;
   border-radius: 8px;
   box-shadow: 0 4px 20px var(--color-shadow-light);
   max-width: 700px;
@@ -178,7 +138,7 @@ option:hover {
 h1 {
   font-family: "Merriweather", serif;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1.25em;
   color: var(--color-text-dark);
   transition: color 0.3s ease; /* Smooth heading transition */
 }
@@ -754,7 +714,8 @@ button.active {
   box-shadow: 0 4px 6px var(--color-shadow-deep); /* Slightly stronger shadow */
 }
 .team-link {
-  display: inline-block;
+  display: flex;
+  align-items: center;
 }
 .team-link button {
   margin: 0px 10px;
@@ -783,6 +744,53 @@ body.dark-mode .navbar ul li a.active {
 button.active {
   background-color: var(--highlight-color); /* Active page in dark mode */
   color: var(--color-dark-text);
+}
+
+/* Expand mode */
+body.expand-mode {
+  margin: 10px;
+}
+.container.expand-mode {
+  padding: 5px;
+  max-width: 100%;
+}
+.navbar.expand-mode {
+  width: auto;
+  padding: 10px 10px;
+}
+
+header {
+  width: 100%;
+  position: relative;
+}
+
+#toggle-mode {
+  height: 35px;
+  padding: 3px 10px;
+}
+
+#toggle-border {
+  height: 35px;
+  padding: 3px 10px;
+}
+
+#toggle-settings {
+  height: 35px;
+  padding: 3px 10px;
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  transform: translate(50%, -50%); 
+  transition-duration: 0s;
+}
+header.expand-mode #toggle-settings {
+  transform: translate(-25%, -50%);
+  transition-duration: 0s;
+}
+
+body.expand-mode .modal {
+  position: absolute;
+  top: 70px;
 }
 
 /* Form Container */

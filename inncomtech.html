@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Customer Support Form | Onity</title>
+    <title>Customer Support Form | Inncom</title>
     <!-- Inline script to check for dark mode immediately -->
     <script>
       // Apply dark mode instantly if it's the saved preference
@@ -27,6 +27,7 @@
 
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
   </head>
   <body>
     <div id="color-selector-modal" class="modal hidden">
@@ -47,7 +48,7 @@
 
     <div class="container">
       <header>
-        <h1>Customer Support Form</h1>
+        <h1>Inncom Customer Support Form</h1>
         <button id="toggle-settings"><i class="material-icons">settings</i></button>
       </header>
 
@@ -61,8 +62,8 @@
         </ul>
       </nav>
       <div class="team-link">
-        <button class="active">Onity</button>
-        <button onclick="location.href='inncomtech.html';">Inncom</button>
+        <button onclick="location.href='index.html';">Onity</button>
+        <button class="active">Inncom</button>
       </div>
 
       <form id="contactForm">
@@ -97,22 +98,6 @@
           placeholder="Enter the resolution or next steps"
           required
         ></textarea>
-
-        <label for="fdsStatus">FDS Status at End-of-Call:</label>
-        <select id="fdsStatus" name="fdsStatus" required>
-          <option value="Not Selected">Not Selected</option>
-          <option value="Not Applicable">Not Applicable</option>
-          <option value="Fully Operational">Fully Operational</option>
-          <option value="Partially Functional With PMS">
-            Partially functional with PMS
-          </option>
-          <option value="Able to make keys manually">
-            Able to make keys manually
-          </option>
-          <option value="No encoders operational">
-            No encoders operational
-          </option>
-        </select>
 
         <div class="form-buttons">
           <button type="button" id="copyButton">Copy</button>

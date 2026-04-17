@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Triage Form</title>
+    <title>Triage Form | Onity</title>
     <!-- Inline script to check for dark mode immediately -->
     <script>
       // Apply dark mode instantly if it's the saved preference
@@ -11,6 +11,9 @@
         // Check for saved mode and apply it
         if (localStorage.getItem("mode") === "dark") {
           document.documentElement.classList.add("dark-mode");
+        }
+        if (localStorage.getItem("expandmode") === "expanded") {
+          document.documentElement.classList.add("expand-mode");
         }
       });
       const savedColor = localStorage.getItem("highlightColor");
@@ -23,6 +26,7 @@
     </script>
 
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   </head>
   <body>
     <div id="color-selector-modal" class="modal hidden">
@@ -35,24 +39,31 @@
         </div>
         <button id="apply-color">Apply</button>
         <button id="reset-color">Reset</button>
+        </br>
+        <button id="toggle-mode"><i class="material-icons">dark_mode</i></button>
+        <button id="toggle-border"><i class="material-icons">fullscreen</i></button>
       </div>
     </div>
 
-    <!-- Button to open the modal -->
-    <button id="open-color-selector">Change Highlight Color</button>
-
     <div class="container">
-      <h1>Triage Support Form</h1>
+      <header>
+        <h1>Triage Support Form</h1>
+        <button id="toggle-settings"><i class="material-icons">settings</i></button>
+      </header>
+
       <nav class="navbar">
         <ul>
           <li><a href="index.html" class="nav-link">Notes</a></li>
           <li><a href="RMA.html" class="nav-link">RMA</a></li>
           <li><a href="Dial-in.html" class="nav-link">Dial-In</a></li>
-          <li><a href="Triage.html" class="nav-link">Triage</a></li>
+          <li><a href="Triage.html" class="nav-link active">Triage</a></li>
           <li><a href="Product99.html" class="nav-link">Product 99</a></li>
         </ul>
       </nav>
-      <button id="toggle-mode">Toggle Dark Mode</button>
+      <div class="team-link">
+        <button class="active">Onity</button>
+        <button onclick="location.href='inncomtriage.html'">Inncom</button>
+      </div>
 
       <form id="triageForm">
         <label for="customerNameTriage">S/W:</label>
@@ -62,12 +73,6 @@
           placeholder="Enter the customer's name"
           required
         ></textarea>
-
-        <!-- <label for="phoneUpdated">Contact Phone Updated/Verified:</label>
-        <select id="phoneUpdated" name="phoneUpdated" required>
-          <option value="No">No</option>
-          <option value="Yes">Yes</option>
-        </select> -->
 
         <div id="contactNumberTriageDiv">
           <label for="contactNumberTriage">Contact Number:</label>

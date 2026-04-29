@@ -28,6 +28,10 @@
 
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    <!-- contains function definitions for loadSavedValues(), copyPage(), clearPage(), and undoClear() -->
+    <script src="scripts/rma.js"></script>
+    <script src="script.js" defer></script>
   </head>
   <body>
     <div id="color-selector-modal" class="modal hidden">
@@ -62,7 +66,7 @@
         </ul>
       </nav>
 
-      <form id="rmaForm" name="rmaForm">
+      <form id="templateForm" name="rmaForm">
         <label for="rmaType">RMA Type:</label>
         <select id="rmaType" name="RMATYPE" required>
           <option value="Not Selected">Not Selected</option>
@@ -181,7 +185,7 @@
         <button id="addButton">Add Part</button>
 
         <div class="form-buttons">
-          <button name="COPY" type="button" id="copyButtonRMA">Copy</button>
+          <button name="COPY" type="button" id="copyButton">Copy</button>
           <button name="CLEAR" type="button" id="clearButton">Clear</button>
           <button type="button" id="undoClearButton" class="hidden">
             Undo
@@ -192,7 +196,5 @@
         Copied to clipboard!
       </div>
     </div>
-
-    <script src="script.js"></script>
   </body>
 </html>

@@ -24,10 +24,67 @@
           savedColor
         );
       }
+
+      // Called by script.js when document loaded
+      function loadSavedValues() {
+        return true;
+      }
+
+      // Called by script.js prior to copying form data
+      function validateForm() {
+        return true
+      }
+
+      // Called by script.js when copy button pressed
+      function copyPage() {
+        const reportDate = document.getElementById("reportDate")?.value || "";
+        const incidentDate = document.getElementById("incidentDate")?.value || "";
+        const contactName = document.getElementById("contactName99")?.value || "";
+        const contactNumber = document.getElementById("contactNumber99")?.value || "";
+        const email = document.getElementById("email")?.value || "";
+        const productType = document.getElementById("productType")?.value || "";
+        const lockCaseType = document.getElementById("lockCaseType")?.value || "";
+        const numberOfRoomsInHotel = document.getElementById("numberOfRoomsInHotel")?.value || "";
+        const warrantyStartDate = document.getElementById("warrantyStartDate")?.value || "";
+        const accountNumber = document.getElementById("accountNumber")?.value || "";
+        const caseNumber = document.getElementById("caseNumber")?.value || "";
+        const propertyName = document.getElementById("propertyName")?.value || "";
+        const propertyAddress = document.getElementById("propertyAddress")?.value || "";
+        const summary = document.getElementById("summary")?.value || "";
+
+        let fullText = `Report Date: ${reportDate}\n`;
+        fullText += `Incident Date: ${incidentDate}\n`;
+        fullText += `Contact Name: ${contactName}\n`;
+        fullText += `Contact Number: ${contactNumber}\n`;
+        fullText += `Email Address: ${email}\n\n`;
+        fullText += `Product Type: ${productType}\n`;
+        fullText += `Lock Case Type: ${lockCaseType}\n`;
+        fullText += `Number of Rooms in Hotel: ${numberOfRoomsInHotel}\n`;
+        fullText += `Warranty Start Date: ${warrantyStartDate}\n`;
+        fullText += `Account Number: ${accountNumber}\n`;
+        fullText += `Case Number: ${caseNumber}\n\n`;
+        fullText += `Property Name: ${propertyName}\n`;
+        fullText += `Property Address: ${propertyAddress}\n\n`;
+        fullText += `Summary:\n${summary.trim()}`;
+
+        return fullText;
+      }
+
+      // Called by script.js when clear button pressed
+      function clearPage(lastFormState) {
+        return lastFormState;
+      }
+
+      // Called by script.js when undo button pressed
+      function undoClear(lastFormState) {
+        return true;
+      }
     </script>
 
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    <script src="script.js" defer></script>
   </head>
   <body>
     <div id="color-selector-modal" class="modal hidden">
@@ -62,7 +119,7 @@
         </ul>
       </nav>
 
-      <form id="product99" class="form-99">
+      <form id="templateForm" class="form-99">
         <div class="form-item">
           <label for="reportDate">Report Date</label>
           <input type="date" id="reportDate" name="reportDate" required />
@@ -150,7 +207,7 @@
           ></textarea>
         </div>
         <div class="form-buttons">
-          <button type="button" id="copyButton99">Copy</button>
+          <button type="button" id="copyButton">Copy</button>
           <button type="button" id="clearButton">Clear</button>
           <button type="button" id="undoClearButton" class="hidden">
             Undo
@@ -161,7 +218,5 @@
         Copied to clipboard!
       </div>
     </div>
-
-    <script src="script.js"></script>
   </body>
 </html>

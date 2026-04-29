@@ -28,6 +28,10 @@
 
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    <!-- contains function definitions for loadSavedValues(), copyPage(), clearPage(), and undoClear() -->
+    <script src="scripts/dialin.js"></script>
+    <script src="script.js" defer></script>
   </head>
   <body>
     <div id="color-selector-modal" class="modal hidden">
@@ -63,7 +67,7 @@
       </nav>
 
       <!-- Compact, Two-Column Dial-In Form -->
-      <form class="dial-in-form" id="dialInForm">
+      <form class="dial-in-form" id="templateForm">
         <div class="form-item">
           <label for="contactName">Contact Name:</label>
           <input type="text" id="contactName" name="contactName" required />
@@ -186,7 +190,7 @@
         </div>
 
         <div class="form-buttons">
-          <button type="button" id="copyButtonDialIn">Copy</button>
+          <button type="button" id="copyButton">Copy</button>
           <button type="button" id="clearButton">Clear</button>
           <button type="button" id="undoClearButton" class="hidden">
             Undo
@@ -197,7 +201,5 @@
         Copied to clipboard!
       </div>
     </div>
-
-    <script src="script.js"></script>
   </body>
 </html>

@@ -23,11 +23,46 @@
           savedColor,
         );
       }
+
+      // Called by script.js when document loaded
+      function loadSavedValues() {
+        return true;
+      }
+
+      // Called by script.js prior to copying form data
+      function validateForm() {
+        return true
+      }
+
+      // Called by script.js when copy button pressed
+      function copyPage() {
+        const customerName = document.getElementById("customerName")?.value || "";
+        const reasonForCall = document.getElementById("reasonForCall")?.value || "";
+        const troubleshooting = document.getElementById("troubleshooting")?.value || "";
+        const resolution = document.getElementById("resolution")?.value || "";
+
+        let fullText = `S/W:\n${customerName.trim()}\n\n`;
+        fullText += `Reason for Call:\n${reasonForCall.trim()}\n\n`;
+        fullText += `Troubleshooting Performed:\n${troubleshooting.trim()}\n\n`;
+        fullText += `Resolution or Next Steps:\n${resolution.trim()}`;
+        return fullText;
+      }
+
+      // Called by script.js when clear button pressed
+      function clearPage(lastFormState) {
+        return lastFormState;
+      }
+
+      // Called by script.js when undo button pressed
+      function undoClear(lastFormState) {
+        return true;
+      }
     </script>
 
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+    
+    <script src="script.js" defer></script>
   </head>
   <body>
     <div id="color-selector-modal" class="modal hidden">
@@ -66,7 +101,7 @@
         <button class="active">Inncom</button>
       </div>
 
-      <form id="contactForm">
+      <form id="templateForm">
         <label for="customerName">S/W:</label>
         <textarea
           id="customerName"
@@ -111,7 +146,5 @@
         Copied to clipboard!
       </div>
     </div>
-
-    <script src="script.js"></script>
   </body>
 </html>

@@ -144,9 +144,22 @@ function handleWarrantyTypeChange (warrantyType) {
   }
 };
 
+function openInncomRMA() {
+    localStorage.setItem("Page Mode", "inncom")
+    location.href='inncomrma.html';
+}
 
 // Called by script.js when document loaded
 function loadSavedValues() {
+    var lastPageType = localStorage.getItem("Page Mode");
+
+    if (lastPageType == "inncom") {
+        openInncomRMA()
+        return false;
+    } else {
+        localStorage.setItem("Page Mode", "onity")
+    }
+
     const savedRmaType = localStorage.getItem("rmaType");
     const savedWarrantyType = localStorage.getItem("warranty");
     const RmaTypeField = document.getElementById("rmaType");

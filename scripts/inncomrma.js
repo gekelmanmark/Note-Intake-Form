@@ -76,10 +76,22 @@ function savePartsToLocalStorage() {
   localStorage.setItem("partsData", JSON.stringify(partsData));
 }
 
-
+function openOnityRMA() {
+    localStorage.setItem("Page Mode", "onity")
+    location.href='RMA.html';
+}
 
 // Called by script.js when document loaded
 function loadSavedValues() {
+    var lastPageType = localStorage.getItem("Page Mode");
+
+    if (lastPageType == "onity") {
+        openOnityRMA()
+        return false;
+    } else {
+        localStorage.setItem("Page Mode", "inncom")
+    }
+
     const savedPartsData = JSON.parse(localStorage.getItem("partsData")) || [];
     savedPartsData.forEach((part) => {
       if (part.partNumber || part.swVersion || part.quantity) {

@@ -24,8 +24,21 @@
         );
       }
 
+      function openOnityNotes() {
+          localStorage.setItem("Page Mode", "onity")
+          location.href='index.html';
+      }
+
       // Called by script.js when document loaded
       function loadSavedValues() {
+        var lastPageType = localStorage.getItem("Page Mode");
+
+        if (lastPageType == "onity") {
+          openOnityNotes()
+        } else {
+          localStorage.setItem("Page Mode", "inncom")
+        }
+
         return true;
       }
 
@@ -97,7 +110,7 @@
         </ul>
       </nav>
       <div class="team-link">
-        <button onclick="location.href='index.html';">Onity</button>
+        <button onclick="openOnityNotes()">Onity</button>
         <button class="active">Inncom</button>
       </div>
 

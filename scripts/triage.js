@@ -51,9 +51,22 @@ function handleWarrantyStatusChange(status) {
   }
 };
 
+function openInncomTriage() {
+    localStorage.setItem("Page Mode", "inncom")
+    location.href='inncomtriage.html';
+}
 
 // Called by script.js when document loaded
 function loadSavedValues() {
+    var lastPageType = localStorage.getItem("Page Mode");
+
+    if (lastPageType == "inncom") {
+        openInncomTriage()
+        return false;
+    } else {
+        localStorage.setItem("Page Mode", "onity")
+    }
+
     const savedTransferredTo = localStorage.getItem("transferredTo");
     const transferredTo = document.getElementById("transferredTo");
     const savedwarrantyStatus = localStorage.getItem("warrantyStatus");

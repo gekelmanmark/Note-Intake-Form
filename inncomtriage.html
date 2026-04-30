@@ -24,8 +24,23 @@
         );
       }
 
+
+      function openOnityTriage() {
+          localStorage.setItem("Page Mode", "onity")
+          location.href='Triage.html';
+      }
+
       // Called by script.js when document loaded
       function loadSavedValues() {
+        var lastPageType = localStorage.getItem("Page Mode");
+
+        if (lastPageType == "onity") {
+            openOnityTriage()
+            return false;
+        } else {
+            localStorage.setItem("Page Mode", "inncom")
+        }
+
         return true;
       }
 
@@ -100,7 +115,7 @@
         </ul>
       </nav>
       <div class="team-link">
-        <button onclick="location.href='Triage.html';">Onity</button>
+        <button onclick="openOnityTriage()">Onity</button>
         <button class="active">Inncom</button>
       </div>
 

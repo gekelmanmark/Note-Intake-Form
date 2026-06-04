@@ -58,7 +58,7 @@
         const reasonForCall = document.getElementById("triageReasonForCall")?.value || "";
 
         let fullText = `S/W: ${customerNameTriage.trim()}\n`;
-        fullText += `Property: ${propertyName.trim()}\n`;
+        fullText += `Property Name: ${propertyName.trim()}\n`;
         fullText += `Phone Number: ${contactNumberTriage.trim()}\n`;
         fullText += `Contact Email: ${emailUpdated.trim()}\n`;
         fullText += `Reason for Call: ${reasonForCall.trim()}`;
@@ -128,11 +128,11 @@
           required
         ></textarea>
 
-        <label for="customerPropertyTriage">Property:</label>
+        <label for="customerPropertyTriage">Property Name:</label>
         <textarea
           id="customerPropertyTriage"
           rows="2"
-          placeholder="Enter the full property name"
+          placeholder="Enter the full property name. Include address when not correct on Salesforce."
           required
         ></textarea>
 

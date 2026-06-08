@@ -63,6 +63,7 @@
           <li><a href="Dial-in.html" class="nav-link">Dial-In</a></li>
           <li><a href="Triage.html" class="nav-link">Triage</a></li>
           <li><a href="Product99.html" class="nav-link">Product 99</a></li>
+		  <li><a href="leadCreation.html" class="nav-link">Lead Creation</a></li>
         </ul>
       </nav>
       <div class="team-link">
@@ -100,11 +101,14 @@
             <option value="Extended">Extended</option>
           </select>
         </div>
+		
+		<!-- Order Field (Initially Hidden) -->
         <div id="orderField" class="hidden">
           <label for="order">Order Number:</label>
           <input name="BSOFIELD" type="text" id="order" />
         </div>
 
+		<!-- Warranty Level Field (Initially Hidden) -->
         <div id="warrantyLevelField" class="hidden">
           <label for="warrantyLevel">Warranty Level:</label>
           <select name="WARRANTYLEVEL" id="warrantyLevel" required>
@@ -116,6 +120,27 @@
             <option value="Ruby">Ruby</option>
             <option value="Emerald">Emerald</option>
             <option value="Diamond">Diamond</option>
+          </select>
+        </div>
+		
+		<!-- HT Weather Kit Field (Initially Hidden) -->
+        <div id="weatherKitField" class="hidden">
+          <label class="custom-checkbox">
+            <input type="checkbox" name="weakit" id="weatherKitCheckBox" />
+            <span class="checkmark"></span>
+            HT Weather Kit?
+          </label>
+        </div>
+		
+	    <!-- Approved By Field (Initially Hidden) -->
+        <div id="approvedByField" class="hidden">
+          <label for="approvedBy">Approved By:</label>
+          <select name="APPROVEDBY" id="approvedBy">
+            <option value="Not Selected">Not Selected</option>
+            <option value="Chris">Chris</option>
+            <option value="Alex">Alex</option>
+			<option value="Melissa">Melissa</option>
+            <option value="Jessica">Jessica</option>
           </select>
         </div>
 
@@ -202,3 +227,5 @@
     </div>
   </body>
 </html>
+
+

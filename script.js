@@ -393,3 +393,5 @@ textareaElements.forEach((element) => {
     element.style.height = savedHeight; // Restore the height from localStorage
   }
 });
+
+

@@ -71,6 +71,15 @@ function handleRmaTypeChange (rmaType) {
   const orderField = document.getElementById("orderField");
   const order = document.getElementById("order");
   const warrantyLevelField = document.getElementById("warrantyLevelField");
+  const approvedByField = document.getElementById("approvedByField");
+  const weatherKitField = document.getElementById("weatherKitField");
+  
+  inspectionField.classList.add("hidden");
+  warrantyField.classList.add("hidden");
+  orderField.classList.add("hidden");
+  warrantyLevelField.classList.add("hidden");
+  approvedByField.classList.add("hidden");
+  weatherKitField.classList.add("hidden");
 
   // Display fields based on selected RMA type
   if (rmaType === "Paid Repair - HT22X / Safe-XPP Only") {
@@ -79,8 +88,11 @@ function handleRmaTypeChange (rmaType) {
     orderField.classList.add("hidden");
     order.required = false;
     warrantyLevelField.classList.add("hidden");
+  } else if (rmaType === "Sample") {
+	  approvedByField.classList.remove("hidden");  
   } else if (rmaType === "Warranty ADV Replace") {
     warranty.required = true;
+	weatherKitField.classList.remove("hidden");
     if (warranty.value === "Limited") {
       inspectionField.classList.remove("hidden");
       warrantyField.classList.remove("hidden");
@@ -114,7 +126,8 @@ function handleRmaTypeChange (rmaType) {
         order.required = false;
         warrantyLevelField?.classList.add("hidden");
       }
-    });
+    });	
+	
   } else {
     // Hide all conditional fields for other RMA types
     inspectionField.classList.add("hidden");
@@ -122,6 +135,8 @@ function handleRmaTypeChange (rmaType) {
     orderField.classList.add("hidden");
     order.required = false;
     warrantyLevelField.classList.add("hidden");
+	weatherKitField.classList.add("hidden");
+	approvedByField.classList.add("hidden");
   }
 };
 
@@ -224,6 +239,11 @@ function copyPage() {
         ?.checked
         ? "Yes"
         : "No";
+	const approvedBy = document.getElementById("approvedBy")?.value || "";
+	const weatherKitChecked = document.getElementById("weatherKitCheckbox")
+		?.checked
+		? "Yes"
+		: "No";
 
     const orderNumber = document.getElementById("order")?.value || "";
     const warrantyLevel = document.getElementById("warrantyLevel")?.value || "";
@@ -251,7 +271,13 @@ function copyPage() {
                 fullText += `\nWarranty Type: ${warrantyLevel}`;
             }
         }
-    }
+	}
+	if (rmaType === "Sample") {
+		if(approvedByField !== "Not Selected") {
+			fullText += `\nApproved By: ${approvedBy}`; 
+		}
+	}
+
 
     fullText += `\nShipping Method: ${shippingType}`;
     fullText += `\nRed Dot: ${redDot}`;
@@ -267,6 +293,26 @@ function copyPage() {
         var quantity = quantities[index]?.value || "N/A";
         fullText += `Part Number: ${partNumber.trim()}, Quantity: ${quantity.trim()}\n`;
     });
+	
+	if (weatherKitChecked) {
+		fullText += `\n\nItems to return\n`;
+		partNumbers.forEach((partNumberInput, index) => {
+			var partNumber = partNumberInput.value || "N/A";
+			var quantity = quantities[index]?.value || "N/A";
+			if (partNumber === "QH300560" || partNumber === "QH300580") return;
+			fullText += `Part Number: ${partNumber.trim()}, Quantity: ${quantity.trim()}\n`;
+		});
+		
+		
+		fullText += `\n\nItems not to be Returned: \n`;
+		partNumbers.forEach((partNumberInput, index) => {
+			var partNumber = partNumberInput.value || "N/A";
+			var quantity = quantities[index]?.value || "N/A";
+			if (partNumber !== "QH300560" && partNumber !== "QH300580") return;
+			fullText += `Part Number: ${partNumber.trim()}, Quantity: ${quantity.trim()}\n`;
+		});
+		
+    }
 
     return fullText;
 }
@@ -314,3 +360,7 @@ function undoClear(lastFormState) {
 
     return true;
 }
+
+
+
+

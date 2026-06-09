@@ -47,6 +47,7 @@ function applyValidationStyles(form) {
       // Always clear the class if it no longer applies
       element.classList.remove("invalid-field");
     }
+	
   });
 }
 

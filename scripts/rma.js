@@ -73,6 +73,8 @@ function handleRmaTypeChange (rmaType) {
   const warrantyLevelField = document.getElementById("warrantyLevelField");
   const approvedByField = document.getElementById("approvedByField");
   const weatherKitField = document.getElementById("weatherKitField");
+  const weatherQuantityField = document.getElementById("weatherQuantityField");
+  const weatherKitCheckBox = document.getElementById("weatherKitCheckBox");
   
   inspectionField.classList.add("hidden");
   warrantyField.classList.add("hidden");
@@ -80,6 +82,7 @@ function handleRmaTypeChange (rmaType) {
   warrantyLevelField.classList.add("hidden");
   approvedByField.classList.add("hidden");
   weatherKitField.classList.add("hidden");
+  weatherQuantityField.classList.add("hidden");
 
   // Display fields based on selected RMA type
   if (rmaType === "Paid Repair - HT22X / Safe-XPP Only") {
@@ -112,6 +115,12 @@ function handleRmaTypeChange (rmaType) {
       order.required = false;
       warrantyLevelField.classList.add("hidden");
     }
+	 
+	if(weatherKitCheckBox.checked) {
+		weatherQuantityField.classList.remove("hidden");
+	} else {
+		weatherQuantityField.classList.add("hidden");
+	}
     warranty.addEventListener("change", function () {
       if (warranty.value === "Limited") {
         orderField?.classList.remove("hidden");
@@ -126,7 +135,15 @@ function handleRmaTypeChange (rmaType) {
         order.required = false;
         warrantyLevelField?.classList.add("hidden");
       }
-    });	
+    });
+	weatherKitCheckBox.addEventListener("change", function () {
+		if (weatherKitCheckBox.checked) {
+			weatherQuantityField.classList.remove("hidden");
+		} else {
+			weatherQuantityField.classList.add("hidden");
+		}
+	});
+	
 	
   } else {
     // Hide all conditional fields for other RMA types
@@ -240,7 +257,7 @@ function copyPage() {
         ? "Yes"
         : "No";
 	const approvedBy = document.getElementById("approvedBy")?.value || "";
-	const weatherKitChecked = document.getElementById("weatherKitCheckbox")
+	const weatherKitChecked = document.getElementById("weatherKitCheckBox")
 		?.checked
 		? "Yes"
 		: "No";
@@ -250,6 +267,7 @@ function copyPage() {
 
     const partNumbers = document.querySelectorAll('input[name="partNumber[]"]',);
     const quantities = document.querySelectorAll('input[name="quantity[]"]',);
+	const weatherQuantity = document.getElementById("weatherQuantity")?.value || "";
 
     const addButton = document.getElementById("addButton");
     addButton.classList.remove("invalid-field");
@@ -291,26 +309,24 @@ function copyPage() {
     partNumbers.forEach((partNumberInput, index) => {
         var partNumber = partNumberInput.value || "N/A";
         var quantity = quantities[index]?.value || "N/A";
-        fullText += `Part Number: ${partNumber.trim()}, Quantity: ${quantity.trim()}\n`;
+        fullText += `Part Number: ${partNumber.trim().toUpperCase()}, Quantity: ${quantity.trim()}\n`;
+
     });
 	
-	if (weatherKitChecked) {
+	if (weatherKitChecked) {	
+		fullText += `Part Number: QH300560, Quantity: ${weatherQuantity.trim()}\n`;
+		fullText += `Part Number: QH300580, Quantity: ${weatherQuantity.trim()}\n`;	
+		
 		fullText += `\n\nItems to return\n`;
 		partNumbers.forEach((partNumberInput, index) => {
 			var partNumber = partNumberInput.value || "N/A";
 			var quantity = quantities[index]?.value || "N/A";
-			if (partNumber === "QH300560" || partNumber === "QH300580") return;
-			fullText += `Part Number: ${partNumber.trim()}, Quantity: ${quantity.trim()}\n`;
+			fullText += `Part Number: ${partNumber.trim().toUpperCase()}, Quantity: ${quantity.trim()}\n`;
 		});
-		
 		
 		fullText += `\n\nItems not to be Returned: \n`;
-		partNumbers.forEach((partNumberInput, index) => {
-			var partNumber = partNumberInput.value || "N/A";
-			var quantity = quantities[index]?.value || "N/A";
-			if (partNumber !== "QH300560" && partNumber !== "QH300580") return;
-			fullText += `Part Number: ${partNumber.trim()}, Quantity: ${quantity.trim()}\n`;
-		});
+		fullText += `Part Number: QH300560, Quantity: ${weatherQuantity.trim()}\n`;
+		fullText += `Part Number: QH300580, Quantity: ${weatherQuantity.trim()}\n`;
 		
     }
 

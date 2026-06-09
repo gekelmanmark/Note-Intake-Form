@@ -105,7 +105,7 @@
 		<!-- Order Field (Initially Hidden) -->
         <div id="orderField" class="hidden">
           <label for="order">Order Number:</label>
-          <input name="BSOFIELD" type="text" id="order" />
+          <input name="BSOFIELD" type="number" id="order" />
         </div>
 
 		<!-- Warranty Level Field (Initially Hidden) -->
@@ -132,10 +132,16 @@
           </label>
         </div>
 		
+		<!-- Quantity Field (Initially Hidden) -->
+		<div id="weatherQuantityField" class="hidden">
+			<label for="weatherQuantity">Quantity:</label>
+			<input name="weaQuant" type="number" id="weatherQuantity" />
+		</div>
+		
 	    <!-- Approved By Field (Initially Hidden) -->
         <div id="approvedByField" class="hidden">
           <label for="approvedBy">Approved By:</label>
-          <select name="APPROVEDBY" id="approvedBy">
+          <select name="APPROVEDBY" id="approvedBy" required>
             <option value="Not Selected">Not Selected</option>
             <option value="Chris">Chris</option>
             <option value="Alex">Alex</option>

@@ -118,8 +118,10 @@ function handleRmaTypeChange (rmaType) {
 	 
 	if(weatherKitCheckBox.checked) {
 		weatherQuantityField.classList.remove("hidden");
+		weatherQuantity.required = true;
 	} else {
 		weatherQuantityField.classList.add("hidden");
+		weatherQuantity.required = false;
 	}
     warranty.addEventListener("change", function () {
       if (warranty.value === "Limited") {
@@ -139,8 +141,10 @@ function handleRmaTypeChange (rmaType) {
 	weatherKitCheckBox.addEventListener("change", function () {
 		if (weatherKitCheckBox.checked) {
 			weatherQuantityField.classList.remove("hidden");
+			weatherQuantity.required = true;
 		} else {
 			weatherQuantityField.classList.add("hidden");
+			weatherQuantity.required = false;
 		}
 	});
 	
@@ -151,6 +155,7 @@ function handleRmaTypeChange (rmaType) {
     warrantyField.classList.add("hidden");
     orderField.classList.add("hidden");
     order.required = false;
+	weatherQuantity.required = false;
     warrantyLevelField.classList.add("hidden");
 	weatherKitField.classList.add("hidden");
 	approvedByField.classList.add("hidden");
@@ -261,7 +266,7 @@ function copyPage() {
 		?.checked
 		? "Yes"
 		: "No";
-	const weatherKitCopy = document.getElementById("weatherKitCheckBox")?.checked || false;
+	let shouldCopy = false;
 
     const orderNumber = document.getElementById("order")?.value || "";
     const warrantyLevel = document.getElementById("warrantyLevel")?.value || "";
@@ -272,7 +277,11 @@ function copyPage() {
 
     const addButton = document.getElementById("addButton");
     addButton.classList.remove("invalid-field");
-    
+	
+	if (rmaType === "Warranty ADV Replace" && weatherKitChecked === "Yes") {
+		shouldCopy = true;
+	}
+	 
     let fullText = `RMA Type: ${rmaType}`;
     if (inspectionChecked === "Yes") {
         if (rmaType === "Warranty ADV Replace" || rmaType === "Paid Repair - HT22X / Safe-XPP Only") {
@@ -296,6 +305,7 @@ function copyPage() {
 			fullText += `\nApproved By: ${approvedBy}`; 
 		}
 	}
+	
 
 
     fullText += `\nShipping Method: ${shippingType}`;
@@ -315,8 +325,7 @@ function copyPage() {
     });
 	
 	
-	
-	if (weatherKitCopy) {			
+	if (shouldCopy) {			
 		fullText += `Part Number: QH300560, Quantity: ${weatherQuantity.trim()}\n`;
 		fullText += `Part Number: QH300580, Quantity: ${weatherQuantity.trim()}\n`;	
 		

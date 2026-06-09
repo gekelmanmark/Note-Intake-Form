@@ -261,6 +261,7 @@ function copyPage() {
 		?.checked
 		? "Yes"
 		: "No";
+	const weatherKitCopy = document.getElementById("weatherKitCheckBox")?.checked || false;
 
     const orderNumber = document.getElementById("order")?.value || "";
     const warrantyLevel = document.getElementById("warrantyLevel")?.value || "";
@@ -313,7 +314,9 @@ function copyPage() {
 
     });
 	
-	if (weatherKitChecked) {	
+	
+	
+	if (weatherKitCopy) {			
 		fullText += `Part Number: QH300560, Quantity: ${weatherQuantity.trim()}\n`;
 		fullText += `Part Number: QH300580, Quantity: ${weatherQuantity.trim()}\n`;	
 		

@@ -285,7 +285,7 @@ function copyPage() {
     let fullText = `RMA Type: ${rmaType}`;
     if (inspectionChecked === "Yes") {
         if (rmaType === "Warranty ADV Replace" || rmaType === "Paid Repair - HT22X / Safe-XPP Only") {
-            fullText += ` **08 Inspection Requested**`;
+            fullText += ` **Quality 08 (526 Evaluation)**`;
         }
     }
     if (rmaType === "Warranty ADV Replace") {

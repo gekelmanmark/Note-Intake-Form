@@ -14,7 +14,7 @@ function copyPage() {
     const needed = document.getElementById("needed")?.value || "";
     
     let fullText = `Full Address:\n ${propertyAddress.trim()}\n`;
-    fullText += `Decription:\n ${needed.trim()}\n`;
+    fullText += `Description:\n ${needed.trim()}\n`;
 
     return fullText;
 }
